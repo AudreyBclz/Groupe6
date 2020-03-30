@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum P2</title>
+    <link href="css/eval.css" rel="stylesheet"/>
+</head>
+<body>
+    <img src="img/forum.png"/>
+        <div id="partie_haute">
+            <div id="log_co">
+                <span id="pseudo_forum"></span>
+                <em id="date_forum"></em>
+            </div>
+        <button class="btn" id="btn_deco">Déconnexion</button>
+        </div>
+    <table>
+        <tr>
+            <td class="luOuPas"><img src="img/env_ouverte.png"/>Lu</td>
+            <td>Accueil<br><div class="liste_ss_sujet"><span class="sous_sujet">Mot de l'admin</span><span class="sous_sujet">Présentation</span><span class="sous_sujet">Membre</span></div></td>
+            <td class="message">Dernier message Audrey</td>
+        </tr>
+        <tr>
+            <td class="luOuPas nonLu"><img src="img/enveloppe.png"/>Non Lu</td>
+            <td><span class="nonLu">Réglement</span><br/><div class="liste_ss_sujet"><span class="sous_sujet">Acceptation du réglement</span><span class="sous_sujet">Avertissement</span><span class="sous_sujet">Exclusion</span></div></td>
+            <td class="message nonLu">Dernier message Jean</td>
+        </tr>
+        <tr>
+            <td class="luOuPas"><img src="img/enveloppe.png"/>Non lu</td>
+            <td>Archive</td>
+            <td class="message">Dernier message Luc</td>
+        </tr>
+    </table>
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/eval.js"></script>
+    <script>
+        console.log(sessionStorage.getItem("session:"));
+        if(sessionStorage.getItem("session:")===null)
+        {
+            location.href='index.html';
+        }
+        (function affiche()
+        {
+            var session=sessionStorage.getItem("session:");
+            session=JSON.parse(session);
+            document.getElementById("pseudo_forum").innerHTML="Bonjour "+session.pseudo_co;
+            document.getElementById("date_forum").innerHTML= "Dernière connexion le "+session.date_co;
+        }());
+        function deco()
+        {
+            sessionStorage.removeItem("session:");
+            location.href="index.html";
+        }
+        document.getElementById("btn_deco").addEventListener("click",deco,false);
+    </script>
+</body>
+</html>
