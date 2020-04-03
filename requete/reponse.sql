@@ -1,35 +1,44 @@
 -- 1 --
-SELECT name, model_year, price,nameCat,brand_name
-FROM products AS prod, categories AS cat, brands AS br
-WHERE br.brand_name="Haro"
-AND cat.nameCat="Electric Bikes"
+SELECT  products.name,
+        products.model_year,
+        products.price,
+        categories.nameCat,
+        brands.brand_name
+FROM products
+INNER JOIN categories ON products.category_id = categories.idCat
+INNER JOIN brands ON products.brand_id = brands.brand_id
+WHERE brands.brand_name = "Haro"
+AND categories.nameCat = "Electric Bikes";
 
 
 -- 2 --
-SELECT
-	prod.name,
-    prod.model_year,
-    prod.price,
-    cat.nameCat,
-    br.brand_name,
-    ROUND(prod.price*0.2,2) AS MontantTVA,
-    ROUND(prod.price*1.2,2) AS PrixTTC
-FROM products AS prod, categories AS cat, brands AS br
-WHERE br.brand_name="Haro"
-AND cat.nameCat="Electric Bikes"
+SELECT     products.name,
+           products.model_year,
+           categories.nameCat,
+           brands.brand_name,
+           products.price AS PrixHT,
+           CAST(products.price*0.2 as DECIMAL(9,2)) AS TVA,
+           CAST(products.price*1.2 as DECIMAL(9,2)) AS PrixTTC
+FROM products
+         INNER JOIN categories ON products.category_id = categories.idCat
+         INNER JOIN brands ON products.brand_id = brands.brand_id
+
 
 
 -- 3 --
-SELECT prod.name
-FROM products AS prod
-WHERE prod.price >=500
-AND prod.price<=1500
+SELECT *
+FROM products
+WHERE products.price BETWEEN 500 AND 1500
 
 
 -- 4 --
-SELECT prod.name, prod.model_year, prod.price
-FROM products AS prod, brands AS br
-WHERE br.brand_name LIKE 'H%'
+SELECT  products.name,
+        products.model_year,
+        products.price,
+        brands.brand_name
+FROM products
+         INNER JOIN brands ON products.brand_id=brands.brand_id
+WHERE brands.brand_name LIKE 'H%'
 
 
 -- 5 --
