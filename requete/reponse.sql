@@ -65,7 +65,7 @@ SET products.price=1499 WHERE products.id=9; -- Il n'y a pas de produit avec id 
 
 
 -- 9 --
-INSERT INTO categories (nameCat)
+INSERT INTO categories (categories.nameCat)
 VALUES ('Roller skates')
 
 
