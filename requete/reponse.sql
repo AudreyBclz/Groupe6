@@ -68,7 +68,7 @@ VALUES('roller skates cool',
         2020,
         258);
 
-
+;
 
 
 
