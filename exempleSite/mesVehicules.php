@@ -36,12 +36,12 @@ $tabVehicule =array("Renault"=>"R25",
             <tbody>
             <?php
             foreach ($tabVehicule as $marque=> $modele)
-            {
-                echo '<tr>
-                        <td>'.$marque.'</td>
-                        <td>'.$modele.'</td>
-                       <tr/>';
-            }
+            {?>
+                <tr>
+                    <td><?= $marque; ?></td>
+                    <td><?= $modele; ?></td>
+                <tr/>;
+            <?php}
             ?>
             </tbody>
         </table>
