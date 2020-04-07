@@ -18,4 +18,3 @@ function footer()
     </html>
     <?php
 }
-?>
