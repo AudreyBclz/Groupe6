@@ -61,7 +61,7 @@ if(isset($_POST['marque']) && isset($_POST['modele']))
     $reqInsVehi->bindParam(':idmarque',$idMa);
     $reqInsVehi->execute();
 }
-$sqlVehi='SELECT marque.nomMarque, modele.nomModele
+$sqlVehi='SELECT vehicule.idVehicule,marque.nomMarque, modele.nomModele
             FROM vehicule
             INNER JOIN marque ON vehicule.marque_idMarque=marque.idMarque
             INNER JOIN modele ON vehicule.modele_idModele=modele.idModele';
@@ -76,6 +76,7 @@ head();
     <table class="table table-hover mt-5 mb-5">
         <thead class="thead-dark">
         <tr>
+            <th> ID</th>
             <th>Marque</th>
             <th>Modèle</th>
         </tr>
@@ -88,6 +89,7 @@ head();
         {
         ?>
         <tr>
+            <td><?= $donnees['idVehicule'] ?></td>
             <td><?= $donnees['nomMarque'] ?></td>
             <td><?= $donnees['nomModele'] ?></td>
         </tr>
