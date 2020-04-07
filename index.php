@@ -33,4 +33,4 @@ head();
     </div>
 <?php
 footer();
-?>
+

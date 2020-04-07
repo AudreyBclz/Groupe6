@@ -15,3 +15,4 @@ function head()
     <div class="container">
     <?php
 }
+?>

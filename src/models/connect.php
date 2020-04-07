@@ -12,3 +12,4 @@ function connect(){
         die('Erreur : '.$e->getMessage());
     }
 }
+?>

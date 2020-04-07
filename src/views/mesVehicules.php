@@ -71,3 +71,4 @@ head();
     </div>
 <?php
 footer();
+?>
