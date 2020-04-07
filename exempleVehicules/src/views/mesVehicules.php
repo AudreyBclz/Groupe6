@@ -7,34 +7,66 @@ require '../models/connect.php';
 $db=connect();
 $mod=array();
 $mar=array();
+$marNotDb=true;
+$modNotDb=true;
+
 
 if(isset($_POST['marque']) && isset($_POST['modele']))
 {
     $marque=htmlspecialchars(trim($_POST['marque']));
     $modele=htmlspecialchars(trim($_POST['modele']));
-    $sqlSelectMod='SELECT idModele FROM modele WHERE nomModele = :modele';
-    $sqlSelectMar='SELECT idMarque FROM marque WHERE nomMarque = :marque';
+    $sqlSelectMod='SELECT idModele,nomModele FROM modele';
+    $sqlSelectMar='SELECT idMarque,nomMarque FROM marque';
 
-    $reqSelMod=$db->prepare($sqlSelectMod);
-    $reqSelMod->bindParam(':modele',$modele);
-    while ($data=$reqSelMod->fetchObject())
+    $reqSelMod=$db->query($sqlSelectMod);
+    while ($data=$reqSelMod->fetch())
     {
-        array_push($mod,$data);
+        if($data['nomModele']=== $modele)
+        {
+            $modNotDb=false;
+            $idMo=intval($data['idModele']);
+        }
+    }
+    if ($modNotDb)
+    {
+        $sqlInsertMod='INSERT INTO modele(nomModele) VALUES(:modele)';
+        $req=$db->prepare($sqlInsertMod);
+        $req->bindParam(':modele',$modele,PDO::PARAM_STR);
+        $req->execute();
+        $idMo=$db->lastInsertId();
     }
 
+    $reqSelMar=$db->query($sqlSelectMar);
+    while ($data=$reqSelMar->fetch())
+    {
+        if($data['nomMarque']===$marque)
+        {
+            $marNotDb=false;
+            $idMa=intval($data['idMarque']);
 
-    $sqlInsertMod='INSERT INTO modele(nomModele) VALUES(:modele)';
-    $sqlInsertMar='INSERT INTO marque(nomMarque) VALUES(:marque)';
+        }
+    }
+    if ($marNotDb)
+    {
+        $sqlInsertMar='INSERT INTO marque(nomMarque) VALUES(:marque)';
+        $req=$db->prepare($sqlInsertMar);
+        $req->bindParam(':marque',$marque,PDO::PARAM_STR);
+        $req->execute();
+        $idMa=$db->lastInsertId();
+    }
 
-    $req=$db->prepare($sqlInsertMod);
-    $req->bindParam(':modele',$modele,PDO::PARAM_STR);
-    $req->execute();
-
-    $req2=$db->prepare($sqlInsertMar);
-    $req2->bindParam(':marque',$marque,PDO::PARAM_STR);
-
-
+    $sqlInsertVehi='INSERT INTO vehicule(modele_idModele,marque_idMarque) VALUES(:idmodele,:idmarque)';
+    $reqInsVehi=$db->prepare($sqlInsertVehi);
+    $reqInsVehi->bindParam(':idmodele',$idMo);
+    $reqInsVehi->bindParam(':idmarque',$idMa);
+    $reqInsVehi->execute();
 }
+$sqlVehi='SELECT marque.nomMarque, modele.nomModele
+            FROM vehicule
+            INNER JOIN marque ON vehicule.marque_idMarque=marque.idMarque
+            INNER JOIN modele ON vehicule.modele_idModele=modele.idModele';
+
+
 
 head();
 ?>
@@ -49,17 +81,18 @@ head();
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <?php
-            foreach ($vehiculeMarque as $marque=>$modele){
-            ?>
-            <td><?= $marque ?></td>
-            <td><?= $modele ?></td>
-        </tr>
         <?php
-        }
+        $reqVehi =$db->prepare($sqlVehi);
+        $reqVehi->execute();
+        while($donnees=$reqVehi->fetch())
+        {
         ?>
-
+        <tr>
+            <td><?= $donnees['nomMarque'] ?></td>
+            <td><?= $donnees['nomModele'] ?></td>
+        </tr>
+        <?php }
+?>
         </tbody>
     </table>
     <div>
