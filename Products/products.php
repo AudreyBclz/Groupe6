@@ -41,22 +41,22 @@ while($data=$reqSel->fetchObject())
                 <td><?= $product->name ?></td>
                 <td><?= $product->price ?></td>
                 <td><?= $product->catName ?></td>
-                <td>
-                    <div class="inline-flex">
+                <td class="m-0">
+                    <div class="d-flex">
                         <form method="get" action="src/views/action.php" class="form-inline">
                             <input type="number" value="<?= $product->id ?>" name="id" readonly="readonly" class="d-none"/>
                             <input type="text" value="read" name="action" class="d-none"/>
-                            <button class="btn btn-primary" type="submit"><i class="fa fa-bars" aria-hidden="true"></i> Lire</button>
+                            <button class="btn btn-primary mr-1" type="submit"><i class="fa fa-bars" aria-hidden="true"></i> Lire</button>
                         </form>
                         <form method="get" action="src/views/action.php" class="form-inline">
                             <input type="number" value="<?= $product->id ?>" name="id" readonly="readonly" class="d-none"/>
                             <input type="text" value="modify" name="action" class="d-none"/>
-                            <button class="btn btn-warning" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                            <button class="btn btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                         </form>
                         <form method="get" action="src/views/action.php" class="form-inline" >
                             <input type="number" value="<?= $product->id ?>" name="id" readonly="readonly" class="d-none"/>
                             <input type="text" value="delete" name="action" class="d-none"/>
-                            <button class="btn btn-danger" type="submit"><i class="fa fa-minus-square" aria-hidden="true"></i> Supprimer</button>
+                            <button class="btn btn-danger mr-1" type="submit"><i class="fa fa-minus-square" aria-hidden="true"></i> Supprimer</button>
                         </form>
                     </div>
                 </td>
