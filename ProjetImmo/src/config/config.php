@@ -1,5 +1,5 @@
 <?php
 define('LOCALHOST', 'localhost');
-define('DBNAME', 'products');
+define('DBNAME', 'projetimmo');
 define('DBID', 'root');
 define('DBMDP', '');
