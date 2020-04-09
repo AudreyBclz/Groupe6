@@ -7,6 +7,24 @@ require_once 'src/models/connect.php';
 head();
 
 $db=connect();
+
+// voir si on a supprimé un produit
+$url=explode('?delete=',$_SERVER['REQUEST_URI']);
+if (isset($url[1]) && $url[1]=='done')
+{ ?>
+    <div class="alert-danger p-5 text-center">Produit supprimé</div>';
+<?php
+}
+
+// voir si on a modifié un produit
+$url_m=explode('?modify=',$_SERVER['REQUEST_URI']);
+if (isset($url_m[1]) && $url_m[1]=='done')
+{ ?>
+    <div class="alert-success p-5 text-center">Modification effectuée avec succès</div>
+<?php
+}
+
+
 $sqlSel='SELECT products.id,products.name,products.price, categories.name AS catName
          FROM products
          INNER JOIN categories ON products.category_id= categories.id';

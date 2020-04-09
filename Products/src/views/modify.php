@@ -52,7 +52,8 @@ if (isset($_POST['name_modif']) && isset($_POST['desc_modif']) && isset($_POST['
                  SET products.name = :nvname,
                  products.description = :descr, 
                  products.price = :nvprice, 
-                 products.category_id = :idCat 
+                 products.category_id = :idCat,
+                 products.modified= NOW() 
                  WHERE products.id = :nvid';
 
     $reqUpProd =$db->prepare($sqlUpProd);
@@ -65,6 +66,7 @@ if (isset($_POST['name_modif']) && isset($_POST['desc_modif']) && isset($_POST['
 
     $reqUpProd->execute();
 }
+header('Location:../../products.php?modify=done');
 ?>
-<div class="alert-success p-5 text-center">Modification effectuée avec succès</div>
-<div class="text-center"><a href="../../products.php" class="btn btn-success w-25 mt-5"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour à la liste</a></div>
+
+

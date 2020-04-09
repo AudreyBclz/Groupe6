@@ -20,8 +20,7 @@ if ($_GET['action']=="delete")
              WHERE id='.$_GET['id'];
     $reqDel=$db->prepare($sqlDel);
     $reqDel->execute();
-    echo '<div class="alert-danger p-5 text-center">Produit supprimé</div>
-           <div class="text-center"><a href="../../products.php" class="btn btn-danger mt-5 w-25"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour à la liste</a></div>';
+    header('Location:../../products.php?delete=done');
 }
 
 elseif($_GET['action']=="modify") {
@@ -39,6 +38,7 @@ elseif($_GET['action']=="modify") {
     ?>
 
     <h2 class="text-center"> Modification</h2>
+    <div class="text-center"><a href="../../products.php" class="btn btn-dark mt-5"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour à la liste</a></div>
     <form method="post" action="modify.php" class="mx-auto w-25">
         <?php
         foreach ($prod as $product) {
@@ -61,11 +61,11 @@ elseif($_GET['action']=="modify") {
         <button type="submit" class="btn btn-primary mt-3"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier
         </button>
     </form>
+
     <?php
-}elseif($_GET['action']=='read')
-{
-$produit = array();
-$sqlSelProd = 'SELECT   products.id,
+}elseif($_GET['action']=='read') {
+    $produit = array();
+    $sqlSelProd = 'SELECT   products.id,
                         products.name AS prodName,
                         products.description,
                         products.price,
@@ -77,46 +77,47 @@ $sqlSelProd = 'SELECT   products.id,
                  FROM products
                  INNER JOIN categories ON products.category_id=categories.id
                  WHERE products.id=' . $_GET['id'];
-$reqSelProd = $db->prepare($sqlSelProd);
-$reqSelProd->execute();
-while ($data = $reqSelProd->fetchObject()) {
-    array_push($produit, $data);
+    $reqSelProd = $db->prepare($sqlSelProd);
+    $reqSelProd->execute();
+    while ($data = $reqSelProd->fetchObject()) {
+        array_push($produit, $data);
+    }
+
+    ?>
+    <div class="container">
+        <h2>Product</h2>
+
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Category</th>
+                <th scope="col">Created</th>
+                <th scope="col">Modified</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($produit as $aProduct) { ?>
+                <tr>
+                    <th scope="row"><?= $aProduct->id ?></th>
+                    <td><?= $aProduct->prodName ?></td>
+                    <td><?= $aProduct->description ?></td>
+                    <td><?= $aProduct->price ?></td>
+                    <td><?= $aProduct->catName ?></td>
+                    <td><?= $aProduct->date_crea ?></td>
+                    <td><?= $aProduct->date_modif ?></td>
+                </tr>
+                <?php
+            } ?>
+            </tbody>
+        </table>
+        <div class="text-center"><a href="../../products.php" class="btn btn-dark mt-5"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour à la liste</a></div>
+    </div>
+    <?php
 }
-
-?>
-<div class="container">
-    <h2>Product</h2>
-
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Category</th>
-            <th scope="col">Created</th>
-            <th scope="col">Modified</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        foreach ($produit as  $aProduct)
-        { ?>
-        <tr>
-            <th scope="row"><?= $aProduct->id ?></th>
-            <td><?= $aProduct->prodName ?></td>
-            <td><?= $aProduct->description ?></td>
-            <td><?= $aProduct->price ?></td>
-            <td><?= $aProduct->catName ?></td>
-            <td><?= $aProduct->date_crea ?></td>
-            <td><?= $aProduct->date_modif ?></td>
-        </tr>
-                <?php }
-}?>
-        </tbody>
-    </table>
-</div>
-<?php
 footer();
 ?>
