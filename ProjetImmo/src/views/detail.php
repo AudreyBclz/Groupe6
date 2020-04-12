@@ -20,6 +20,15 @@ head();
             <li class="nav-item">
                 <a class="nav-link" href="./contact.php">Contact</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./ajoutbien.php">Ajout de bien</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
+            </li>
         </ul>
     </div>
 </nav>
