@@ -85,7 +85,7 @@ $nbPage=ceil($nbre/3);
             <?php
 foreach ($loc as $location)
 { ?>
-    <div class="card w-50">
+    <div class="card w-33">
         <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Annonce">
         <div class="card-body">
             <h5 class="card-title"><?= $location->titreLocation ?></h5>
