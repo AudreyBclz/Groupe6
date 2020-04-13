@@ -199,8 +199,9 @@ if ($_GET['action']=='read') {
                 <span> Nombre de pièces : <?= $loc->nbPiecedetail ?></span>
             </div>
             <p class="my-3"><?= $loc->descdetail ?></p>
-            <div class="mt-5">
+            <div class="mt-5 d-flex justify-content-between">
                 <span class="bg-success p-2 rounded">Prix : <?= $loc->prixLocation ?> € net vendeur</span>
+                <a class="btn btn-dark" href="location.php">Retour</a>
             </div>
         </div>
         </div>

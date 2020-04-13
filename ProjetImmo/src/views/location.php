@@ -1,8 +1,33 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+require_once '../config/config.php';
+require_once '../models/connect.php';
 
 head();
+$db=connect();
+
+$db=connect();
+
+$url=explode('indice=',$_SERVER['REQUEST_URI']);
+if (isset($url[1]))
+{
+    $indice=intval($url[1]);
+}
+else
+{
+    $indice=0;
+}
+
+$sqlSelLoc='SELECT * 
+            FROM location LIMIT '.$indice.',3';
+$reqSelLoc=$db->prepare($sqlSelLoc);
+$reqSelLoc->execute();
+$loc=array();
+while($data=$reqSelLoc->fetchObject())
+{
+    array_push($loc,$data);
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="../../index.php">DamienLocation</a>
@@ -32,60 +57,72 @@ head();
         </ul>
     </div>
 </nav>
-
-<div class="container">
+    <div class="container">
 
     <div class="row">
-        <h1>Voici une sélection de nos biens immobiliers </h1>
+        <h1 class="mx-auto mb-3">Sélections des biens immobiliers </h1>
     </div>
 
 
     <div class="card-group">
-        <div class="card">
-            <img class="card-img-top" src="../../public/img/cabane.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">La cabane au fond du jardin</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="row">
-                    <a href="./detail.php">
-                        <span class="btn btn-outline-secondary">Voir +</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-footer">
-                <h6>130 000 Euro net vendeur</h6>
+<?php
+
+$sqlcpte='SELECT COUNT(*)  AS nbLoc FROM location';
+$reqcpte=$db->prepare($sqlcpte);
+$reqcpte->execute();
+$cpte=array();
+while ($data=$reqcpte->fetchObject())
+{
+    array_push($cpte,$data);
+}
+foreach ($cpte as $nb)
+{
+    $nbre=$nb->nbLoc;
+}
+$nbPage=ceil($nbre/3);
+?>
+        <div class="d-flex">
+            <?php
+foreach ($loc as $location)
+{ ?>
+    <div class="card w-50">
+        <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Annonce">
+        <div class="card-body">
+            <h5 class="card-title"><?= $location->titreLocation ?></h5>
+            <p class="card-text"><?= $location->resumeLocation ?></p>
+            <div class="d-flex justify-content-between">
+                <form method="get" action="action.php" class="form-inline">
+                    <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
+                    <input type="text" value="read" name="action" class="d-none"/>
+                    <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                </form>
             </div>
         </div>
-        <div class="card">
-            <img class="card-img-top" src="../../public/img/maison_bleue.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">C'est une maison bleue...</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                <div class="row">
-                    <a href="./detail.php">
-                        <span class="btn btn-outline-secondary">Voir +</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-footer">
-                <h6>350 Euro net vendeur</h6>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="../../public/img/maison-luxe.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Petite maison "de caractère"</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                <div class="row">
-                    <a href="./detail.php">
-                        <span class="btn btn-outline-secondary">Voir +</span>
-                    </a>
-                </div>
-            </div>
-            <div class="card-footer">
-                <h6>1 800 000 Euro (frais d'agences offerts)</h6>
-            </div>
+        <div class="card-footer">
+            <h6><?=$location->prixLocation ?> € net vendeur</h6>
         </div>
     </div>
-    <?php
+
+<?php }
+?>
+    </div>
+        <div class="mx-auto">
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <li class="page-item active" aria-current="page">
+
+                </li>
+                <?php
+                for ($i=1; $i<=$nbPage;$i++)
+                { ?>
+                <li class="page-item"><a class="page-link" href="location.php?indice=<?= ($i-1)*3 ?>"><?= $i ?></a></li>
+               <?php
+               } ?>
+            </ul>
+        </nav>
+        </div>
+        <?php
 footer();
+?>
+
+
