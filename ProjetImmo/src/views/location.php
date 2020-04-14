@@ -81,11 +81,13 @@ foreach ($cpte as $nb)
 }
 $nbPage=ceil($nbre/3);
 ?>
+        <div class="card-deck">
         <div class="d-flex">
             <?php
 foreach ($loc as $location)
 { ?>
-    <div class="card w-33">
+
+    <div class="card mw-33">
         <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Annonce">
         <div class="card-body">
             <h5 class="card-title"><?= $location->titreLocation ?></h5>
@@ -106,7 +108,8 @@ foreach ($loc as $location)
 <?php }
 ?>
     </div>
-        <div class="mx-auto">
+        </div>
+        <div class="mx-auto mt-3">
         <nav aria-label="...">
             <ul class="pagination pagination-sm">
                 <li class="page-item active" aria-current="page">

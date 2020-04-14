@@ -66,35 +66,45 @@ if (isset($url_m[1]) && $url_m[1]=='done')
 
 
     <div class="card-group">
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-3">
+
         <?php
         foreach ($loc as $location)
         { ?>
-        <div class="card">
-            <img class="card-img-top mw-25" src="../../public/img/<?= $location->imageLocation ?>" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"><?= $location->titreLocation ?></h5>
-                <p class="card-text"><?= $location->resumeLocation ?></p>
-              <div class="d-flex justify-content-between">
-                        <form method="get" action="action.php" class="form-inline">
-                            <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
-                            <input type="text" value="read" name="action" class="d-none"/>
-                            <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
-                        </form>
-                        <form method="get" action="action.php" class="form-inline">
-                            <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
-                            <input type="text" value="modify" name="action" class="d-none"/>
-                            <button class="btn btn-outline-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
-                        </form>
-                        <form method="get" action="action.php" class="form-inline" >
-                            <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
-                            <input type="text" value="delete" name="action" class="d-none"/>
-                            <button class="btn btn-outline-danger mr-1" type="submit"><i class="fa fa-minus-square" aria-hidden="true"></i> Supprimer</button>
-                        </form>
+
+            <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $location->titreLocation ?></h5>
+                        <p class="card-text"><?= $location->resumeLocation ?></p>
+                        <div class="d-flex justify-content-between">
+                            <form method="get" action="action.php" class="form-inline">
+                                <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="read" name="action" class="d-none"/>
+                                <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                            </form>
+                            <form method="get" action="action.php" class="form-inline">
+                                <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="modify" name="action" class="d-none"/>
+                                <button class="btn btn-outline-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                            </form>
+                            <form method="get" action="action.php" class="form-inline" >
+                                <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="delete" name="action" class="d-none"/>
+                                <button class="btn btn-outline-danger" type="submit"><i class="fa fa-minus-square" aria-hidden="true"></i> Supprimer</button>
+                            </form>
+                        </div>
                     </div>
+                    <div class="card-footer">
+                        <h6><?=$location->prixLocation ?> € net vendeur</h6>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-                <h6><?=$location->prixLocation ?> € net vendeur</h6>
-            </div>
-        </div>
 <?php }
         ?>
+    </div>
+    </div>
+    <?php
+footer();
+

@@ -7,11 +7,14 @@ require_once '../models/connect.php';
 $db=connect();
 head();
 if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['prenomRepre']) && isset($_POST['emailAg']) && isset($_POST['mdpAg']) &&
-    isset($_POST['confmdpAg']) && isset($_POST['adresse1Ag']) && isset($_POST['codePostAg']) && isset($_POST['paysAg'])) {
+    isset($_POST['confmdpAg']) && isset($_POST['adresse1Ag']) && isset($_POST['codePostAg']) &&isset($_POST['villeAg']) && isset($_POST['paysAg'])) {
 
-    $sqlSelAg = 'SELECT agence.idAgence FROM agence WHERE agence.nomAgence=:nom';
+    $sqlSelAg = 'SELECT agence.idAgence,email FROM agence 
+                    INNER JOIN adresse ON adresse_idadresse=idadresse
+                    WHERE agence.nomAgence=:nom OR email=:mail';
     $reqSelAg = $db->prepare($sqlSelAg);
     $reqSelAg->bindParam(':nom', $_POST['nomAg']);
+    $reqSelAg->bindParam(':mail',$_POST['emailAg']);
     $reqSelAg->execute();
     $ag = array();
     while ($data = $reqSelAg->fetchObject()) {
@@ -21,16 +24,19 @@ if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['pre
         <div class="alert-warning">L'agence a déjà été enregistrée</div>
         <?php
     }
-    if ($_POST['mdpAg'] != $_POST['confmdpAg']) { ?>
+    elseif ($_POST['mdpAg'] != $_POST['confmdpAg'])
+    { ?>
         <div class="alert-warning">Erreur dans la confirmation du mot de passe</div>
         <?php
     } else {
-        $sqlInsAdAg = 'INSERT INTO adresse (adresse1, adresse2,codepostal,pays)
-                 VALUES(:adresse1,:adresse2,:cp,:pays)';
+        $sqlInsAdAg = 'INSERT INTO adresse (email,adresse1, adresse2,codepostal,ville,pays)
+                 VALUES(:mail,:adresse1,:adresse2,:cp,:ville,:pays)';
         $reqInsAdAg = $db->prepare($sqlInsAdAg);
+        $reqInsAdAg->bindParam(':mail',$_POST['emailAg']);
         $reqInsAdAg->bindParam(':adresse1', $_POST['adresse1Ag']);
         $reqInsAdAg->bindParam(':adresse2', $_POST['adresse2Ag']);
         $reqInsAdAg->bindParam(':cp', $_POST['codePostAg']);
+        $reqInsAdAg->bindParam(':ville',$_POST['villeAg']);
         $reqInsAdAg->bindParam(':pays', $_POST['paysAg']);
         $reqInsAdAg->execute();
         $idAd = intval($db->lastInsertId());
@@ -51,13 +57,15 @@ if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['pre
 }
 
 if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST['emailClient']) && isset($_POST['mdp']) && isset($_POST['confmdp']) &&
-    isset($_POST['cladresse1']) && isset($_POST['cladresse2']) && isset($_POST['clcodePost']) && isset($_POST['clpays'])) {
+    isset($_POST['cladresse1']) && isset($_POST['cladresse2']) && isset($_POST['clcodePost']) && isset($_POST['clville']) && isset($_POST['clpays'])) {
 
-    $sqlSelCl = 'SELECT client.idClient FROM client 
-                    WHERE client.nomClient=:nomCl AND client.prenomClient=:prenomCl';
+    $sqlSelCl = 'SELECT client.idClient,email FROM client
+                    INNER JOIN adresse ON adresse_idadresse=idadresse 
+                    WHERE (client.nomClient=:nomCl AND client.prenomClient=:prenomCl) OR email=:mail';
     $reqSelCl = $db->prepare($sqlSelCl);
     $reqSelCl->bindParam(':nomCl', $_POST['nomClient']);
     $reqSelCl->bindParam(':prenomCl', $_POST['prenomClient']);
+    $reqSelCl->bindParam(':mail',$_POST['emailClient']);
     $reqSelCl->execute();
     $cl = array();
     while ($data = $reqSelCl->fetchObject()) {
@@ -67,15 +75,18 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
         <div class="alert-warning">Le client a déjà été enregistré</div>
         <?php
     }
-    if ($_POST['mdp'] != $_POST['confmdp']) { ?>
+    elseif ($_POST['mdp'] != $_POST['confmdp'])
+    { ?>
         <div class="alert-warning">Erreur dans la confirmation du mot de passe</div>
         <?php
     } else {
-        $sqlInsAdCl = 'INSERT INTO adresse (adresse1, adresse2,codepostal,pays)
-                 VALUES(:adresse1,:adresse2,:cp,:pays)';
+        $sqlInsAdCl = 'INSERT INTO adresse (email,adresse1, adresse2,ville,codepostal,pays)
+                 VALUES(:mail,:adresse1,:adresse2,:ville,:cp,:pays)';
         $reqInsAdCl = $db->prepare($sqlInsAdCl);
+        $reqInsAdCl->bindParam(':mail',$_POST['emailClient']);
         $reqInsAdCl->bindParam(':adresse1', $_POST['cladresse1']);
         $reqInsAdCl->bindParam(':adresse2', $_POST['cladresse2']);
+        $reqInsAdCl->bindParam(':ville',$_POST['clville']);
         $reqInsAdCl->bindParam(':cp', $_POST['clcodePost']);
         $reqInsAdCl->bindParam(':pays', $_POST['clpays']);
         $reqInsAdCl->execute();
@@ -92,7 +103,7 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
         $reqInsCl->bindParam(':idCl', $idAdCl);
         $reqInsCl->execute();
 
-        echo'<div class="alert-success">Agence bien enregistrée</div>';
+        echo'<div class="alert-success">Client bien enregistré</div>';
     }
 }
 ?>
@@ -146,7 +157,7 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
             </div>
             <div class="form-group">
                 <label for="emailAg">Email :</label>
-                <input type="text" name="emailAg" id="emailAg" class="form-control" required="required">
+                <input type="email" name="emailAg" id="emailAg" class="form-control" required="required">
             </div>
             <div class="form-group">
                 <label for="mdpAg">Mot de passe :</label>
@@ -161,6 +172,8 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
                 <input type="text" name="adresse1Ag" id="adresse1Ag" class="form-control " required="required">
                 <label for="adresse2Ag">Complément :</label>
                 <input type="text" name="adresse2Ag" id="adresse2Ag" class="form-control">
+                <label for="villeAg">Ville :</label>
+                <input type="text" name="villeAg" id="villeAg" class="form-control" required="required">
                 <div class="d-flex justify-content-between">
                     <div>
                         <label for="codePostAg">Code Postal :</label>
@@ -206,6 +219,8 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
                     <input type="text" name="cladresse1" id="cladresse1" class="form-control " required="required">
                     <label for="cladresse2">Complément :</label>
                     <input type="text" name="cladresse2" id="cladresse2" class="form-control">
+                    <label for="clville">Ville :</label>
+                    <input type="text" name="clville" id="clville" class="form-control" required="required">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="clcodePost">Code Postal :</label>

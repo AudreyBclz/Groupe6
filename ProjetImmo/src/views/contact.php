@@ -1,8 +1,35 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+require_once '../config/config.php';
+require_once '../models/connect.php';
 
 head();
+$db=connect();
+if(isset($_POST['ct_email']) && isset($_POST['ct_adresse1']) && isset($_POST['ct_ville'])
+    && isset($_POST['ct_codePost']) && isset($_POST['ct_pays']) && isset($_POST['ct_message']))
+{
+    $sqlInsAd='INSERT INTO adresse (email,adresse1,adresse2,ville,codepostal,pays)
+                VALUES (:mail,:ad1,:ad2,:ville,:cp,:pays)';
+    $reqInsAd=$db->prepare($sqlInsAd);
+    $reqInsAd->bindParam(':mail',$_POST['ct_email']);
+    $reqInsAd->bindParam(':ad1',$_POST['ct_adresse1']);
+    $reqInsAd->bindParam(':ad2',$_POST['ct_adresse2']);
+    $reqInsAd->bindParam(':ville',$_POST['ct_ville']);
+    $reqInsAd->bindParam(':cp',$_POST['ct_codePost']);
+    $reqInsAd->bindParam(':pays',$_POST['ct_pays']);
+    $reqInsAd->execute();
+    $idAd=intval($db->lastInsertId());
+
+    $sqlInsCon='INSERT INTO contact (messagecontact,adresse_idadresse)
+                VALUES (:msg,:id)';
+    $reqInsCon=$db->prepare($sqlInsCon);
+    $reqInsCon->bindParam(':msg',$_POST['ct_message']);
+    $reqInsCon->bindParam(':id',$idAd);
+    $reqInsCon->execute();
+
+    echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="../../index.php">DamienLocation</a>
@@ -36,47 +63,50 @@ head();
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6">
-            <form class="mt-5">
+            <form class="mt-5" method="post" action="contact.php">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <input type="email" class="form-control" id="email" name="ct_email" required="required">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="adresse">Address</label>
-                        <input type="text" class="form-control" id="adresse" placeholder="1234 Main St">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" class="form-control" id="adresse" name="ct_adresse1" required="required">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="inputAddress2">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        <label for="inputAddress2">Complément d'adresse</label>
+                        <input type="text" class="form-control" id="inputAddress2" name="ct_adresse2">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <label for="inputCity">Ville</label>
+                        <input type="text" class="form-control" id="inputCity" name="ct_ville" required="required">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-between col-md-12">
+                        <div class="form-group">
+                            <label for="inputZip">Code Postal</label>
+                            <input type="text" class="form-control w-50" id="inputZip" name="ct_codePost" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputState">Pays</label>
+                            <input type="text" class="form-control w-50" id="inputState" name="ct_pays" required="required">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select>
+                        <label for="inputmess">Message</label>
+                        <textarea class="form-control" id="inputmess" name="ct_message" required="required"></textarea>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="inputZip">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-outline-secondary">Sign in</button>
+                <button type="submit" class="btn btn-outline-secondary">Envoyer</button>
             </form>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6 mt-5">
