@@ -83,11 +83,14 @@ $nbPage=ceil($nbre/3);
 ?>
         <div class="card-deck">
         <div class="d-flex">
+            <div class="row">
+
             <?php
 foreach ($loc as $location)
 { ?>
 
-    <div class="card mw-33">
+                <div class="col-sm-12 col-xl-4 col-lg-4 col-md-4">
+    <div class="card h-100">
         <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Annonce">
         <div class="card-body">
             <h5 class="card-title"><?= $location->titreLocation ?></h5>
@@ -104,9 +107,11 @@ foreach ($loc as $location)
             <h6><?=$location->prixLocation ?> € net vendeur</h6>
         </div>
     </div>
+                </div>
 
 <?php }
 ?>
+            </div>
     </div>
         </div>
         <div class="mx-auto mt-3">

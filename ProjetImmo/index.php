@@ -9,6 +9,7 @@ $db=connect();
 
 if (isset($_POST['email']) & isset($_POST['mdp']))
 {
+    $okAg=false;
     $sqlSelAg='SELECT idadresse, mdpAgence FROM adresse
                INNER JOIN agence ON idadresse=adresse_idadresse
                 WHERE email=:mail';
@@ -33,6 +34,7 @@ if (isset($_POST['email']) & isset($_POST['mdp']))
         }
     }
 
+    $okCl=true;
     $sqlSelCl='SELECT idadresse, mdpClient FROM adresse
                INNER JOIN client ON idadresse=adresse_idadresse
                 WHERE email=:mail';
