@@ -9,9 +9,9 @@ head();
 if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['prenomRepre']) && isset($_POST['emailAg']) && isset($_POST['mdpAg']) &&
     isset($_POST['confmdpAg']) && isset($_POST['adresse1Ag']) && isset($_POST['codePostAg']) &&isset($_POST['villeAg']) && isset($_POST['paysAg'])) {
 
-    $sqlSelAg = 'SELECT agence.idAgence,email FROM agence 
+    $sqlSelAg = 'SELECT agence.idagence,email FROM agence 
                     INNER JOIN adresse ON adresse_idadresse=idadresse
-                    WHERE agence.nomAgence=:nom OR email=:mail';
+                    WHERE agence.nomAgence = :nom OR email = :mail';
     $reqSelAg = $db->prepare($sqlSelAg);
     $reqSelAg->bindParam(':nom', $_POST['nomAg']);
     $reqSelAg->bindParam(':mail',$_POST['emailAg']);
@@ -29,14 +29,14 @@ if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['pre
         <div class="alert-warning">Erreur dans la confirmation du mot de passe</div>
         <?php
     } else {
-        $sqlInsAdAg = 'INSERT INTO adresse (email,adresse1, adresse2,codepostal,ville,pays)
-                 VALUES(:mail,:adresse1,:adresse2,:cp,:ville,:pays)';
+        $sqlInsAdAg = 'INSERT INTO adresse (mail,adresse1, adresse2,ville,codepostal,pays)
+                 VALUES(:mail,:adresse1,:adresse2,:ville,:cp,:pays)';
         $reqInsAdAg = $db->prepare($sqlInsAdAg);
         $reqInsAdAg->bindParam(':mail',$_POST['emailAg']);
         $reqInsAdAg->bindParam(':adresse1', $_POST['adresse1Ag']);
         $reqInsAdAg->bindParam(':adresse2', $_POST['adresse2Ag']);
-        $reqInsAdAg->bindParam(':cp', $_POST['codePostAg']);
         $reqInsAdAg->bindParam(':ville',$_POST['villeAg']);
+        $reqInsAdAg->bindParam(':cp', $_POST['codePostAg']);
         $reqInsAdAg->bindParam(':pays', $_POST['paysAg']);
         $reqInsAdAg->execute();
         $idAd = intval($db->lastInsertId());
@@ -59,9 +59,9 @@ if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['pre
 if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST['emailClient']) && isset($_POST['mdp']) && isset($_POST['confmdp']) &&
     isset($_POST['cladresse1']) && isset($_POST['cladresse2']) && isset($_POST['clcodePost']) && isset($_POST['clville']) && isset($_POST['clpays'])) {
 
-    $sqlSelCl = 'SELECT client.idClient,email FROM client
+    $sqlSelCl = 'SELECT client.idclient,mail FROM client
                     INNER JOIN adresse ON adresse_idadresse=idadresse 
-                    WHERE (client.nomClient=:nomCl AND client.prenomClient=:prenomCl) OR email=:mail';
+                    WHERE (client.nomClient=:nomCl AND client.prenomClient=:prenomCl) OR mail=:mail';
     $reqSelCl = $db->prepare($sqlSelCl);
     $reqSelCl->bindParam(':nomCl', $_POST['nomClient']);
     $reqSelCl->bindParam(':prenomCl', $_POST['prenomClient']);
@@ -80,7 +80,7 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
         <div class="alert-warning">Erreur dans la confirmation du mot de passe</div>
         <?php
     } else {
-        $sqlInsAdCl = 'INSERT INTO adresse (email,adresse1, adresse2,ville,codepostal,pays)
+        $sqlInsAdCl = 'INSERT INTO adresse (mail,adresse1, adresse2,ville,codepostal,pays)
                  VALUES(:mail,:adresse1,:adresse2,:ville,:cp,:pays)';
         $reqInsAdCl = $db->prepare($sqlInsAdCl);
         $reqInsAdCl->bindParam(':mail',$_POST['emailClient']);
@@ -92,13 +92,12 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
         $reqInsAdCl->execute();
         $idAdCl = intval($db->lastInsertId());
 
-        $sqlInsCl = 'INSERT INTO client (nomClient,prenomClient,emailClient,mdpClient,adresse_idadresse)
-                VALUES (:nomCl,:prenomCl,:emailCl,:mdpCl,:idCl)';
+        $sqlInsCl = 'INSERT INTO client (nomClient,prenomClient,mdpClient,adresse_idadresse)
+                VALUES (:nomCl,:prenomCl,:mdpCl,:idCl)';
         $reqInsCl = $db->prepare($sqlInsCl);
         $mdpCl = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
         $reqInsCl->bindParam(':nomCl', $_POST['nomClient']);
         $reqInsCl->bindParam(':prenomCl', $_POST['prenomClient']);
-        $reqInsCl->bindParam(':emailCl',$_POST['emailClient']);
         $reqInsCl->bindParam(':mdpCl', $mdpCl);
         $reqInsCl->bindParam(':idCl', $idAdCl);
         $reqInsCl->execute();

@@ -19,14 +19,16 @@ else
     $indice=0;
 }
 
-$sqlSelLoc='SELECT * 
-            FROM location LIMIT '.$indice.',3';
-$reqSelLoc=$db->prepare($sqlSelLoc);
-$reqSelLoc->execute();
-$loc=array();
-while($data=$reqSelLoc->fetchObject())
+$sqlSelBien='SELECT * 
+            FROM bien 
+            INNER JOIN adresse ON adresse_idadresse=idadresse
+            LIMIT '.$indice.',3';
+$reqSelBien=$db->prepare($sqlSelBien);
+$reqSelBien->execute();
+$list_bien=array();
+while($data=$reqSelBien->fetchObject())
 {
-    array_push($loc,$data);
+    array_push($list_bien,$data);
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -67,7 +69,7 @@ while($data=$reqSelLoc->fetchObject())
     <div class="card-group">
 <?php
 
-$sqlcpte='SELECT COUNT(*)  AS nbLoc FROM location';
+$sqlcpte='SELECT COUNT(*)  AS nbBien FROM Bien';
 $reqcpte=$db->prepare($sqlcpte);
 $reqcpte->execute();
 $cpte=array();
@@ -77,7 +79,7 @@ while ($data=$reqcpte->fetchObject())
 }
 foreach ($cpte as $nb)
 {
-    $nbre=$nb->nbLoc;
+    $nbre=$nb->nbBien;
 }
 $nbPage=ceil($nbre/3);
 ?>
@@ -86,25 +88,29 @@ $nbPage=ceil($nbre/3);
             <div class="row">
 
             <?php
-foreach ($loc as $location)
+foreach ($list_bien as $bien)
 { ?>
 
                 <div class="col-sm-12 col-xl-4 col-lg-4 col-md-4">
     <div class="card h-100">
-        <img class="card-img-top" src="../../public/img/<?= $location->imageLocation ?>" alt="Annonce">
+        <img class="card-img-top" src="../../public/img/<?= $bien->imageBien ?>" alt="Annonce">
         <div class="card-body">
-            <h5 class="card-title"><?= $location->titreLocation ?></h5>
-            <p class="card-text"><?= $location->resumeLocation ?></p>
+            <div class="d-flex justify-content-between">
+                <p class="font-weight-bold bg-dark p-1 rounded text-light"><?= $bien->typeAnnonce ?></p>
+                <p class=" font-weight-bold"><?= $bien->ville ?></p>
+            </div>
+            <h5 class="card-title"><?= $bien->titreBien ?></h5>
+            <p class="card-text"><?= $bien->resumeBien ?></p>
             <div class="d-flex justify-content-between">
                 <form method="get" action="action.php" class="form-inline">
-                    <input type="number" value="<?= $location->idlocation ?>" name="id" readonly="readonly" class="d-none"/>
+                    <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                     <input type="text" value="read" name="action" class="d-none"/>
                     <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                 </form>
             </div>
         </div>
         <div class="card-footer">
-            <h6><?=$location->prixLocation ?> € net vendeur</h6>
+            <h6><?=$bien->prixBien ?> € net vendeur</h6>
         </div>
     </div>
                 </div>

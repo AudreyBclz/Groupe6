@@ -7,52 +7,68 @@ require_once '../models/connect.php';
 head();
 $db=connect();
 
-if (isset($_POST['titre']) && isset($_POST['resume']) && isset($_POST['superficie']) && isset($_POST['nbpiece']) && isset($_POST['prix']) && isset($_POST['description']))
+if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien']) && isset($_POST['resume']) &&
+    isset($_POST['superficie']) && isset($_POST['nbpiece']) && isset($_POST['prix'])&& isset($_POST['adresse1']) && isset($_POST['ville'])
+    && isset($_POST['codePost']) && isset($_POST['pays'])  && isset($_POST['description']))
 {
-    $sqlAffloc2='SELECT *
-                    FROM location
-                    INNER JOIN detail ON detail_iddetail=iddetail
-                    WHERE idlocation=:idloc';
-    $reqAffloc2=$db->prepare($sqlAffloc2);
-    $reqAffloc2->bindParam(':idloc',$_POST['id']);
-    $reqAffloc2->execute();
-    $affLoc2=array();
-    while($data=$reqAffloc2->fetchObject())
+    $sqlAffbien2='SELECT *
+                    FROM bien
+                    INNER JOIN adresse ON adresse_idadresse=idadresse
+                    WHERE idbien=:idbien';
+    $reqAffbien2=$db->prepare($sqlAffbien2);
+    $reqAffbien2->bindParam(':idbien',$_POST['id']);
+    $reqAffbien2->execute();
+    $affbien2=array();
+    while($data=$reqAffbien2->fetchObject())
     {
-        array_push($affLoc2,$data);
+        array_push($affbien2,$data);
     }
-    foreach ($affLoc2 as $location)
+    foreach ($affbien2 as $bien)
     {
-        $idDet=intval($location->detail_iddetail);
+        $idAd=intval($bien->adresse_idadresse);
     }
 
-    $sqlUpDet='UPDATE detail
-                        SET Superficiedetail = :super,
-                            nbPiecedetail = :nb,
-                            descdetail = :descr
-                            WHERE iddetail = :id';
-    $reqUpDet=$db->prepare($sqlUpDet);
+    $sqlUpAd='UPDATE adresse
+                        SET adresse1 = :ad1,
+                            adresse2 = :ad2,
+                            ville = :ville,
+                            codepostal = :cp,
+                            pays = :pays
+                            WHERE idadresse = :id';
+    $reqUpAd=$db->prepare($sqlUpAd);
 
-    $reqUpDet->bindParam(':super',$_POST['superficie']);
-    $reqUpDet->bindParam(':nb',$_POST['nbpiece']);
-    $reqUpDet->bindParam(':descr',$_POST['description']);
-    $reqUpDet->bindParam(':id',$idDet);
-    $reqUpDet->execute();
+    $reqUpAd->bindParam(':ad1',$_POST['adresse1']);
+    $reqUpAd->bindParam(':ad2',$_POST['adresse2']);
+    $reqUpAd->bindParam(':ville',$_POST['ville']);
+    $reqUpAd->bindParam(':cp',$_POST['codePost']);
+    $reqUpAd->bindParam(':pays',$_POST['pays']);
+    $reqUpAd->bindParam(':id',$idAd);
+    $reqUpAd->execute();
 
-    $sqlUpLoc='UPDATE location
-                        SET titreLocation = :titre,
-                            resumeLocation = :resume,
-                            prixLocation = :prix,
-                            imageLocation = :image,
-                            dateModifLocation = NOW()
-                            WHERE idlocation = :id_l';
-    $reqUpLoc=$db->prepare($sqlUpLoc);
-    $reqUpLoc->bindParam(':titre',$_POST['titre']);
-    $reqUpLoc->bindParam(':resume',$_POST['resume']);
-    $reqUpLoc->bindParam(':prix',$_POST['prix']);
-    $reqUpLoc->bindParam(':image',$_FILES['image']['name']);
-    $reqUpLoc->bindParam(':id_l',$_POST['id']);
-    $reqUpLoc->execute();
+    $sqlUpBien='UPDATE bien
+                        SET titreBien = :titre,
+                            typeAnnonce= :typeA,
+                            typeBien= :typeB,
+                            resumeBien = :resume,
+                            superficieBien = :super,
+                            nbpieceBien = :nbp,
+                            prixBien = :prix,
+                            descBien = :descr,
+                            imageBien = :image,
+                            dateModifBien = NOW()
+                            WHERE idbien = :id_b';
+    $reqUpBien=$db->prepare($sqlUpBien);
+    $reqUpBien->bindParam(':titre',$_POST['titre']);
+    $reqUpBien->bindParam(':typeA',$_POST['typeA']);
+    $reqUpBien->bindParam(':typeB',$_POST['typeBien']);
+    $reqUpBien->bindParam(':resume',$_POST['resume']);
+    $reqUpBien->bindParam(':super',$_POST['superficie']);
+    $reqUpBien->bindParam(':nbp',$_POST['nbpiece']);
+    $reqUpBien->bindParam(':prix',$_POST['prix']);
+    $reqUpBien->bindParam(':descr',$_POST['description']);
+    $reqUpBien->bindParam(':image',$_FILES['image']['name']);
+    $reqUpBien->bindParam(':id_b',$_POST['id']);
+    $reqUpBien->execute();
 
     header('Location:gererMesBiens.php?modify=done');
 

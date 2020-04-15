@@ -11,50 +11,48 @@ if (isset($_GET['action']) && isset($_GET['id']))
 {
     if ($_GET['action']=="delete")
     {
-        $sqlSelDet='SELECT detail_iddetail FROM location WHERE idlocation='.$_GET['id'];
-        $reqSelDet=$db->prepare($sqlSelDet);
-        $reqSelDet->execute();
-        $det=array();
-        while ($data=$reqSelDet->fetchObject())
+        $sqlSelAd='SELECT adresse_idadresse FROM bien WHERE idbien= :id';
+        $reqSelAd=$db->prepare($sqlSelAd);
+        $reqSelAd->bindParam(':id',$_GET['id']);
+        $reqSelAd->execute();
+        $adresse=array();
+        while ($data=$reqSelAd->fetchObject())
         {
-            array_push($det,$data);
+            array_push($adresse,$data);
         }
-        foreach ($det as $detail)
-        {
-            $idDet = intval($detail->detail_iddetail);
-        }
-        $sqlDelDet='DELETE FROM detail
-                    WHERE iddetail=:iddet';
-        $reqDelDet=$db->prepare($sqlDelDet);
-        $reqDelDet->bindParam(':iddet',$idDet);
-        $reqDelDet->execute();
 
-        $sqlDelLoc='DELETE FROM location
-                    WHERE idlocation=:id';
-        $reqDelLoc=$db->prepare($sqlDelLoc);
-        $reqDelLoc->bindParam(':id',$_GET['id']);
-        $reqDelLoc->execute();
+        foreach ($adresse as $ad)
+        {
+            $idAd = intval($ad->adresse_idadresse);
+        }
+        $sqlDelAd='DELETE FROM adresse
+                    WHERE idadresse=:idad';
+        $reqDelAd=$db->prepare($sqlDelAd);
+        $reqDelAd->bindParam(':idad',$idAd);
+        $reqDelAd->execute();
+
+        $sqlDelBien='DELETE FROM bien
+                    WHERE idbien=:id';
+        $reqDelBien=$db->prepare($sqlDelBien);
+        $reqDelBien->bindParam(':id',$_GET['id']);
+        $reqDelBien->execute();
 
         header('Location:gererMesBiens.php?delete=done');
     }
 
     if($_GET['action']=="modify")
     {
-     $sqlAffloc='SELECT *,Superficiedetail,nbPiecedetail,descdetail
-                    FROM location
-                    INNER JOIN detail ON detail_iddetail=iddetail
-                    WHERE idlocation=:idloc';
-        $reqAffloc=$db->prepare($sqlAffloc);
-        $reqAffloc->bindParam(':idloc',$_GET['id']);
-        $reqAffloc->execute();
-        $affLoc=array();
-        while($data=$reqAffloc->fetchObject())
+     $sqlAffbien='SELECT *
+                    FROM bien
+                    INNER JOIN adresse ON adresse_idadresse=idadresse
+                    WHERE idbien=:idbien';
+        $reqAffbien=$db->prepare($sqlAffbien);
+        $reqAffbien->bindParam(':idbien',$_GET['id']);
+        $reqAffbien->execute();
+        $affbien=array();
+        while($data=$reqAffbien->fetchObject())
         {
-            array_push($affLoc,$data);
-        }
-        foreach ($affLoc as $location)
-        {
-            $iddetail=intval($location->detail_iddetail);
+            array_push($affbien,$data);
         }
 
         ?>
@@ -92,69 +90,128 @@ if (isset($_GET['action']) && isset($_GET['id']))
                 <h2 class="mx-auto mt-3"> Modification</h2>
             </div>
             <div>
-                <form method="post" action="modify.php" class="w-50 mx-auto mt-5" enctype="multipart/form-data">
-                    <?php foreach ($affLoc as $location)
-                    { ?>
-                    <div class="form-group row w-50">
-                        <label for="titre" class="form"> ID :</label>
-                        <input type="number" name="id" value="<?= $location->idlocation ?>" id="id" class="form-control" readonly="readonly">
-                    </div>
-                    <div class="form-group row w-50">
-                        <label for="titre" class="form"> Titre de l'annonce :</label>
-                        <input type="text" name="titre" value="<?= $location->titreLocation ?>" id="titre" class="form-control" required="required">
-                    </div>
-                    <div class="form-group row">
-                        <label for="resume">Résumé de l'annonce :</label>
-                        <textarea maxlength="255" name="resume" id="resume" class="form-control" required="required"><?= $location->resumeLocation ?></textarea>
+                <form method="post" action="modify.php" class="mx-auto mt-5" enctype="multipart/form-data">
+                    <?php
+                    foreach ($affbien as $bien)
+                    {
+                    ?>
+                        <div class="row justify-content-between">
 
-                    </div>
-                    <div class="row d-flex justify-content-between">
-                        <div class="form-group ">
-                            <label for="superficie">Superficie :</label>
-                            <input type="number" name="superficie" value="<?= $location->Superficiedetail ?>" id="superficie" class="form-control" required="required">
-                        </div>
+                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+                                <div class="d-none">
+                                    <input type="number" name="id" value="<?= $bien->idbien ?>"/>
+                                </div>
 
-                        <div class="form-group">
-                            <label for="nbpiece">Nombre de pièces :</label>
-                            <input type="number" name="nbpiece" value="<?= $location->nbPiecedetail ?>" id="nbpiece" class="form-control" required="required">
-                        </div>
-                        <div class="form-group">
-                            <label for="prix">Prix : :</label>
-                            <input type="number" name="prix" value="<?= $location->prixLocation ?>" id="prix" class="form-control" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="description">Description complète :</label>
-                        <textarea class="form-control" name="description" id="description" required="required"><?= $location->descdetail ?></textarea>
-                    </div>
-                    <div class="row">
-                        <label for="image">Photographie du bien :</label><br>
-                    </div>
-                    <div class="row">
-                        <input type="file" name="image" value="<?= $location->imageLocation ?>" id="image">
-                    </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-dark mt-4">Envoyer</button>
-                    </div>
+                                <div class="d-flex justify-content-between row">
+                                    <div class="form-group">
+                                        <label for="titre"> Titre de l'annonce :</label>
+                                        <input type="text" name="titre" value="<?= $bien->titreBien ?>" id="titre" class="form-control" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="typeA"> Type d'Annonce :</label>
+                                        <select name="typeA" id="typeA" class="form-control">
+                                            <option value="Achat">Achat</option>
+                                            <option value="Location">Location</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group w-50">
+                                        <label for="typeBien"> Type de bien :</label>
+                                        <select name="typeBien" id="typeBien" class="form-control">
+                                            <option value="Maison">Maison</option>
+                                            <option value="Appartement">Appartement</option>
+                                            <option value="Garage">Garage</option>
+                                            <option value="Commerce">Commerce</option>
+                                            <option value="Terrain">Terrain</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-group row">
+                                        <label for="resume">Résumé de l'annonce :</label>
+                                        <textarea maxlength="255" name="resume"id="resume" class="form-control" required="required"><?= $bien->resumeBien ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between row">
+                                    <div class="form-group">
+                                        <label for="superficie">Superficie :</label>
+                                        <input type="number" name="superficie" value="<?= $bien->superficieBien ?>" id="superficie" class="form-control" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nbpiece">Nombre de pièces :</label>
+                                        <input type="number" name="nbpiece"  value="<?= $bien->nbpieceBien ?>" id="nbpiece" class="form-control" required="required">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="prix">Prix :</label>
+                                        <input type="number" name="prix" value="<?= $bien->prixBien ?>" id="prix" class="form-control" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label for="adresse">Adresse</label>
+                                    <input type="text" class="form-control" id="adresse" value="<?= $bien->adresse1 ?>" name="adresse1" required="required">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputAddress2">Complément d'adresse</label>
+                                    <input type="text" class="form-control"  value="<?= $bien->adresse2 ?>" id="inputAddress2" name="adresse2">
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="form-group">
+                                        <label for="inputCity">Ville</label>
+                                        <input type="text" class="form-control" value="<?= $bien->ville ?>" id="inputCity" name="ville" required="required">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between row">
+                                    <div class="form-group">
+                                        <label for="inputZip">Code Postal</label>
+                                        <input type="number" class="form-control" id="inputZip" name="codePost" value="<?= $bien->codepostal ?>" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputState">Pays</label>
+                                        <input type="text" class="form-control" id="inputState" name="pays" value="<?= $bien->pays ?>" required="required">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label for="description">Description complète :</label>
+                                    <textarea class="form-control" name="description" id="description" required="required"><?= $bien->descBien ?></textarea>
+                                </div>
+                                <div class="row">
+                                    <label for="image">Photographie du bien :</label><br>
+                                </div>
+                                <div class="row">
+                                    <input type="file" name="image" id="image">
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-dark mt-4">Envoyer</button>
+                                </div>
+                            </div>
+                    </form>
                 </form>
-           <?php
-             } ?>
+            <?php } ?>
              </div>
         </div>
 
     <?php }
 }
 if ($_GET['action']=='read') {
-    $sqlSel1 = 'SELECT *,Superficiedetail,nbPiecedetail,descdetail
-                    FROM location
-                    INNER JOIN detail ON detail_iddetail=iddetail
-                    WHERE idlocation=:id';
+    $sqlSel1 = 'SELECT *
+                    FROM bien
+                    INNER JOIN adresse ON adresse_idadresse=idadresse
+                    WHERE idbien=:id';
     $reqSel1 = $db->prepare($sqlSel1);
     $reqSel1->bindParam(':id', $_GET['id']);
     $reqSel1->execute();
-    $selLoc = array();
+    $selBien = array();
     while ($data = $reqSel1->fetchObject()) {
-        array_push($selLoc, $data);
+        array_push($selBien, $data);
     }
     ?>
 
@@ -188,19 +245,35 @@ if ($_GET['action']=='read') {
         </div>
     </nav>
     <div class="container">
-    <?php foreach ($selLoc as $loc) { ?>
+    <?php foreach ($selBien as $bien) {
+        if($bien->typeAnnonce == "Achat")
+        {
+            $prefix_prix=' € net vendeur';
+        }else
+        {
+            $prefix_prix=' € / mois';
+        }
+        ?>
         <div class="col-lg-6 col-md-6 mx-auto">
-            <h1 class="flex-block text-center"><?= $loc->titreLocation ?></h1>
+            <h1 class="flex-block text-center"><?= $bien->titreBien ?></h1>
             <div>
-                <img class="img-thumbnail" src="../../public/img/<?= $loc->imageLocation ?>">
+                <img class="img-thumbnail" src="../../public/img/<?= $bien->imageBien ?>">
+            </div>
+            <div class="mt-1">
+                <span class="font-weight-bold"><?= $bien->ville ?></span>
+                <p class="mt-4">
+                    <span class="bg-warning p-2 rounded"><?= $bien->typeBien ?></span>
+                    <span class="bg-info p-2 rounded font-weight-bold"><?= $bien->typeAnnonce ?></span>
+                    <span class="bg-success p-2 rounded text-light font-weight-bold">Prix : <?= $bien->prixBien ?><?= $prefix_prix ?></span>
+                </p>
             </div>
             <div>
-                <span>Superficie : <?= $loc->Superficiedetail ?> m²</span>
-                <span> Nombre de pièces : <?= $loc->nbPiecedetail ?></span>
+                <span class="pr-5">Superficie : <?= $bien->superficieBien ?> m²</span>
+                <span> Nombre de pièces : <?= $bien->nbpieceBien ?></span>
             </div>
-            <p class="my-3"><?= $loc->descdetail ?></p>
-            <div class="mt-5 d-flex justify-content-between">
-                <span class="bg-success p-2 rounded">Prix : <?= $loc->prixLocation ?> € net vendeur</span>
+            <p class="my-3"><?= $bien->descBien ?></p>
+            <div class="mt-2 d-flex justify-content-between">
+
                 <a class="btn btn-dark" href="location.php">Retour</a>
             </div>
         </div>
