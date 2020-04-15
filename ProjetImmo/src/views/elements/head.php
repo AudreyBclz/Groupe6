@@ -16,7 +16,7 @@ function head()
 
     <title></title>
 </head>
-<body>
+<body class="bg-grey">
 
 
     <?php

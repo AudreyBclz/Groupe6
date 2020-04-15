@@ -95,6 +95,7 @@ if (isset($url_m[1]) && $url_m[1]=='done')
                             <form method="get" action="action.php" class="form-inline">
                                 <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                                 <input type="text" value="read" name="action" class="d-none"/>
+                                <input type="text" value="gererMesBiens" name="page" class="d-none"/>
                                 <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                             </form>
                             <form method="get" action="action.php" class="form-inline">

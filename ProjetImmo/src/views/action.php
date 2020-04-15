@@ -253,6 +253,14 @@ if ($_GET['action']=='read') {
         {
             $prefix_prix=' € / mois';
         }
+        if (isset($_GET['indice']))
+        {
+            $ind=$_GET['indice'];
+        }
+        else
+        {
+            $ind=0;
+        }
         ?>
         <div class="col-lg-6 col-md-6 mx-auto">
             <h1 class="flex-block text-center"><?= $bien->titreBien ?></h1>
@@ -274,7 +282,7 @@ if ($_GET['action']=='read') {
             <p class="my-3"><?= $bien->descBien ?></p>
             <div class="mt-2 d-flex justify-content-between">
 
-                <a class="btn btn-dark" href="location.php">Retour</a>
+                <a class="btn btn-dark" href="<?= $_GET['page'] ?>.php?indice=<?= $ind ?>">Retour</a>
             </div>
         </div>
         </div>

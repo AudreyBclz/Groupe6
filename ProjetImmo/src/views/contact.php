@@ -6,26 +6,30 @@ require_once '../models/connect.php';
 
 head();
 $db=connect();
-if(isset($_POST['ct_email']) && isset($_POST['ct_adresse1']) && isset($_POST['ct_ville'])
-    && isset($_POST['ct_codePost']) && isset($_POST['ct_pays']) && isset($_POST['ct_message']))
-{
-    $sqlInsAd='INSERT INTO adresse (email,adresse1,adresse2,ville,codepostal,pays)
-                VALUES (:mail,:ad1,:ad2,:ville,:cp,:pays)';
-    $reqInsAd=$db->prepare($sqlInsAd);
-    $reqInsAd->bindParam(':mail',$_POST['ct_email']);
-    $reqInsAd->bindParam(':ad1',$_POST['ct_adresse1']);
-    $reqInsAd->bindParam(':ad2',$_POST['ct_adresse2']);
-    $reqInsAd->bindParam(':ville',$_POST['ct_ville']);
-    $reqInsAd->bindParam(':cp',$_POST['ct_codePost']);
-    $reqInsAd->bindParam(':pays',$_POST['ct_pays']);
-    $reqInsAd->execute();
-    $idAd=intval($db->lastInsertId());
 
-    $sqlInsCon='INSERT INTO contact (messagecontact,adresse_idadresse)
-                VALUES (:msg,:id)';
+$sqlSelBien='SELECT idbien,titreBien FROM bien';
+$reqSelBien=$db->prepare($sqlSelBien);
+$reqSelBien->execute();
+$list_bien=array();
+while($data=$reqSelBien->fetchObject())
+{
+    array_push($list_bien,$data);
+}
+
+if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien'])
+    && isset($_POST['ville']) && isset($_POST['annonce']) && isset($_POST['ct_message']))
+{
+
+    $sqlInsCon='INSERT INTO contact (emailContact,typeAnnonceContact,typeBienContact,villechercheeContact,messageContact
+                ,bien_idbien)
+                VALUES (:mail,:typeA,:typeB,:ville,:message,:idB)';
     $reqInsCon=$db->prepare($sqlInsCon);
-    $reqInsCon->bindParam(':msg',$_POST['ct_message']);
-    $reqInsCon->bindParam(':id',$idAd);
+    $reqInsCon->bindParam(':mail',$_POST['ct_email']);
+    $reqInsCon->bindParam(':typeA',$_POST['typeA']);
+    $reqInsCon->bindParam(':typeB',$_POST['typeBien']);
+    $reqInsCon->bindParam(':ville',$_POST['ville']);
+    $reqInsCon->bindParam(':message',$_POST['ct_message']);
+    $reqInsCon->bindParam(':idB',$_POST['annonce']);
     $reqInsCon->execute();
 
     echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
@@ -62,47 +66,55 @@ if(isset($_POST['ct_email']) && isset($_POST['ct_adresse1']) && isset($_POST['ct
 
 <div class="container">
     <div class="row">
+        <h1 class="mx-auto">Contact</h1>
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6">
             <form class="mt-5" method="post" action="contact.php">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="email">Email</label>
+                        <label for="email">Email :</label>
                         <input type="email" class="form-control" id="email" name="ct_email" required="required">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="adresse">Adresse</label>
-                        <input type="text" class="form-control" id="adresse" name="ct_adresse1" required="required">
+                <div class="d-flex justify-content-between">
+
+                    <div class="form-group">
+                        <label for="typeA"> Type d'Annonce recherchée :</label>
+                        <select name="typeA" id="typeA" class="form-control">
+                            <option value="Achat">Achat</option>
+                            <option value="Location">Location</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeBien"> Type de bien :</label>
+                        <select name="typeBien" id="typeBien" class="form-control">
+                            <option value="Maison">Maison</option>
+                            <option value="Appartement">Appartement</option>
+                            <option value="Garage">Garage</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Terrain">Terrain</option>
+                        </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="inputAddress2">Complément d'adresse</label>
-                        <input type="text" class="form-control" id="inputAddress2" name="ct_adresse2">
+                <div class="w-50">
+                    <div class="form-group">
+                        <label for="inputCity">Ville recherchée :</label>
+                        <input type="text" class="form-control" id="inputCity" name="ville" required="required">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="inputCity">Ville</label>
-                        <input type="text" class="form-control" id="inputCity" name="ct_ville" required="required">
-                    </div>
+                <div class="form-group">
+                    <label for="Annonce"> Interessé par :</label>
+                    <select name="annonce" id="Annonce" class="form-control">
+                        <?php foreach ($list_bien as $bien)
+                            { ?>
+                                <option value="<?= $bien->idbien ?>"><?= $bien->titreBien ?></option>
+                           <?php }?>
+                    </select>
                 </div>
-                <div class="row">
-                    <div class="d-flex justify-content-between col-md-12">
-                        <div class="form-group">
-                            <label for="inputZip">Code Postal</label>
-                            <input type="text" class="form-control w-50" id="inputZip" name="ct_codePost" required="required">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputState">Pays</label>
-                            <input type="text" class="form-control w-50" id="inputState" name="ct_pays" required="required">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                        <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="inputmess">Message</label>
+                        <label for="inputmess">Message :</label>
                         <textarea class="form-control" id="inputmess" name="ct_message" required="required"></textarea>
                     </div>
                 </div>

@@ -89,7 +89,15 @@ $nbPage=ceil($nbre/3);
 
             <?php
 foreach ($list_bien as $bien)
-{ ?>
+{
+    if($bien->typeAnnonce == "Achat")
+    {
+        $prefix_prix=' € net vendeur';
+    }else
+    {
+        $prefix_prix=' € / mois';
+    }
+    ?>
 
                 <div class="col-sm-12 col-xl-4 col-lg-4 col-md-4">
     <div class="card h-100">
@@ -105,12 +113,14 @@ foreach ($list_bien as $bien)
                 <form method="get" action="action.php" class="form-inline">
                     <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                     <input type="text" value="read" name="action" class="d-none"/>
+                    <input type="text" value="location" name="page" class="d-none"/>
+                    <input type="number" value="<?= $indice ?>" name="indice" class="d-none"/>
                     <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                 </form>
             </div>
         </div>
         <div class="card-footer">
-            <h6><?=$bien->prixBien ?> € net vendeur</h6>
+            <h6><?=$bien->prixBien ?><?= $prefix_prix ?></h6>
         </div>
     </div>
                 </div>
