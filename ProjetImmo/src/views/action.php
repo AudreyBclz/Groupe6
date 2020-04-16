@@ -4,6 +4,7 @@ require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
 
+session_start();
 head();
 $db=connect();
 
@@ -67,21 +68,33 @@ if (isset($_GET['action']) && isset($_GET['id']))
             <li class="nav-item">
                 <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="location.php">Location</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-            </li>
+            <?php
+            if(isset($_SESSION['agence']) && isset($_SESSION['client'])) {
+                if ($_SESSION['agence'] || $_SESSION['client']) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="location.php">Location</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.php">Contact</a>
+                    </li>
+                    <?php if ($_SESSION['agence']) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
+                    </li>
+                    <?php if ($_SESSION['agence']) { ?>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
+                    </li>
+               <?php }
+            }?>
         </ul>
     </div>
 </nav>

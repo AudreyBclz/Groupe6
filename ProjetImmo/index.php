@@ -4,6 +4,7 @@ require_once 'src/views/elements/footer.php';
 require_once 'src/config/config.php';
 require_once 'src/models/connect.php';
 
+session_start();
 head();
 $db=connect();
 
@@ -61,6 +62,10 @@ if (isset($_POST['email']) & isset($_POST['mdp']))
     if ($okAg || $okCl)
     {
         echo'<div class="p-2 alert-success">Connexion effectuée avec succès</div>';
+
+            $_SESSION['agence'] = $okAg;
+            $_SESSION['client'] = $okCl;
+
     }
     else{
         echo '<div class="p-2 alert-warning">Erreur d\'identification</div>';
@@ -77,21 +82,35 @@ if (isset($_POST['email']) & isset($_POST['mdp']))
                 <li class="nav-item active">
                     <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./src/views/location.php">Location</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./src/views/contact.php">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./src/views/ajoutbien.php">Ajout de bien</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./src/views/ajoutClAg.php">Ajout Client/Agence</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./src/views/gererMesBiens.php">Gestion biens</a>
-                </li>
+                <?php
+                if(isset($_SESSION['agence']) && isset($_SESSION['client']))
+                {
+                if($_SESSION['agence'] || $_SESSION['client']) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./src/views/location.php">Location</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./src/views/contact.php">Contact</a>
+                    </li>
+
+                    <?php if ($_SESSION['agence']) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./src/views/ajoutbien.php">Ajout de bien</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./src/views/ajoutClAg.php">Ajout Client/Agence</a>
+                    </li>
+
+                    <?php if ($_SESSION['agence']) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./src/views/gererMesBiens.php">Gestion biens</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="src/models/deconnect.php">Déconnexion</a>
+                    </li>
+                <?php }        } ?>
             </ul>
         </div>
     </nav>

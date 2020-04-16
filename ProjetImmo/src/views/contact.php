@@ -7,6 +7,8 @@ require_once '../models/connect.php';
 head();
 $db=connect();
 
+session_start();
+
 $sqlSelBien='SELECT idbien,titreBien FROM bien';
 $reqSelBien=$db->prepare($sqlSelBien);
 $reqSelBien->execute();
@@ -17,22 +19,26 @@ while($data=$reqSelBien->fetchObject())
 }
 
 if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien'])
-    && isset($_POST['ville']) && isset($_POST['annonce']) && isset($_POST['ct_message']))
-{
+    && isset($_POST['ville']) && isset($_POST['annonce']) && isset($_POST['ct_message'])) {
 
-    $sqlInsCon='INSERT INTO contact (emailContact,typeAnnonceContact,typeBienContact,villechercheeContact,messageContact
+    $sqlInsCon = 'INSERT INTO contact (emailContact,typeAnnonceContact,typeBienContact,villechercheeContact,messageContact
                 ,bien_idbien)
                 VALUES (:mail,:typeA,:typeB,:ville,:message,:idB)';
-    $reqInsCon=$db->prepare($sqlInsCon);
-    $reqInsCon->bindParam(':mail',$_POST['ct_email']);
-    $reqInsCon->bindParam(':typeA',$_POST['typeA']);
-    $reqInsCon->bindParam(':typeB',$_POST['typeBien']);
-    $reqInsCon->bindParam(':ville',$_POST['ville']);
-    $reqInsCon->bindParam(':message',$_POST['ct_message']);
-    $reqInsCon->bindParam(':idB',$_POST['annonce']);
+    $reqInsCon = $db->prepare($sqlInsCon);
+    $reqInsCon->bindParam(':mail', $_POST['ct_email']);
+    $reqInsCon->bindParam(':typeA', $_POST['typeA']);
+    $reqInsCon->bindParam(':typeB', $_POST['typeBien']);
+    $reqInsCon->bindParam(':ville', $_POST['ville']);
+    $reqInsCon->bindParam(':message', $_POST['ct_message']);
+    $reqInsCon->bindParam(':idB', $_POST['annonce']);
     $reqInsCon->execute();
 
-    echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
+   /* $mailing = 'Bonjour je recherche un(e) ' . $_POST['typeA'] . ' d\'un bien de type ' . $_POST['typeBien'] . ' dans le secteur de la ville de ' . $_POST['ville'] . ' .Pour plus d\'infos voici
+    mon message :' . $_POST['ct_message'];
+    $retour = mail('alohaha368@gmail.com', 'Envoi depuis la page contact', $mailing, 'From : ' . $_POST['ct_email']);
+    if ($retour) {*/
+        echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
+    //}
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,21 +51,37 @@ if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien
             <li class="nav-item">
                 <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
             </li>
+<?php
+if(isset($_SESSION['agence']) && isset($_SESSION['client']))
+{
+    if($_SESSION['agence'] || $_SESSION['client'])
+    { ?>
             <li class="nav-item">
                 <a class="nav-link" href="location.php">Location</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="contact.php">Contact</a>
             </li>
+        <?php if($_SESSION['agence'])
+            { ?>
             <li class="nav-item">
                 <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
             </li>
+                <?php } ?>
             <li class="nav-item">
                 <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
             </li>
+        <?php if($_SESSION['agence'])
+            { ?>
             <li class="nav-item">
                 <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
             </li>
+                <?php } ?>
+            <li class="nav-item">
+                <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
+            </li>
+               <?php }
+    } ?>
         </ul>
     </div>
 </nav>

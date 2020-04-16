@@ -6,6 +6,11 @@ require_once '../models/connect.php';
 
 $db=connect();
 head();
+session_start();
+if ($_SESSION['client'])
+{
+    header('Location:../../index.php');
+}
 if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien']) && isset($_POST['resume']) &&
     isset($_POST['superficie']) && isset($_POST['nbpiece']) && isset($_POST['prix'])&& isset($_POST['adresse1']) && isset($_POST['ville'])
     && isset($_POST['codePost']) && isset($_POST['pays'])  && isset($_POST['description']))
@@ -49,21 +54,33 @@ if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien'])
             <li class="nav-item">
                 <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="location.php">Location</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
+<?php
+if(isset($_SESSION['agence']) && isset($_SESSION['client'])) {
+    if ($_SESSION['agence'] || $_SESSION['client']) { ?>
+        <li class="nav-item">
+            <a class="nav-link" href="location.php">Location</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="contact.php">Contact</a>
+        </li>
+        <?php if ($_SESSION['agence']) { ?>
             <li class="nav-item active">
                 <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
+        <?php } ?>
+        <li class="nav-item">
+            <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
+        </li>
+        <?php if ($_SESSION['agence']) { ?>
             <li class="nav-item">
                 <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
             </li>
+        <?php } ?>
+            <li class="nav-item">
+                <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
+            </li>
+   <?php }
+}?>
         </ul>
     </div>
 </nav>
