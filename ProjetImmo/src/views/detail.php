@@ -15,6 +15,9 @@ head();
             <li class="nav-item active">
                 <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
+            </li>
             <?php
             if(isset($_SESSION['agence']) && isset($_SESSION['client']))
             {
@@ -31,11 +34,9 @@ head();
             <li class="nav-item">
                 <a class="nav-link" href="./ajoutbien.php">Ajout de bien</a>
             </li>
-            <?php } ?>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-            <?php if($_SESSION['agence'])
+            <?php }
+
+            if($_SESSION['agence'])
                 { ?>
             <li class="nav-item">
                 <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
