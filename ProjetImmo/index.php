@@ -11,54 +11,50 @@ $db=connect();
 if (isset($_POST['email']) & isset($_POST['mdp']))
 {
     $okAg=false;
-    $sqlSelAg='SELECT idadresse, mdpAgence FROM adresse
-               INNER JOIN agence ON idadresse=adresse_idadresse
-                WHERE mail=:mail';
-    $reqSelAg=$db->prepare($sqlSelAg);
-    $reqSelAg->bindParam(':mail',$_POST['email']);
-    $reqSelAg->execute();
-    $agence=array();
-    while($data=$reqSelAg->fetchObject())
+    $sqlSelUserAg='SELECT * FROM users
+                INNER JOIN agence ON iduser = user_iduser
+                WHERE mailUser=:mail';
+    $reqSelUserAg=$db->prepare($sqlSelUserAg);
+    $reqSelUserAg->bindParam(':mail',$_POST['email']);
+    $reqSelUserAg->execute();
+    $userAg=array();
+    while ($data=$reqSelUserAg->fetchObject())
     {
-        array_push($agence,$data);
+        array_push($userAg,$data);
     }
 
-    if(empty($agence))
+    if(empty($userAg))
     {
         $okAg=false;
     }
     else
     {
-        if( password_verify($_POST['mdp'],$agence[0]->mdpAgence))
-        {
-            $okAg=true;
-        }
+            $okAg=password_verify($_POST['mdp'],$userAg[0]->mdpUser);
+
     }
 
     $okCl=true;
-    $sqlSelCl='SELECT idadresse, mdpClient FROM adresse
-               INNER JOIN client ON idadresse=adresse_idadresse
-                WHERE mail=:mail';
-    $reqSelCl=$db->prepare($sqlSelCl);
-    $reqSelCl->bindParam(':mail',$_POST['email']);
-    $reqSelCl->execute();
-    $client=array();
-    while($data=$reqSelCl->fetchObject())
+    $sqlSelUserCl='SELECT * FROM users
+               INNER JOIN client ON iduser=user_iduser
+                WHERE mailUser=:mail';
+    $reqSelUserCl=$db->prepare($sqlSelUserCl);
+    $reqSelUserCl->bindParam(':mail',$_POST['email']);
+    $reqSelUserCl->execute();
+    $userCl=array();
+    while($data=$reqSelUserCl->fetchObject())
     {
-        array_push($client,$data);
+        array_push($userCl,$data);
     }
-
-    if(empty($client))
+    
+    if(empty($userCl))
     {
         $okCl=false;
     }
     else
         {
-        if (password_verify($_POST['mdp'], $client[0]->mdpClient))
-        {
-            $okCl = true;
-        }
+            $okCl = password_verify($_POST['mdp'], $userCl[0]->mdpUser);
     }
+
     if ($okAg || $okCl)
     {
         echo'<div class="p-2 alert-success">Connexion effectuée avec succès</div>';
