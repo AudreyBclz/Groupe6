@@ -3,11 +3,18 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
+require_once '../models/notco.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//load Composer's autoloader
+require '../../vendor/autoload.php';
 
 head();
 $db=connect();
 
 session_start();
+notconnected();
 
 $sqlSelBien='SELECT idbien,titreBien FROM bien';
 $reqSelBien=$db->prepare($sqlSelBien);
@@ -21,24 +28,56 @@ while($data=$reqSelBien->fetchObject())
 if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien'])
     && isset($_POST['ville']) && isset($_POST['annonce']) && isset($_POST['ct_message'])) {
 
-    $sqlInsCon = 'INSERT INTO contact (emailContact,typeAnnonceContact,typeBienContact,villechercheeContact,messageContact
+    $email=htmlspecialchars(trim($_POST['ct_email']));
+    $ville=htmlspecialchars(trim($_POST['ville']));
+    $message=htmlspecialchars(trim($_POST['ct_message']));
+    $nom=htmlspecialchars(trim($_POST['nom']));
+    $prenom=htmlspecialchars(trim($_POST['prenom']));
+   /* $sqlInsCon = 'INSERT INTO contact (emailContact,typeAnnonceContact,typeBienContact,villechercheeContact,messageContact
                 ,bien_idbien)
                 VALUES (:mail,:typeA,:typeB,:ville,:message,:idB)';
     $reqInsCon = $db->prepare($sqlInsCon);
-    $reqInsCon->bindParam(':mail', $_POST['ct_email']);
+    $reqInsCon->bindParam(':mail', $email);
     $reqInsCon->bindParam(':typeA', $_POST['typeA']);
     $reqInsCon->bindParam(':typeB', $_POST['typeBien']);
-    $reqInsCon->bindParam(':ville', $_POST['ville']);
-    $reqInsCon->bindParam(':message', $_POST['ct_message']);
+    $reqInsCon->bindParam(':ville', $ville);
+    $reqInsCon->bindParam(':message', $message);
     $reqInsCon->bindParam(':idB', $_POST['annonce']);
-    $reqInsCon->execute();
+    $reqInsCon->execute();*/
 
-   /* $mailing = 'Bonjour je recherche un(e) ' . $_POST['typeA'] . ' d\'un bien de type ' . $_POST['typeBien'] . ' dans le secteur de la ville de ' . $_POST['ville'] . ' .Pour plus d\'infos voici
-    mon message :' . $_POST['ct_message'];
-    $retour = mail('alohaha368@gmail.com', 'Envoi depuis la page contact', $mailing, 'From : ' . $_POST['ct_email']);
-    if ($retour) {*/
+   $mailing = 'Bonjour je recherche un(e) ' . $_POST['typeA'] . ' d\'un bien de type ' . $_POST['typeBien'] . ' dans le secteur de la ville de ' . $ville . ' .Pour plus d\'informations voici
+    mon message :' . $message;
+
+   $sqlSelB='SELECT titreBien FROM bien
+                WHERE idbien=:id';
+    $reqSelB=$db->prepare($sqlSelBien);
+    $reqSelB->bindParam(':id',$_POST['annonce']);
+    $reqSelB->execute();
+    $data=$reqSelB->fetchObject();
+    $titre=$data->titreBien;
+   $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host         = 'smtp.gmail.com';
+        $mail->SMTPAuth     = true;
+        $mail->Username     = 'alohaha638@gmail.com';
+        $mail->Password     = 'lecobra02.';
+        $mail->SMTPSecure   = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port         = 587;
+
+        $mail->setFrom($email,'Renseignement pour: '.$titre);
+        $mail->addAddress('alohaha638@gmail.com',$nom.' '.$prenom);
+
+        $mail->isHTML(true);
+        $mail->Subject  = 'Formulaire de contact :';
+        $mail->Body     = $mailing;
+
+        $mail->send();
         echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
-    //}
+
+    }catch (Exception $e) { ?>
+        <div class="alert-warning p-2 text-center">Le message n'a pas pu être envoyé. Le message d'erreur :<?php $mail->ErrorInfo ?></div>';
+    <?php }
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -94,6 +133,15 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6">
             <form class="mt-5" method="post" action="contact.php">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="nom">Nom :</label>
+                        <input type="text" class="form-control" id="nom" name="nom" required="required">
+                    </div><div class="form-group col-md-12">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" class="form-control" id="prenom" name="prenom" required="required">
+                    </div>
+                </div>
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="email">Email :</label>

@@ -3,10 +3,12 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
+require_once '../models/notco.php';
 
 $db=connect();
 head();
 session_start();
+notconnected();
 if ($_SESSION['client'])
 {
     header('Location:../../index.php');

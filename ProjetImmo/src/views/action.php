@@ -3,10 +3,12 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
+require_once '../models/notco.php';
 
 session_start();
 head();
 $db=connect();
+notconnected();
 
 if (isset($_GET['action']) && isset($_GET['id']))
 {

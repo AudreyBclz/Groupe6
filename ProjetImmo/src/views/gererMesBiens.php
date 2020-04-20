@@ -3,8 +3,10 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
+require_once '../models/notco.php';
 
 session_start();
+notconnected();
 head();
 $db=connect();
 $sqlSelBien='SELECT * 
