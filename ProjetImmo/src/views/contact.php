@@ -61,7 +61,7 @@ if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien
         $mail->Host         = 'smtp.gmail.com';
         $mail->SMTPAuth     = true;
         $mail->Username     = 'alohaha638@gmail.com';
-        $mail->Password     = 'lecobra02.';
+        $mail->Password     = '*********.';
         $mail->SMTPSecure   = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port         = 587;
 
