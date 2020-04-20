@@ -3,12 +3,11 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
-require_once '../models/notco.php';
 
 session_start();
 $db=connect();
 head();
-notconnected();
+
 
 if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['prenomRepre']) && isset($_POST['emailAg']) && isset($_POST['mdpAg']) &&
     isset($_POST['confmdpAg']) && isset($_POST['adresse1Ag']) && isset($_POST['codePostAg']) &&isset($_POST['villeAg']) && isset($_POST['paysAg'])) {
