@@ -49,7 +49,7 @@ if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien'])
    <div class="row">
        <h2 class="mx-auto mt-3"> Ajouter un bien immobilier</h2>
    </div>
-    <form method="post" action="ajoutbien.php" class="mx-auto mt-5" enctype="multipart/form-data">
+    <form method="post" action="ajoutAnnonce" class="mx-auto mt-5" enctype="multipart/form-data">
     <div class="row justify-content-between">
 
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
