@@ -68,7 +68,7 @@ if (isset($_GET['action']) && isset($_GET['id']))
                     <?php
                     foreach ($affbien as $bien)
                     {
-                    ?>
+                    ?><div class="container">
                         <div class="row justify-content-between">
 
                             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
