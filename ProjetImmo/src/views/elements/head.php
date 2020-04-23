@@ -1,6 +1,6 @@
 <?php
-function head()
-{ ?>
+session_start();
+ ?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -17,9 +17,51 @@ function head()
     <title></title>
 </head>
 <body class="bg-grey">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">DamienLocation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $router->generate('accueil') ?>">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $router->generate('inscription') ?>">Ajout Client/Agence</a>
+            </li>
+
+            <?php
+            if(isset($_SESSION['agence']) && isset($_SESSION['client'])) {
+                if ($_SESSION['agence'] || $_SESSION['client']) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $router->generate('annonces') ?>">Annonces</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $router->generate('contact') ?>">Contact</a>
+                    </li>
+                    <?php if ($_SESSION['agence']) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $router ->generate('ajoutAnnonce') ?>">Ajout de bien</a>
+                        </li>
+                    <?php }
+
+                    if ($_SESSION['agence']) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $router->generate('gestionBiens') ?>">Gestion biens</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $router->generate('disconected') ?>">Déconnexion</a>
+                    </li>
+                <?php }
+            }?>
+        </ul>
+    </div>
+</nav>
+
 
 
     <?php
-} ?>
+ ?>
 
-<!-- Je n'ai pas mis la navbar car sinon on n'aurait plus la classe active pour chaque lien (sinon il faut utiliser js :) -->

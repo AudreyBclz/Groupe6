@@ -1,13 +1,13 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notco.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notco.php';
 
-session_start();
+
 notconnected();
-head();
+
 $db=connect();
 $sqlSelBien='SELECT * 
             FROM bien
@@ -33,51 +33,7 @@ if (isset($url_m[1]) && $url_m[1]=='done')
 <?php
 }
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-<?php
-if(isset($_SESSION['agence']) && isset($_SESSION['client']))
-{
-    if($_SESSION['agence'] || $_SESSION['client'])
-    { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="location.php">Location</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-        <?php if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-            </li>
-                <?php }
 
-        if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item active">
-                <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-            </li>
-                <?php } ?>
-            <li class="nav-item">
-                <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
-            </li>
-       <?php }
-    } ?>
-        </ul>
-    </div>
-</nav>
 
 <div class="container">
 
@@ -103,7 +59,7 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
 
             <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
                 <div class="card h-100">
-                    <img class="card-img-top" src="../../public/img/<?= $bien->imageBien ?>" alt="Card image cap">
+                    <img class="card-img-top" src="<?php __DIR__; ?>public/img/<?= $bien->imageBien ?>" alt="Card image cap">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <p class="font-weight-bold bg-dark p-1 rounded text-light"><?= $bien->typeAnnonce ?></p>
@@ -112,18 +68,18 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
                         <h5 class="card-title"><?= $bien->titreBien ?></h5>
                         <p class="card-text"><?= $bien->resumeBien ?></p>
                         <div class="d-flex justify-content-between">
-                            <form method="get" action="action.php" class="form-inline">
+                            <form method="get" action="gestion" class="form-inline">
                                 <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                                 <input type="text" value="read" name="action" class="d-none"/>
                                 <input type="text" value="gererMesBiens" name="page" class="d-none"/>
                                 <button class="btn btn-outline-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                             </form>
-                            <form method="get" action="action.php" class="form-inline">
+                            <form method="get" action="gestion" class="form-inline">
                                 <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                                 <input type="text" value="modify" name="action" class="d-none"/>
                                 <button class="btn btn-outline-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                             </form>
-                            <form method="get" action="action.php" class="form-inline" >
+                            <form method="get" action="gestion" class="form-inline" >
                                 <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                                 <input type="text" value="delete" name="action" class="d-none"/>
                                 <button class="btn btn-outline-danger" type="submit"><i class="fa fa-minus-square" aria-hidden="true"></i> Supprimer</button>
@@ -140,5 +96,5 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
     </div>
     </div>
     <?php
-footer();
+
 

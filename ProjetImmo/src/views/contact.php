@@ -1,19 +1,19 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notco.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notco.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 //load Composer's autoloader
-require '../../vendor/autoload.php';
 
-head();
+
+
 $db=connect();
 
-session_start();
+
 notconnected();
 
 $sqlSelBien='SELECT idbien,titreBien FROM bien';
@@ -61,7 +61,7 @@ if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien
         $mail->Host         = 'smtp.gmail.com';
         $mail->SMTPAuth     = true;
         $mail->Username     = 'alohaha638@gmail.com';
-        $mail->Password     = '*********.';
+        $mail->Password     = 'lecobra02.';
         $mail->SMTPSecure   = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port         = 587;
 
@@ -80,59 +80,13 @@ if(isset($_POST['ct_email']) && isset($_POST['typeA']) && isset($_POST['typeBien
     <?php }
 }
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-<?php
-if(isset($_SESSION['agence']) && isset($_SESSION['client']))
-{
-    if($_SESSION['agence'] || $_SESSION['client'])
-    { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="location.php">Location</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-        <?php if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-            </li>
-                <?php }
-
-        if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-            </li>
-                <?php } ?>
-            <li class="nav-item">
-                <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
-            </li>
-               <?php }
-    } ?>
-        </ul>
-    </div>
-</nav>
-
 <div class="container">
     <div class="row">
         <h1 class="mx-auto">Contact</h1>
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6">
-            <form class="mt-5" method="post" action="contact.php">
+            <form class="mt-5" method="post" action="contact">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="nom">Nom :</label>
@@ -193,8 +147,8 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
             </form>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6  col-lg-6  col-xl-6 mt-5">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10165.462850644237!2d2.8071097344365343!3d50.434288369956704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47dd307d659025fd%3A0xb92f8bd91a43659a!2zQ29sbMOoZ2UgSmVhbiBKYXVyw6hz!5e0!3m2!1sfr!2sfr!4v1586439142378!5m2!1sfr!2sfr" width="500" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2542.0047114298313!2d2.79697982663707!3d50.42238385152657!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xbf69594a43038fd6!2sAFPA!5e0!3m2!1sfr!2sfr!4v1587645874035!5m2!1sfr!2sfr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
     </div>
     <?php
-footer();
+

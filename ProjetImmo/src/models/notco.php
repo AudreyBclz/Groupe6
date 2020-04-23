@@ -2,7 +2,7 @@
 {
     if (!isset($_SESSION['agence']) && !isset($_SESSION['client']))
     {
-        header('Location:../../index.php');
+        header('Location:../../home.php');
     }
 }
 

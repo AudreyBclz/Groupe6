@@ -1,13 +1,13 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notco.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notco.php';
 
-session_start();
+
 notconnected();
-head();
+
 $db=connect();
 
 if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien']) && isset($_POST['resume']) &&
@@ -73,7 +73,7 @@ if (isset($_POST['titre']) &&isset($_POST['typeA']) && isset($_POST['typeBien'])
     $reqUpBien->bindParam(':id_b',$_POST['id']);
     $reqUpBien->execute();
 
-    header('Location:gererMesBiens.php?modify=done');
+    header('Location:gestionBiens?modify=done');
 
 
 

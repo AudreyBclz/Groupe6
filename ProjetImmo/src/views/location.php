@@ -1,14 +1,13 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notco.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notco.php';
 
-head();
+
 $db=connect();
 
-session_start();
 notconnected();
 
 $url=explode('indice=',$_SERVER['REQUEST_URI']);
@@ -33,50 +32,8 @@ while($data=$reqSelBien->fetchObject())
     array_push($list_bien,$data);
 }
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
 
-           <?php
-           if(isset($_SESSION['agence']) && isset($_SESSION['client'])) {
-               if ($_SESSION['agence'] || $_SESSION['client']) { ?>
-                   <li class="nav-item active">
-                       <a class="nav-link" href="location.php">Location</a>
-                   </li>
-                   <li class="nav-item">
-                       <a class="nav-link" href="contact.php">Contact</a>
-                   </li>
-                   <?php if ($_SESSION['agence']) { ?>
-                       <li class="nav-item">
-                           <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-                       </li>
-                   <?php }
-
-                   if ($_SESSION['agence']) { ?>
-                       <li class="nav-item">
-                           <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-                       </li>
-                   <?php } ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
-                </li>
-               <?php }
-           }?>
-        </ul>
-    </div>
-</nav>
-    <div class="container">
-
+<div class="container">
     <div class="row">
         <h1 class="mx-auto mb-3">Sélections des biens immobiliers </h1>
     </div>
@@ -99,7 +56,7 @@ foreach ($cpte as $nb)
 }
 $nbPage=ceil($nbre/3);
 ?>
-        <div class="card-deck">
+        <div class="card-deck mx-2">
         <div class="d-flex">
             <div class="row">
 
@@ -115,9 +72,9 @@ foreach ($list_bien as $bien)
     }
     ?>
 
-                <div class="col-sm-12 col-xl-4 col-lg-4 col-md-4">
+                <div class="col-sm-12 col-xl-4 col-lg-3 col-md-3">
     <div class="card h-100">
-        <img class="card-img-top" src="../../public/img/<?= $bien->imageBien ?>" alt="Annonce">
+        <img class="card-img-top" src="<?php  __DIR__  ?>public/img/<?= $bien->imageBien ?>" alt="Annonce">
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <p class="font-weight-bold bg-dark p-1 rounded text-light"><?= $bien->typeAnnonce ?></p>
@@ -126,7 +83,7 @@ foreach ($list_bien as $bien)
             <h5 class="card-title"><?= $bien->titreBien ?></h5>
             <p class="card-text"><?= $bien->resumeBien ?></p>
             <div class="d-flex justify-content-between">
-                <form method="get" action="action.php" class="form-inline">
+                <form method="get" action="gestion" class="form-inline">
                     <input type="number" value="<?= $bien->idbien ?>" name="id" readonly="readonly" class="d-none"/>
                     <input type="text" value="read" name="action" class="d-none"/>
                     <input type="text" value="location" name="page" class="d-none"/>
@@ -155,14 +112,13 @@ foreach ($list_bien as $bien)
                 <?php
                 for ($i=1; $i<=$nbPage;$i++)
                 { ?>
-                <li class="page-item"><a class="page-link" href="location.php?indice=<?= ($i-1)*3 ?>"><?= $i ?></a></li>
+                <li class="page-item"><a class="page-link" href="<?= $router->generate('annonces') ?>?indice=<?= ($i-1)*3 ?>"><?= $i ?></a></li>
                <?php
                } ?>
             </ul>
         </nav>
         </div>
         <?php
-footer();
 ?>
 
 

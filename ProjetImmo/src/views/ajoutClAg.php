@@ -1,12 +1,11 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
 
-session_start();
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
+
 $db=connect();
-head();
+
 
 
 if (isset($_POST['nomAgence']) && isset($_POST['nomRepre']) && isset($_POST['prenomRepre']) && isset($_POST['emailAg']) && isset($_POST['mdpAg']) &&
@@ -129,50 +128,6 @@ if (isset($_POST['nomClient']) && isset($_POST['prenomClient']) && isset($_POST[
 }
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-<?php
-if(isset($_SESSION['agence']) && isset($_SESSION['client']))
-{
-    if($_SESSION['agence'] || $_SESSION['client'])
-    { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="location.php">Location</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-        <?php if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-            </li>
-                <?php }
-                if($_SESSION['agence'])
-            { ?>
-            <li class="nav-item">
-                <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-            </li>
-                <?php } ?>
-            <li class="nav-item">
-                <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
-            </li>
-               <?php }
-    } ?>
-        </ul>
-    </div>
-</nav>
 <div class="container">
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-lg-1 mt-sm-5 mt-md-5">
@@ -277,4 +232,3 @@ if(isset($_SESSION['agence']) && isset($_SESSION['client']))
     </div>
 </div>
 <?php
-footer();

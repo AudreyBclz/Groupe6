@@ -1,6 +1,4 @@
-<?php
-function footer()
-{ ?>
+
 </div>
 
 
@@ -12,5 +10,4 @@ function footer()
 </body>
 </html>
 
-<?php }
-?>
+

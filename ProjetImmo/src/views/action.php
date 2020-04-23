@@ -1,12 +1,11 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notco.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notco.php';
 
-session_start();
-head();
+
 $db=connect();
 notconnected();
 
@@ -40,7 +39,7 @@ if (isset($_GET['action']) && isset($_GET['id']))
         $reqDelBien->bindParam(':id',$_GET['id']);
         $reqDelBien->execute();
 
-        header('Location:gererMesBiens.php?delete=done');
+        header('Location:gestionBiens?delete=done');
     }
 
     if($_GET['action']=="modify")
@@ -60,53 +59,12 @@ if (isset($_GET['action']) && isset($_GET['id']))
 
         ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-            </li>
-            <?php
-            if(isset($_SESSION['agence']) && isset($_SESSION['client'])) {
-                if ($_SESSION['agence'] || $_SESSION['client']) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="location.php">Location</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
-                    <?php if ($_SESSION['agence']) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-                        </li>
-                    <?php }
 
-                    if ($_SESSION['agence']) { ?>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-                        </li>
-                    <?php } ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../models/deconnect.php">Déconnexion</a>
-                    </li>
-               <?php }
-            }?>
-        </ul>
-    </div>
-</nav>
-        <div class="container">
             <div class="row">
                 <h2 class="mx-auto mt-3"> Modification</h2>
             </div>
-            <div>
-                <form method="post" action="modify.php" class="mx-auto mt-5" enctype="multipart/form-data">
+            <div class="mx-3">
+                <form method="post" action="modify" class="mx-auto mt-5" enctype="multipart/form-data">
                     <?php
                     foreach ($affbien as $bien)
                     {
@@ -166,7 +124,7 @@ if (isset($_GET['action']) && isset($_GET['id']))
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mx-3">
                                 <div class="form-group row">
                                     <label for="adresse">Adresse</label>
                                     <input type="text" class="form-control" id="adresse" value="<?= $bien->adresse1 ?>" name="adresse1" required="required">
@@ -231,36 +189,7 @@ if ($_GET['action']=='read') {
     }
     ?>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="../../index.php">DamienLocation</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="../../index.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="location.php">Location</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.php">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ajoutbien.php">Ajout de bien</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ajoutClAg.php">Ajout Client/Agence</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="gererMesBiens.php">Gestion biens</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
+
     <?php foreach ($selBien as $bien) {
         if($bien->typeAnnonce == "Achat")
         {
@@ -278,10 +207,11 @@ if ($_GET['action']=='read') {
             $ind=0;
         }
         ?>
+
         <div class="col-lg-6 col-md-6 mx-auto">
             <h1 class="flex-block text-center"><?= $bien->titreBien ?></h1>
             <div>
-                <img class="img-thumbnail" src="../../public/img/<?= $bien->imageBien ?>">
+                <img class="img-thumbnail" src="<?php __DIR__; ?>public/img/<?= $bien->imageBien ?>">
             </div>
             <div class="mt-1">
                 <span class="font-weight-bold"><?= $bien->ville ?></span>
@@ -298,7 +228,13 @@ if ($_GET['action']=='read') {
             <p class="my-3"><?= $bien->descBien ?></p>
             <div class="mt-2 d-flex justify-content-between">
 
-                <a class="btn btn-dark" href="<?= $_GET['page'] ?>.php?indice=<?= $ind ?>">Retour</a>
+                <a class="btn btn-dark" href="<?php if($_GET['page'] ==="location")
+                                                {
+                                                    echo $router->generate('annonces').'?indice='.$_GET['indice'];
+                                                }elseif ($_GET['page']==='gererMesBiens'){
+                                                    echo $router->generate('gestionBiens');
+                                                }
+                                                ?>">Retour</a>
             </div>
         </div>
         </div>
