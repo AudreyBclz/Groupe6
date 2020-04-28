@@ -1,0 +1,141 @@
+@media all and (min-width: 993px)
+{
+    body
+    {
+        font-size: 1em;
+    }
+    #navigation
+    {
+        font-size: 1em;
+    }
+    #display_none
+    {
+        display: none;
+    }
+}
+@media all and (max-width: 992px)
+{
+    body
+    {
+        font-size: 0.875em;
+    }
+
+    #navigation
+    {
+        font-size: 0.75em;
+    }
+}
+@font-face {
+    font-family: "Bangers";
+    src: url("../font/Bangers-Regular.ttf") format("truetype");
+}
+
+.bg-vert
+{
+    background-color: #C5E0B4;
+}
+.btn-marron
+{
+    color:#f8f9fa;
+    background-color: #7E6958;
+    border-color: #7E6958;
+}
+.btn-marron:hover
+{
+    color: #f8f9fa;
+    background-color:rgb(127,96,0);
+    border-color:peru;
+}
+#logo
+{
+    width:60%;
+}
+#s_titre
+{
+    color:rgb(127,96,0);
+    font-family: "Bangers";
+}
+.titre
+{
+    color:rgb(127,96,0);
+    font-family: "Bangers";
+    margin-top: 6%;
+    margin-bottom: 10% ;
+}
+.bg-marron
+{
+    background-color: rgba(126,105,88);
+}
+.bg-marron2
+{
+    background-color: rgba(126,105,88,0.75);
+}
+#navigation
+{
+    position: absolute;
+    height:100vh;
+    width:fit-content;
+    object-fit:cover;
+    z-index: 1;
+}
+.footer
+{
+    font-size:12px;
+}
+#croix
+{
+    z-index: 1;
+    position: absolute;
+    margin-left:2rem;
+    width: fit-content;
+}
+#plus
+{
+    z-index: 1;
+    position: absolute;
+    margin-left:2rem;
+    width: fit-content;
+}
+.arr_plan
+{
+    z-index: 0;
+}
+.w-30
+{
+    width:30%;
+}
+.w-45
+{
+    width: 45%;
+}
+.label
+{
+    width:45%;
+}
+.panneau
+{
+    border: #7E6958 solid 6px;
+    box-shadow: 3px 3px 10px #7E6958 ;
+    margin-bottom: 5px;
+}
+#pagination
+{
+    margin-top: 10%;
+}
+a
+{
+    color:whitesmoke;
+}
+.bg-wheat
+{
+    background-color: tan;
+}
+.carte
+{
+    width:100%;
+    height:100%;
+    border: #7E6958 solid 10px;
+    border-radius: 6px;
+    box-shadow:  3px 3px 10px #7E6958;
+}
+
