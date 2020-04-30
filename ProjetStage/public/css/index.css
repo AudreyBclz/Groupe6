@@ -138,4 +138,36 @@ a
     border-radius: 6px;
     box-shadow:  3px 3px 10px #7E6958;
 }
+.w-10
+{
+    width:10%;
+}
+.labelcafe
+{
+    width:25%;
+}
+#gr_cafe
+{
+    margin-top: 15%;
+}
+
+/* Firefox  enlever puces des input type number*/
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Chrome */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin:0;
+}
+
+/* Opéra*/
+input::-o-inner-spin-button,
+input::-o-outer-spin-button {
+    -o-appearance: none;
+    margin:0
+}
+X-Content-Type-Options: nosniff
 

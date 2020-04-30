@@ -73,39 +73,50 @@
         <i class="fa fa-bars"></i>
     </div>
 </div>
-<div class="container arr_plan">
-    <div class="row justify-content-center">
-        <h1 class="text-center titre mb-5">Contact</h1>
-    </div>
-    <div class="row m-auto">
-        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex flex-column">
-                <form method="post" action="contact.html" id="form_contact">
-                   <div class="row">
-                        <label for="nom">Nom :</label>
-                        <input type="text" name="nom" id="nom" class="form-control"required="required"/>
+<div class="container m-auto">
+    <div class="arr_plan">
+        <h1 class="text-center titre">Paiement</h1>
+        <form method="post" action="">
+        <div class="row justify-content-between">
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12  align-items-center">
+                   <div class="d-flex flex-column">
+                        <div>
+                            <div class="m-auto">
+                                <label for="paypal" class="label"><img src="../../public/img/paypal.png" class="w-75"></label>
+                                <input type="radio" name="paiement" value="paypal" id="paypal"/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="">
+                                <label for="cb" class="w-30 label"><img src="../../public/img/cb.jpg" class="w-50"></label>
+                                <input type="radio" name="paiement" value="carte" id="cb" checked="checked" class="ml-15"/>
+                            </div>
+                        </div>
                    </div>
-                    <div class="row">
-                        <label for="prenom">Prénom :</label>
-                        <input type="text" name="prenom" id="prenom" class="form-control"required="required"/>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-marron my-3 d-none" id="bouton_paypal">Payer</button>
                     </div>
-                    <div class="row">
-                        <label for="mail">Mail :</label>
-                        <input type="email" name="mail" id="mail" class="form-control"required="required"/>
-                    </div>
-                    <div class="row">
-                        <label for="message">Message :</label>
-                        <textarea id="message" name="message" class="form-control"required="required"></textarea>
-                    </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-marron my-3" id="btn_contact">Envoyer</button>
+                   </div>
+                    <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12">
+                        <div>
+                           <img src="../../public/img/cb.jpg" class="w-10"/><img src="../../public/img/MasterCard.png" class="w-10"/><img src="../../public/img/visa.png" class="w-10"/>
+                            <img src="../../public/img/american-express.png" class="w-10"/>
+                         </div>
+                        <div id="coord_bancaire">
+                            <label for="numero">Numéro de Carte :</label>
+                            <input type="text" name="numero" id="numero" class="form-control w-75"/>
+                            <label for="crypto">Cryptogramme</label>
+                            <input type="number" name="crypto" id="crypto" class="form-control w-25"/>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-marron mt-3" id="bouton_cb">Payer</button>
+                        </div>
                     </div>
                 </form>
         </div>
-        <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12">
-                <iframe  class="carte" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8550.999309399303!2d2.7861483233733626!3d50.
-                41823646721785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xbf69594a43038fd6!2sAFPA!5e0!3m2!1sfr!2sfr
-                !4v1588060907723!5m2!1sfr!2sfr" frameborder="0" ;" allowfullscreen=""
-                        aria-hidden="false" tabindex="0"></iframe>
+            <div class="text-center" id="gr_cafe">
+                <img src="../../public/img/graincafe.png" class="w-50"/>
+            </div>
         </div>
     </div>
 </div>
