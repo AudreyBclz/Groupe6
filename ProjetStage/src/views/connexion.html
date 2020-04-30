@@ -79,12 +79,12 @@
                 <h1 class="text-center titre mb-5">Connexion</h1>
                 <form method="post" action="connexion.html" class="m-1">
                     <div class="row">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control">
+                        <label for="email_co">Email</label>
+                        <input type="email" name="email_co" id="email_co" class="form-control">
                     </div>
                     <div class="row">
-                        <label for="mdp">Mot de passe</label>
-                        <input type="password" name="mdp" id="mdp" class="form-control">
+                        <label for="mdp_co">Mot de passe</label>
+                        <input type="password" name="mdp_co" id="mdp_co" class="form-control">
                     </div>
                     <div class="row">
                         <button type="submit" class="btn btn-marron mt-3">Se connecter</button>
@@ -97,29 +97,29 @@
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex flex-column">
                 <div class="d-none d-lg-block">
                     <h1 class="text-center titre mb-5">Inscription</h1>
-                        <form method="post" action="connexion.html" class="m-1">
+                    <form method="post" action="connexion.html" class="m-1">
                             <div class="row justify-content-between">
                                 <label for="nom" class="label">Nom :</label>
                                 <label for="prenom" class="label">Prénom :</label>
                             </div>
                             <div class="row justify-content-between">
-                                <input type="text" name="prenom" id="prenom" class="form-control w-45" required="required"/>
                                 <input type="text" name="nom" id="nom" class="form-control w-45" required="required"/>
+                                <input type="text" name="prenom" id="prenom" class="form-control w-45" required="required"/>
                             </div>
                             <div class="row justify-content-between">
                                 <label for="email" class="label">Email :</label>
-                                <label for="mdp" class="label">Mot de passe :</label>
+                                <label for="mdp" class="label">Mot de passe * :</label>
                             </div>
                             <div class="row justify-content-between">
                                 <input type="email" name="email" id="email" class="form-control w-45 " required="required">
-                                <input type="email" name="conf_email" id="conf_email" class="form-control w-45 " required="required">
+                                <input type="password" name="mdp" id="mdp" class="form-control w-45" required="required" aria-describedby="passhelp">
                             </div>
                             <div class="row justify-content-between">
                                 <label for="conf_email" class="label">Confirmer mail :</label>
                                 <label for="conf_mdp" class="label">Confirmer mot de passe :</label>
                             </div>
                             <div class="row justify-content-between">
-                                <input type="password" name="mdp" id="mdp" class="form-control w-45" required="required">
+                                <input type="email" name="conf_email" id="conf_email" class="form-control w-45 " required="required">
                                 <input type="password" name="conf_mdp" id="conf_mdp" class="form-control w-45" required="required">
                             </div>
                             <div class="row justify-content-between">
@@ -128,7 +128,7 @@
                             </div>
                             <div class="row justify-content-between">
                                 <input type="text" name="adresse" id="adresse" class="form-control w-45" required="required">
-                                <input type="text" name="complement" id="complement" class="form-control w-45" required="required">
+                                <input type="text" name="complement" id="complement" class="form-control w-45">
                             </div>
                             <div class="row justify-content-between">
                                 <label for="codePost" class="label">Code Postal :</label>
@@ -142,8 +142,9 @@
                                 <label for="robot" class="mr-2"> Je ne suis pas un robot :</label>
                                 <input type="checkbox" value="ok" name="robot" id="robot" class="form-check" />
                             </div>
-                            <div class="row">
-                                <button type="submit" class="btn btn-marron mt-3">S'inscrire</button>
+                            <div class="row justify-content-between">
+                                <button type="submit" class="btn btn-marron mt-3" id="inscription">S'inscrire</button>
+                                <small id="passhelp"> *8 caractères minimum et au moins une majuscule</small>
                             </div>
                         </form>
                     </div>
@@ -152,10 +153,9 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="../../public/js/index.js"></script>
-
 </body>
 </html>
