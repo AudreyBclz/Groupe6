@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="../../public/css/index.css">
+
+    <title></title>
+</head>
+<body class="bg-vert">
+<div class="d-flex">
+    <nav class="bg-marron navbar-light text-center d-none" id="navigation" role="navigation">
+        <div class="h-100 d-flex flex-column justify-content-between" id="navbarNav">
+            <div>
+                <a class="navbar-brand" href="../../index.php"><img src="../../public/img/tasseCafe64.png"></a>
+                <ul class="nav navbar-light flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="panier.php">Mon panier</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="connexion.php">Connexion<span class="d-none d-lg-block m-0">/Inscription</span></a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link" href="inscription.php">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class=" nav-link active" href="selection.php">Sélection de la semaine</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plusvendus.php">Les + vendus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nosproduits.php">Tous nos produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.php">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ajoutcafe.php">Ajout Café</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="modifcafe.php">Modification Café</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-light flex-column footer">
+                <li class="nav-item text-light">
+                    SARL Paradise Coffee<br/>
+                    87 rue des Fleurs <br/>
+                    54000 NANCY
+                </li>
+                <li class="nav-item text-light">
+                    Contact:<br/>
+                    paradise.coffee@aol.fr
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div>
+    <div id="croix" class="d-none">
+        <i class="fa fa-times"></i>
+    </div>
+    <div id="plus">
+        <i class="fa fa-bars"></i>
+    </div>
+</div>
+<div class="container">
+    <div class="arr_plan row justify-content-center">
+        <h1 class="text-center titre">Nom du café</h1>
+        <div class="row justify-content-between">
+            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mb-3">
+                <img src="../../public/img/cafe-vrac.png" class="panneau w-100 bg-light rounded" alt="...">
+                <div class="d-flex justify-content-between mt-3">
+                    <p><span>Pays:</span><span class="p-2 m-1 rounded bg-wheat font-weight-bold">Honduras</span></p>
+                    <p><span>Type :</span><span class="p-2 m-1 rounded bg-light font-weight-bold">En grain</span></p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                <div class="d-flex justify-content-between mb-3">
+                    <img src="../../public/img/deca.png" class="w-25">
+                    <img src="../../public/img/bio.png" class="w-50">
+                </div>
+                <div class="bg-marron2 p-3">
+                    <h5 class="card-title">Un café fort en goût</h5>
+                    <p class="card-text">
+
+                        Aenean pharetra orci id vehicula efficitur. Nam euismod, neque quis pharetra luctus, felis sapien
+                        vestibulum erat, vel porta orci turpis et mi. Ut vel mauris vitae orci fermentum elementum.
+                        In efficitur, velit ac luctus eleifend, arcu massa lobortis erat, sed luctus libero odio eget orci.
+                        Nunc non velit mi. Suspendisse quis pulvinar lectus. Vestibulum blandit risus id risus consequat, a efficitur ex tempor.
+                        Vestibulum aliquet ullamcorper velit a efficitur. </p>
+                </div>
+                <div class="card-footer">
+                    <p>Prix:<span class="font-weight-bold p-2">25€</span> le sachet d'1kg<p>
+                </div>
+                <form method="post" action="panier.html" class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <label for="quantite" class="mr-2">Qté:</label>
+                        <input type="number" name="quantite" id="quantite" class=" form-control w-25">
+                    </div>
+                    <button type="submit" class="btn btn-marron">Ajouter au panier</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="../../public/js/index.js"></script>
+</body>
+</html>
