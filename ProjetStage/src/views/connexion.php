@@ -1,83 +1,13 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="public/css/index.css">
-    <link rel="stylesheet" href="../../public/css/index.css">
-
-    <title></title>
-</head>
-<body class="bg-vert">
-<div class="d-flex">
-    <nav class="bg-marron navbar-light text-center d-none" id="navigation" role="navigation">
-        <div class="h-100 d-flex flex-column justify-content-between" id="navbarNav">
-            <div>
-                <a class="navbar-brand" href="../../index.html"><img src="../../public/img/tasseCafe64.png"></a>
-                <ul class="nav navbar-light flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="panier.html">Mon panier</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="connexion.html">Connexion<span class="d-none d-lg-block m-0">/Inscription</span></a>
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link" href="inscription.html">Inscription</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class=" nav-link active" href="selection.html">Sélection de la semaine</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="plusvendus.html">Les + vendus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="nosproduits.html">Tous nos produits</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ajoutcafe.html">Ajout Café</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="modifcafe.html">Modification Café</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Déconnexion</a>
-                    </li>
-                </ul>
-            </div>
-            <ul class="nav navbar-light flex-column footer">
-                <li class="nav-item text-light">
-                    SARL Paradise Coffee<br/>
-                    87 rue des Fleurs <br/>
-                    54000 NANCY
-                </li>
-                <li class="nav-item text-light">
-                    Contact:<br/>
-                    paradise.coffee@aol.fr
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-<div>
-    <div id="croix" class="d-none">
-        <i class="fa fa-times"></i>
-    </div>
-    <div id="plus">
-        <i class="fa fa-bars"></i>
-    </div>
-</div>
-    <div class="container">
+<?php
+require_once 'elements/head.php';
+require_once 'elements/footer.php';
+head();
+?>
+<div class="container">
         <div class="arr_plan row justify-content-between">
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex flex-column">
                 <h1 class="text-center titre mb-5">Connexion</h1>
-                <form method="post" action="connexion.html" class="m-1">
+                <form method="post" action="connexion.php" class="m-1">
                     <div class="row">
                         <label for="email_co">Email</label>
                         <input type="email" name="email_co" id="email_co" class="form-control">
@@ -97,7 +27,7 @@
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex flex-column">
                 <div class="d-none d-lg-block">
                     <h1 class="text-center titre mb-5">Inscription</h1>
-                    <form method="post" action="connexion.html" class="m-1">
+                    <form method="post" action="connexion.php" class="m-1">
                             <div class="row justify-content-between">
                                 <label for="nom" class="label">Nom :</label>
                                 <label for="prenom" class="label">Prénom :</label>
@@ -153,9 +83,5 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="../../public/js/index.js"></script>
-</body>
-</html>
+<?php
+footer();
