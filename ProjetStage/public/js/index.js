@@ -65,8 +65,8 @@ function controle_inscription()
 
     if(!test_mail.test(email))
     {
-        alert('Format de l\'adresse mail non valide');
         testForm=false;
+        alert('Format de l\'adresse mail non valide');
     }
     else if(!(email === email_conf))
     {
@@ -93,11 +93,7 @@ function controle_inscription()
         testForm=false;
         alert("Le mot de passe doit contenir une majuscule");
     }
-    if (testForm)
-    {
-       document.getElementById("form_inscription").submit();
-
-    }
+   return testForm;
 }
 $("#inscription").on("click",controle_inscription);
 
@@ -105,17 +101,34 @@ function controle_contact()
 {
     var email=document.getElementById("mail").value;
     var contact_mail=/^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-z]{2,6}$/;
-    var testcontact = true;
-
 
    if(!contact_mail.test(email))
     {
-        testcontact=false;
         alert('Format de l\'adresse mail non valide, réessayer.');
+        return false;
     }
-    if(testcontact)
+    else
     {
-        document.getElementById("form_contact").submit();
+        return true;
     }
 }
 $("#btn_contact").on("click",controle_contact);
+
+function controle_cafe()
+{
+    var prix=document.getElementById("prix").value;
+    var decimal=/^[0-9]{1,3}\.?[0-9]{0,2}$/;
+
+
+    if(!decimal.test(prix))
+    {
+        alert('Un nombre décimal ou entier est attendu.');
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+$("#ajout_cafe").on("click",controle_cafe);
+$("#modif_cafe").on("click",controle_cafe);
