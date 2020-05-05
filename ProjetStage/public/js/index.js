@@ -99,10 +99,17 @@ $("#inscription").on("click",controle_inscription);
 
 function controle_contact()
 {
+    var cp=document.getElementById("codePost").value;
+    var test_cp=/^[0-9]{5}$/;
     var email=document.getElementById("mail").value;
     var contact_mail=/^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-z]{2,6}$/;
 
-   if(!contact_mail.test(email))
+   if (!test_cp.test(cp))
+   {
+       alert('Code postal non valide');
+       return false
+   }
+    else if(!contact_mail.test(email))
     {
         alert('Format de l\'adresse mail non valide, réessayer.');
         return false;
