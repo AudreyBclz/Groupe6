@@ -3,10 +3,9 @@ require_once 'elements/head.php';
 require_once 'elements/footer.php';
 require_once '../config/config.php';
 require_once '../models/connect.php';
-
-$db=connect();
+session_start();
 head();
-
+$db=connect();
 
 if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"]) && isset($_POST["prix"]) &&
     isset($_POST["resume"]) && isset($_POST["description"]))
