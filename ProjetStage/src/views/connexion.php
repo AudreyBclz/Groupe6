@@ -1,10 +1,124 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+require_once '../config/config.php';
+require_once '../models/connect.php';
+session_start();
 head();
+$db=connect();
+
+if(isset($_POST['email_co']) && isset($_POST['mdp_co']))
+{
+    $mail_co=htmlspecialchars(trim($_POST['email_co']));
+    $mdp_co=htmlspecialchars(trim($_POST['mdp_co']));
+    $isOk=true;
+
+    $sqlSelMail_co='SELECT idUsers,prenomUsers,nomUsers,mailUsers,passUsers FROM users
+                    WHERE mailUsers=:mail';
+    $reqSelMail_co=$db->prepare($sqlSelMail_co);
+    $reqSelMail_co->bindParam(':mail',$mail_co);
+    $reqSelMail_co->execute();
+    $tab_mail_co=array();
+    while($data=$reqSelMail_co->fetchObject())
+    {
+        array_push($tab_mail_co,$data);
+    }
+    if(empty($tab_mail_co))
+    {
+        $isOk=false;
+    }
+    else
+    {
+        $isOk=password_verify($mdp_co,$tab_mail_co[0]->passUsers);
+    }
+    if ($isOk)
+    {
+        echo '<div class="alert-success p-2 text-center">Bienvenue '.$tab_mail_co[0]->prenomUsers.' '.$tab_mail_co[0]->nomUsers.'</div>';
+        $_SESSION['prenom']=$tab_mail_co[0]->prenomUsers;
+        $_SESSION['nom']=$tab_mail_co[0]->nomUsers;
+    }
+    else
+    {
+        echo '<div class="alert-warning p-2 text-center">Mail ou mot de passe incorrect, veuillez réessayer</div>';
+    }
+
+}
+
+if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) && isset($_POST["mdp"])
+&& isset($_POST["conf_email"]) && isset($_POST["conf_mdp"]) && isset($_POST["adresse"]) &&
+    isset($_POST["codePost"]) && isset($_POST["ville"]) && isset($_POST["robot"]))
+{
+    $nom=htmlspecialchars(trim($_POST['nom']));
+    $prenom=htmlspecialchars(trim($_POST['prenom']));
+    $email=htmlspecialchars(trim($_POST['email']));
+    $mdp=password_hash(htmlspecialchars(trim($_POST['mdp'])),PASSWORD_BCRYPT);
+    $adresse=htmlspecialchars(trim($_POST['adresse']));
+    $complement=htmlspecialchars(trim($_POST['complement']));
+    $ville=htmlspecialchars(trim($_POST['ville']));
+    $test_cp=
+    $sqlSelAd='SELECT idadresse FROM adresse
+                WHERE adresse1=:ad
+                AND adresse2=:ad2
+                AND adresseCP=:cp
+                AND adresseVille=:ville';
+    $reqSelAd=$db->prepare($sqlSelAd);
+    $reqSelAd->bindParam(':ad',$adresse);
+    $reqSelAd->bindParam(':ad2',$complement);
+    $reqSelAd->bindParam(':cp',$_POST['codePost']);
+    $reqSelAd->bindParam(':ville',$ville);
+    $reqSelAd->execute();
+    $tab_ad=array();
+    while($data=$reqSelAd->fetchObject())
+    {
+        array_push($tab_ad,$data);
+    }
+    if(!empty($tab_ad))
+    {
+        $idAd=intval($tab_ad[0]->idadresse);
+    }
+    else
+    {
+        $sqlInsAd='INSERT INTO adresse (adresse1,adresse2,adresseCP,adresseVille)
+                    VALUES (:ad1,:ad2,:cp,:ville)';
+        $reqInsAd=$db->prepare($sqlInsAd);
+        $reqInsAd->bindParam(':ad1',$adresse);
+        $reqInsAd->bindParam(':ad2',$complement);
+        $reqInsAd->bindParam(':cp',$_POST['codePost']);
+        $reqInsAd->bindParam(':ville',$ville);
+        $reqInsAd->execute();
+        $idAd=intval($db->lastInsertId());
+    }
+    $sqlSelMail='SELECT idUsers FROM users
+                 WHERE mailUsers=:mail';
+    $reqSelMail=$db->prepare($sqlSelMail);
+    $reqSelMail->bindParam(':mail',$email);
+    $reqSelMail->execute();
+    $tab_mail=array();
+    while($data=$reqSelMail->fetchObject())
+    {
+        array_push($tab_mail,$data);
+    }
+    if(!empty($tab_mail))
+    {
+        echo'<div class="alert-warning p-2 text-center">Adresse mail déjà utilisée</div>';
+    }
+    else
+    {
+        $sqlInsUser="INSERT INTO users (nomUsers,prenomUsers,mailUsers,passUsers,roleUsers,adresse_idadresse)
+                     VALUES (:nom,:prenom,:mail,:pass,'client',:ad)";
+        $reqInsUser=$db->prepare($sqlInsUser);
+        $reqInsUser->bindParam(':nom',$nom);
+        $reqInsUser->bindParam(':prenom',$prenom);
+        $reqInsUser->bindParam(':mail',$email);
+        $reqInsUser->bindParam(':pass',$mdp);
+        $reqInsUser->bindParam(':ad',$idAd);
+        $reqInsUser->execute();
+        echo '<div class="alert-success p-2 text-center">Votre inscription a bien été enregistrée</div>';
+    }
+}
 ?>
 <div class="container">
-        <div class="arr_plan row justify-content-between">
+        <div class="arr_plan row mt-5 justify-content-between">
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex flex-column">
                 <h1 class="text-center titre mb-5">Connexion</h1>
                 <form method="post" action="connexion.php" class="m-1">
