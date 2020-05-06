@@ -13,7 +13,7 @@ if(isset($_POST['email_co']) && isset($_POST['mdp_co']))
     $mdp_co=htmlspecialchars(trim($_POST['mdp_co']));
     $isOk=true;
 
-    $sqlSelMail_co='SELECT idUsers,prenomUsers,nomUsers,mailUsers,passUsers FROM users
+    $sqlSelMail_co='SELECT * FROM users
                     WHERE mailUsers=:mail';
     $reqSelMail_co=$db->prepare($sqlSelMail_co);
     $reqSelMail_co->bindParam(':mail',$mail_co);
@@ -36,6 +36,8 @@ if(isset($_POST['email_co']) && isset($_POST['mdp_co']))
         echo '<div class="alert-success p-2 text-center">Bienvenue '.$tab_mail_co[0]->prenomUsers.' '.$tab_mail_co[0]->nomUsers.'</div>';
         $_SESSION['prenom']=$tab_mail_co[0]->prenomUsers;
         $_SESSION['nom']=$tab_mail_co[0]->nomUsers;
+        $_SESSION['iduser']=$tab_mail_co[0]->idUsers;
+        $_SESSION['role']=$tab_mail_co[0]->roleUsers;
     }
     else
     {
