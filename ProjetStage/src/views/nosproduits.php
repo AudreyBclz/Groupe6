@@ -318,13 +318,8 @@ if (!isset($triage))
             <ul class="pagination">
                 <?php for($i=1;$i<=$nbPage;$i++)
                 { ?>
-                        <li class="page-item"><a class="page-link" href="nosproduits.php?indice=<?= ($i-1)*3 ?>?tri=<?php
-                             if (isset($triage))
-                            {echo $triage;}
-                            elseif (isset($_POST['tri']))
-                            {echo $_POST['tri'];}
-                             else{echo'tous';}
-                            ?>"><?= $i ?></a></li>
+                        <li class="page-item"><a class="page-link" href="nosproduits.php?indice=<?= ($i-1)*3 ?>?tri=<?= $triage ?>
+                           "><?= $i ?></a></li>
                 <?php } ?>
             </ul>
         </nav>
