@@ -1,0 +1,11 @@
+{
+    "name": "audre/projet-stage",
+    "require": {
+        "phpmailer/phpmailer": "^6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\" : "src/"
+        }
+    }
+}
