@@ -1,3 +1,6 @@
+ProjetStage/vendor/*
+
+
 ProjetImmo/vendor/
 ProjetImmo/vendor/*
 # Cache and logs (Symfony2)

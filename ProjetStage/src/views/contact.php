@@ -1,7 +1,45 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require'../../vendor/autoload.php';
+session_start();
 head();
+
+if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && isset($_POST['message']))
+{
+    $email=htmlspecialchars(trim($_POST['mail']));
+    $nom=htmlspecialchars(trim($_POST['nom']));
+    $prenom=htmlspecialchars(trim($_POST['prenom']));
+    $message=htmlspecialchars(trim($_POST['message']));
+    $mailing=$message.' signé :'.$prenom.' '.$nom;
+
+    $mail= new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'alohaha638@gmail.com';
+        $mail->Password = '********';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom($email, 'Contact ParadiseCoffee');
+        $mail->addAddress('alohaha638@gmail.com', $nom . ' ' . $prenom);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Contact ParadiseCoffee';
+        $mail->Body = $mailing;
+
+        $mail->send();
+        echo '<div class="alert-success p-2 text-center">Votre message a bien été envoyé</div>';
+
+    }catch (Exception $e) {?>
+        <div class="alert-warning p-2 text-center">Le message n'a pas pu être envoyé? Le message d'erreur: <?php $mail->ErrorInfo ?></div>';
+    <?php }
+}
 ?>
 <div class="container arr_plan">
     <div class="row justify-content-center">
