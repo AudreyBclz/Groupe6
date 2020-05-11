@@ -139,3 +139,21 @@ function controle_cafe()
 }
 $("#ajout_cafe").on("click",controle_cafe);
 $("#modif_cafe").on("click",controle_cafe);
+
+function controle_panier(quantite)
+{
+    var test_quantite=/^[1-9]+[0-9]*$/;
+    if(!test_quantite.test(quantite))
+    {
+        alert('Veuillez entrer un nombre entier positif');
+        return false;
+    }
+    else
+    {
+        $("#form_panier").submit();
+    }
+}
+
+$(".quantite").on("change",function (){controle_panier(this.value);});
+
+
