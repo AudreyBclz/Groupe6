@@ -17,7 +17,6 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
     $adresse=htmlspecialchars(trim($_POST['adresse']));
     $complement=htmlspecialchars(trim($_POST['complement']));
     $ville=htmlspecialchars(trim($_POST['ville']));
-    $test_cp=
     $sqlSelAd='SELECT idadresse FROM adresse
                 WHERE adresse1=:ad
                 AND adresse2=:ad2
@@ -62,7 +61,7 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
     }
     if(!empty($tab_mail))
     {
-        echo'<div class=alert-warning p-2 text-center">Adresse mail déjà utilisée</div>';
+        echo'<div class="alert-warning p-2 text-center">Adresse mail déjà utilisée</div>';
     }
     else
     {
