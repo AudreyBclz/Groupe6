@@ -50,7 +50,7 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
             $stock=intval($tab_panier[0]->stockCafe);
             if(($qte+$_GET['quantite']>$stock))
             {
-                echo'<div class="alert-warning p-2 text-center">Vous ne pouvez pas acheter autant de cette article</div>';
+                echo'<div class="alert-warning p-2 text-center">Vous ne pouvez pas acheter autant de cet article</div>';
             }
             else
             {
