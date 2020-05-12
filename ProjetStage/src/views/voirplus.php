@@ -28,8 +28,13 @@ else
 }
 if(isset($_GET['id']) && isset($_GET['quantite']))
 {
-    if(isset($_SESSION['nom']) && isset($_SESSION['prenom']) && isset($_SESSION['iduser']) && isset($_SESSION['role'])) {
+    if($tab_cafe[0]->stockCafe < $_GET['quantite'])
+    {
+        echo'<div class="alert-warning p-2 text-center">Quantité supérieur au stock du produit</div>';
+    }
+    elseif(isset($_SESSION['nom']) && isset($_SESSION['prenom']) && isset($_SESSION['iduser']) && isset($_SESSION['role'])) {
         $sqlSelPanier = 'SELECT * FROM panier
+                        INNER JOIN cafe ON cafe_idcafe=idcafe
                         WHERE  users_idUsers=:id
                         AND cafe_idcafe=:id_c';
         $reqSelPanier = $db->prepare($sqlSelPanier);
@@ -42,6 +47,13 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
         }
         if (!empty($tab_panier)) {
             $qte = intval($tab_panier[0]->quantite);
+            $stock=intval($tab_panier[0]->stockCafe);
+            if(($qte+$_GET['quantite']>$stock))
+            {
+                echo'<div class="alert-warning p-2 text-center">Vous ne pouvez pas acheter autant de cette article</div>';
+            }
+            else
+            {
             $sqlUpPan = 'UPDATE panier
                         SET quantite=:quant
                         WHERE users_idUsers=:id
@@ -53,7 +65,8 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
             $reqUpPan->bindParam(':id_c', $_GET['id']);
             $reqUpPan->execute();
             echo '<div class="alert-info p-2 text-center">Articles ajouté à votre panier</div>';
-        } else {
+        } }
+        else {
             $sqlSelAd = 'SELECT adresse_idadresse FROM users
                         WHERE idUsers=:id';
             $reqSelAd = $db->prepare($sqlSelAd);
@@ -73,7 +86,7 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
             $reqInsPan->bindParam(':qte', $_GET['quantite']);
             $reqInsPan->bindParam(':ad', $idAd);
             $reqInsPan->execute();
-            echo '<div class="alert-info p-2 text-center">Articles ajouté à votre panier</div>';
+            echo '<div class="alert-info p-2 text-center">Article(s) ajouté(s) à votre panier</div>';
 
         }
     }else
@@ -81,7 +94,6 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
         echo'<div class="alert-warning p-2 text-center">Vous devez vous connecter pour ajouter dans votre panier <a href="connexion.php" class="btn btn-marron">Connexion</a></div>';
     }
 }
-
 
 ?>
 
@@ -102,30 +114,37 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
                             </p>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                        <div class="d-flex justify-content-between mb-3 ">
-                            <img src="../../public/img/deca.png" class="w-25 <?php if ($tab_cafe[0]->decafCafe !== "1") {
-                                echo 'invisible';
-                            } ?>">
-                            <img src="../../public/img/bio.png" class="w-50 <?php if ($tab_cafe[0]->bioCafe !== "1") {
-                                echo 'invisible';
-                            } ?>">
-                        </div>
-                        <div class="bg-marron2 p-3 rounded">
-                            <p class="card-text"><?= $tab_cafe[0]->descCafe ?></p>
-                        </div>
-                        <div class="card-footer rounded mb-3">
-                            <p>Prix:<span class="font-weight-bold p-2"><?= $tab_cafe[0]->prixCafe ?>€</span><?= $suffixe ?>
-                            <p>
-                        </div>
-                        <form method="get" action="voirplus.php" class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <label for="quantite" class="mr-2 col-form-label">Qté:</label>
-                                <input type="number" name="quantite" id="quantite" class=" form-control w-25">
-                                <input type="number" name="id" value="<?= $tab_cafe[0]->idcafe ?>" class="d-none"/>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between mb-3 ">
+                                <img src="../../public/img/deca.png" class="w-25 <?php if ($tab_cafe[0]->decafCafe !== "1") {
+                                    echo 'invisible';
+                                } ?>">
+                                <img src="../../public/img/bio.png" class="w-50 <?php if ($tab_cafe[0]->bioCafe !== "1") {
+                                    echo 'invisible';
+                                } ?>">
                             </div>
-                            <button type="submit" class="btn btn-marron">Ajouter au panier</button>
-                        </form>
+                            <div class="bg-marron2 p-3 rounded">
+                                <p class="card-text"><?= $tab_cafe[0]->descCafe ?></p>
+                                <p class="card-text">Quantité restante :<span class="font-weight-bold"> <?=$tab_cafe[0]->stockCafe ?></span></p>
+                            </div>
+                            <div class="card-footer rounded mb-3">
+                                <p>Prix:<span class="font-weight-bold p-2"><?= $tab_cafe[0]->prixCafe ?>€</span><?= $suffixe ?>
+                                <p>
+                            </div>
+                            <form method="get" action="voirplus.php" class="d-flex justify-content-end">
+                                <div class="d-flex">
+                                    <label for="quantite" class="mr-2 col-form-label  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">Qté:</label>
+                                    <input type="number" name="quantite" id="quantite" class=" form-control w-25  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">
+                                    <input type="number" name="id" value="<?= $tab_cafe[0]->idcafe ?>" class="d-none"/>
+                                </div>
+                                <button type="submit" class="btn btn-marron  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">Ajouter au panier</button>
+                            </form>
+                            <?php if(!isset($_SESSION['iduser'])){echo '<p> Vous devez être connecté pour ajouter des articles dans le panier</p>';} ?>
+                        </div>
+                        <div class="mb-2">
+                            <a href="javascript:history.go(-1)"><span class="btn btn-outline-success">Retour</span></a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -240,6 +240,12 @@ if (!isset($triage))
     }
 }
 
+// sert à fixer le problème du retour avec les formulaires
+if (isset($_POST['tri']))
+{
+    header('Location:nosproduits.php?indice=0?tri='.$_POST['tri']);
+}
+
 ?>
 <div class="container">
     <div class="arr_plan">
