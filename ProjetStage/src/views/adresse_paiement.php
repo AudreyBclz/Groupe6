@@ -1,6 +1,7 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+session_start();
 head();
 ?>
 <div class="container">
@@ -17,15 +18,24 @@ head();
                 </div>
             </div>
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 m-1">
-                <form method="post" action="recap.php">
+                <form method="post" action="recap.php" id="form_ad">
+
                     <div class="row custom-control custom-checkbox mb-3">
                         <input type="checkbox" name="same" id="livraison" value="same" class="custom-control-input"/>
                         <label for="livraison" class="custom-control-label">Adresse de Livraison identique à celle de facturation</label>
                     </div>
                     <div id="ad_paiement">
+                        <div class="row justify-content-between">
+                            <label for="nom" class="label">Nom :</label>
+                            <label for="prenom" class="label">Prénom :</label>
+                        </div>
+                        <div class="row justify-content-between">
+                            <input type="text" name="prenom" id="prenom" class="form-control w-45"/>
+                            <input type="text" name="nom" id="nom" class="form-control w-45">
+                        </div>
                         <div class="row">
                             <label for="adresse">Adresse :</label>
-                            <input type="text" name="adresse" id="adresse" class="form-control"/>
+                            <input type="text" name="adresse" id="adresse" class="form-control" />
                         </div>
                         <div class="row">
                             <label for="complement">Complément :</label>
@@ -41,7 +51,7 @@ head();
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" class="btn btn-marron mt-3">Suivant</button>
+                        <button type="submit" class="btn btn-marron mt-3" id="suivant">Suivant</button>
                     </div>
                 </form>
             </div>
