@@ -52,8 +52,8 @@ if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"
             $reqInsertPays->execute();
             $idpays = intval($db->lastInsertId());
         }
-            $sqlInsertCafe='INSERT INTO cafe (nomCafe,typeCafe,decafCafe,bioCafe,prixCafe,resumeCafe,descCafe,photoCafe,date_creaCafe,selectCafe,pays_idpays)
-                            VALUES(:nom,:type_c,:deca,:bio,:prix,:resume,:descr,:photo,NOW(),:select_c,:id_p)';
+            $sqlInsertCafe='INSERT INTO cafe (nomCafe,typeCafe,decafCafe,bioCafe,prixCafe,resumeCafe,descCafe,photoCafe,date_creaCafe,selectCafe,stockCafe,pays_idpays,fournisseur_idfournisseur)
+                            VALUES(:nom,:type_c,:deca,:bio,:prix,:resume,:descr,:photo,NOW(),:select_c,:stock,:id_p,:id_f)';
             $reqInsertCafe=$db->prepare($sqlInsertCafe);
             $reqInsertCafe->bindParam(':nom',$nomcafe);
             $reqInsertCafe->bindParam(':type_c',$_POST["type"]);
@@ -64,11 +64,21 @@ if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"
             $reqInsertCafe->bindParam(':descr',$description);
             $reqInsertCafe->bindParam(':photo',$_FILES["picture"]["name"]);
             $reqInsertCafe->bindParam(':select_c',$_POST['select']);
+            $reqInsertCafe->bindParam(':stock',$_POST['stock']);
             $reqInsertCafe->bindParam(':id_p',$idpays);
+            $reqInsertCafe->bindParam(':id_f',$_POST['fournisseur']);
             $reqInsertCafe->execute();
             move_uploaded_file($_FILES['picture']['tmp_name'],'../../public/img/'.basename($_FILES['picture']['name']));
             echo '<div class="alert-success p-2 text-center">Le café a bien été ajouté</div>';
         }
+}
+$sqlSelFourn='SELECT * FROM fournisseur';
+$reqSelFourn=$db->prepare($sqlSelFourn);
+$reqSelFourn->execute();
+$tab_fourn=array();
+while($data=$reqSelFourn->fetchObject())
+{
+    array_push($tab_fourn,$data);
 }
 ?>
 <div class="container">
@@ -107,8 +117,13 @@ if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label for="prix" class="labelcafe">Prix :</label>
-                        <input type="text" name="prix" id="prix" class="form-control w-30" required="required">
+                        <label for="fournisseur">Fournissseur :</label>
+                        <select name="fournisseur" id="fournisseur" class="form-control w-75">
+                            <?php foreach ($tab_fourn as $fourn)
+                            { ?>
+                                <option value="<?= $fourn->idfournisseur ?>"><?= $fourn->societeFournisseur ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
@@ -119,6 +134,16 @@ if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"
                     <div>
                         <label for="description" class="col-form-label">Description :</label>
                         <textarea name="description" id="description" class="form-control" required="required"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div>
+                            <label for="prix" class="labelcafe">Prix :</label>
+                            <input type="text" name="prix" id="prix" class="form-control w-50" required="required">
+                        </div>
+                        <div>
+                            <label for="stock" class="labelcafe">Stock :</label>
+                            <input type="text" name="stock" id="stock" class="form-control w-50" required="required">
+                        </div>
                     </div>
                     <div class="mt-3">
                         <label for="image" class="col-form-label">Photos :</label>
