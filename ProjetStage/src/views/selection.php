@@ -7,6 +7,11 @@ session_start();
 head();
 $db=connect();
 
+$url=explode('?connect=',$_SERVER['REQUEST_URI']);
+if (isset($url[1]) && $url[1]==='ok')
+{
+    echo '<div class="alert-success p-2 text-center">Bienvenue '.$_SESSION['prenom'].' '.$_SESSION['nom'].'</div>';
+}
 $sqlSelect='SELECT * FROM cafe
             INNER JOIN pays ON pays_idpays=idpays
             WHERE selectCafe=1';
@@ -58,11 +63,14 @@ if (isset($url_m[1]) && $url_m[1]=='done')
                                     <input type="text" value="selection" name="page" class="d-none"/>
                                     <button class="btn btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                                 </form>
+                                <?php if(isset($_SESSION['role']) && $_SESSION['role']==="admin")
+                                    { ?>
                                 <form method="get" action="modifcafe.php" class="form-inline">
                                     <input type="number" value="<?= $cafe_sel->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="selection" name="page" class="d-none"/>
                                     <button class="btn btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                 </form>
+                                        <?php } ?>
                             </div>
                         </div>
                         <div class="card-footer">

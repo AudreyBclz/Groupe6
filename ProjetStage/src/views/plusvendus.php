@@ -59,11 +59,14 @@ if (isset($url_m[1]) && $url_m[1]=='done')
                                     <input type="text" value="plusvendus" name="page" class="d-none"/>
                                     <button class="btn  btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                                 </form>
+                        <?php if(isset($_SESSION['role']) && $_SESSION['role']==="admin")
+                            { ?>
                                 <form method="get" action="modifcafe.php" class="form-inline">
                                     <input type="number" value="<?= $cafe->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="plusvendus" name="page" class="d-none"/>
                                     <button class="btn  btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                 </form>
+                            <?php } ?>
                             </div>
                         </div>
                         <div class="card-footer">
