@@ -1,8 +1,10 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+require_once '../models/notconnect.php';
 session_start();
 head();
+notco();
 ?>
 <div class="container">
     <div class="arr_plan justify-content-center">

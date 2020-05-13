@@ -156,4 +156,23 @@ function controle_panier(quantite)
 
 $(".quantite").on("change",function (){controle_panier(this.value);});
 
+function controle_adresse()
+{
+    if (!$('#livraison').prop('checked'))
+    {
+        var nom=document.getElementById('nom').value,
+            prenom=document.getElementById('prenom').value,
+            adresse=document.getElementById('adresse').value,
+            cp=document.getElementById('cp').value,
+            ville=document.getElementById('ville').value;
 
+        if (nom.length == 0 || prenom.length == 0 || adresse.length == 0 || cp.length == 0 || ville.length == 0)
+        {
+            alert('Adresse de livraison incomplète ou inexistante');
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+$('#suivant').on('click',controle_adresse);
