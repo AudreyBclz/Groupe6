@@ -7,6 +7,7 @@ session_start();
 head();
 $db=connect();
 
+
 if(isset($_POST['email_co']) && isset($_POST['mdp_co']))
 {
     $mail_co=htmlspecialchars(trim($_POST['email_co']));
@@ -33,11 +34,11 @@ if(isset($_POST['email_co']) && isset($_POST['mdp_co']))
     }
     if ($isOk)
     {
-        echo '<div class="alert-success p-2 text-center">Bienvenue '.$tab_mail_co[0]->prenomUsers.' '.$tab_mail_co[0]->nomUsers.'</div>';
         $_SESSION['prenom']=$tab_mail_co[0]->prenomUsers;
         $_SESSION['nom']=$tab_mail_co[0]->nomUsers;
         $_SESSION['iduser']=$tab_mail_co[0]->idUsers;
         $_SESSION['role']=$tab_mail_co[0]->roleUsers;
+        header('Location:selection.php?connect=ok');
     }
     else
     {
