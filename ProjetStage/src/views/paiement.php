@@ -1,12 +1,15 @@
 <?php
 require_once 'elements/head.php';
 require_once 'elements/footer.php';
+require_once '../models/notconnect.php';
+session_start();
 head();
+notco();
 ?>
 <div class="container m-auto">
     <div class="arr_plan">
         <h1 class="text-center titre">Paiement</h1>
-        <form method="post" action="">
+        <form method="post" action="conf_commande.php">
             <div class="row justify-content-between">
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12  align-items-center">
                     <div class="d-flex flex-column">
@@ -35,7 +38,7 @@ head();
                     <div id="coord_bancaire">
                         <label for="numero">Numéro de Carte :</label>
                         <input type="text" name="numero" id="numero" class="form-control w-75"/>
-                        <label for="crypto">Cryptogramme</label>
+                        <label for="crypto">Cryptogramme :</label>
                         <input type="number" name="crypto" id="crypto" class="form-control w-25"/>
                     </div>
                     <div>
