@@ -7,6 +7,10 @@ require_once '../models/connect.php';
 session_start();
 $db=connect();
 head();
+if(!isset($_SESSION['role']) && $_SESSION['role']!=='admin')
+{
+    header('Location:../../index.php');
+}
 
     $sqlSelCaf='SELECT * FROM cafe
                 INNER JOIN pays ON pays_idpays=idpays
@@ -52,6 +56,8 @@ isset($_POST["resume"]) && isset($_POST["description"]))
     }
 
         $sqlUp = 'UPDATE cafe SET
+            stockCafe=:stock,
+            fournisseur_idfournisseur=:fourn,
             nomCafe=:nom,
             typeCafe=:type_c,
             decafCafe=:deca,
@@ -62,10 +68,11 @@ isset($_POST["resume"]) && isset($_POST["description"]))
             photoCafe=:photo,
             date_modifCafe= NOW(),
             selectCafe=:select_c,
-            epuiseCafe=:epuise,
             pays_idpays=:id_p
             WHERE idcafe=:id_c';
         $reqUp=$db->prepare($sqlUp);
+        $reqUp->bindParam(':stock', $_POST['stock']);
+        $reqUp->bindParam(':fourn', $_POST['fournisseur']);
         $reqUp->bindParam(':nom', $nomcafe);
         $reqUp->bindParam(':type_c', $_POST["type"]);
         $reqUp->bindParam(':deca', $_POST["deca"]);
@@ -75,11 +82,26 @@ isset($_POST["resume"]) && isset($_POST["description"]))
         $reqUp->bindParam(':descr', $description);
         $reqUp->bindParam(':photo', $_FILES["image"]["name"]);
         $reqUp->bindParam('select_c', $_POST["select"]);
-        $reqUp->bindParam(':epuise', $_POST["epuise"]);
         $reqUp->bindParam(':id_p', $idpays);
         $reqUp->bindParam(':id_c', $_POST["id_c"]);
         $reqUp->execute();
         header('Location:' . $_POST['page'] . '.php?modify=done');
+}
+$sqlSelFourn='SELECT * FROM fournisseur';
+$reqSelFourn=$db->prepare($sqlSelFourn);
+$reqSelFourn->execute();
+$tab_fourn=array();
+while($data=$reqSelFourn->fetchObject())
+{
+    array_push($tab_fourn,$data);
+}
+
+function selec($value,$tri)
+{
+    if ($value == $tri)
+    {
+        echo'selected="selected"';
+    }
 }
 ?>
 <div class="container">
@@ -103,14 +125,14 @@ isset($_POST["resume"]) && isset($_POST["description"]))
                     <div>
                         <label for="type" class="labelcafe col-form-label">Type :</label>
                         <select name="type" id="type" class="form-control w-50">
-                            <option value="En grain">En grain</option>
-                            <option value="Moulu">Moulu</option>
+                            <option value="En grain"<?php selec('En grain',$cafe->typeCafe) ?>>En grain</option>
+                            <option value="Moulu"<?php selec('Moulu',$cafe->typeCafe) ?>>Moulu</option>
                         </select>
                     </div>
                     <div class="mt-3 d-flex justify-content-between">
                         <div class="form-check form-check-inline">
-                            <label for="decaffeine" class="mr-3 col-form-label">Décafféiné :</label>
-                            <input type="checkbox" value="1" id="decaffeine" name="deca" <?php if ($cafe->decafCafe ==="1"){echo'checked="checked"';} ?>>
+                            <label for="decafeine" class="mr-3 col-form-label">Décaféiné :</label>
+                            <input type="checkbox" value="1" id="decafeine" name="deca" <?php if ($cafe->decafCafe ==="1"){echo'checked="checked"';} ?>>
                         </div>
                         <div class="form-check form-check-inline">
                             <label for="bio" class="mr-3 col-form-label">Bio :</label>
@@ -121,20 +143,28 @@ isset($_POST["resume"]) && isset($_POST["description"]))
                             <input type="checkbox" name="select" value="1" id="select" <?php if ($cafe->selectCafe === "1"){echo'checked="checked"';} ?>>
                         </div>
                     </div>
+                    <div class="mt-3">
+                        <label for="fournisseur">Fournissseur :</label>
+                        <select name="fournisseur" id="fournisseur" class="form-control w-75">
+                            <?php foreach ($tab_fourn as $fourn)
+                            { ?>
+                                <option value="<?= $fourn->idfournisseur ?>"<?php selec($fourn->idfournisseur,$cafe->fournisseur_idfournisseur) ?>><?= $fourn->societeFournisseur ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                     <div class="d-flex justify-content-between">
                         <div class="mt-3">
                             <label for="prix" class="labelcafe">Prix :</label>
                             <input type="text" name="prix" value="<?= $cafe->prixCafe ?>" id="prix" class="form-control w-50" required="required">
                         </div>
                         <div class="mt-3">
-                            <div class="form-check form-check-inline">
-                                <label for="epuise" class="mr-3 col-form-label">Epuisé :</label>
-                                <input type="checkbox" value="1" name="epuise" id="epuise" <?php if ($cafe->epuiseCafe === "1"){echo'checked="checked"';} ?>>
-                            </div>
+                            <label for="stock" class="labelcafe">Stock :</label>
+                            <input type="text" name="stock" value="<?= $cafe->stockCafe ?>" id="stock" class="form-control w-50" required="required">
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                     <div>
                         <label for="resume" class="col-form-label">Résumé :</label>
                         <input type="text" name="resume" value="<?=$cafe->resumeCafe ?>" id="resume" class="form-control" required="required">
