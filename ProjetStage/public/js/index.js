@@ -9,6 +9,14 @@ function cacher()
 
 function afficher()
 {
+    if(document.body.clientHeight < screen.height)
+    {
+        $("#navigation").css('height','100vh');
+    }
+    else
+        {
+        $("#navigation").css('height', document.body.clientHeight);
+        }
     $("#navigation").removeClass("d-none");
     $("#navigation").fadeIn();
     $("#croix").show();
@@ -124,12 +132,20 @@ $("#btn_contact").on("click",controle_contact);
 function controle_cafe()
 {
     var prix=document.getElementById("prix").value;
+    var stock=document.getElementById("stock").value;
+
     var decimal=/^[0-9]{1,3}\.?[0-9]{0,2}$/;
+    var entier=/^[0-9]{1,}$/;
 
 
     if(!decimal.test(prix))
     {
-        alert('Un nombre décimal ou entier est attendu.');
+        alert('Le prix doit être un nombre décimal (2 chiffres après la virgule) ou entier, inférieur à 1000.');
+        return false;
+    }
+    if(!entier.test(stock))
+    {
+        alert('Le stock doit être un nombre entier.');
         return false;
     }
     else
