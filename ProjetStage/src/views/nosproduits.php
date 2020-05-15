@@ -1,11 +1,10 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
 $db=connect();
-head();
+
 
 $url=explode('indice=',$_SERVER['REQUEST_URI']);
 if (isset($url[1]))
@@ -243,7 +242,7 @@ if (!isset($triage))
 // sert à fixer le problème du retour avec les formulaires
 if (isset($_POST['tri']))
 {
-    header('Location:nosproduits.php?indice=0?tri='.$_POST['tri']);
+    header('Location:nosproduits?indice=0?tri='.$_POST['tri']);
 }
 
 ?>
@@ -254,7 +253,7 @@ if (isset($_POST['tri']))
     </div>
         <div class="row m-auto">
             <div class="col-6 text-center">
-                <form action="nosproduits.php" method="post" class="form-inline mb-3">
+                <form action="nosproduits" method="post" class="form-inline mb-3">
                     <label for="trier" class="mr-1">Trier par :</label>
                     <select name="tri" id="trier" class="form-control-sm">
                         <option value="tous"<?php selec("tous",$triage) ?>>Tous les produits</option>
@@ -285,9 +284,10 @@ if (isset($_POST['tri']))
                             $suffixe=' le paquet de 250g';
                         }
                     ?>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 ">
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                     <div class="card h-100 panneau">
-                        <img src="../../public/img/<?= $cafe->photoCafe ?>" class="card-img-top h-50" alt="...">
+                        <?php if($cafe->stockCafe==0){echo'<img src="public/img/epuise.png" class="card-img-top h-50">' ;
+                        }else{ ?><img src="public/img/<?= $cafe->photoCafe ?>" class="card-img-top h-50" alt="..."><?php ;} ?>
                         <div class="card-body bg-marron2 d-flex flex-column justify-content-between">
                             <div>
                                 <h4 class="card-title"><?= $cafe->nomCafe ?></h4>
@@ -298,14 +298,14 @@ if (isset($_POST['tri']))
                             </div>
                             <p class="card-text"><?= $cafe->resumeCafe ?></p>
                             <div class="d-flex justify-content-between">
-                                <form method="get" action="voirplus.php" class="form-inline">
+                                <form method="get" action="detail" class="form-inline">
                                     <input type="number" value="<?= $cafe->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="nosproduits" name="page" class="d-none"/>
                                     <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                                 </form>
                         <?php if(isset($_SESSION['role']) && $_SESSION['role']==="admin")
                                 { ?>
-                                <form method="get" action="modifcafe.php" class="form-inline">
+                                <form method="get" action="modification" class="form-inline">
                                     <input type="number" value="<?= $cafe->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="nosproduits" name="page" class="d-none"/>
                                     <button class="btn btn-sm btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
@@ -327,12 +327,10 @@ if (isset($_POST['tri']))
             <ul class="pagination">
                 <?php for($i=1;$i<=$nbPage;$i++)
                 { ?>
-                        <li class="page-item"><a class="page-link" href="nosproduits.php?indice=<?= ($i-1)*3 ?>?tri=<?= $triage ?>
+                        <li class="page-item"><a class="page-link" href="nosproduits?indice=<?= ($i-1)*3 ?>?tri=<?= $triage ?>
                            "><?= $i ?></a></li>
                 <?php } ?>
             </ul>
         </nav>
     </div>
 </div>
-<?php
-footer();

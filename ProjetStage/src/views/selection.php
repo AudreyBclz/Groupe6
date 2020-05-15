@@ -1,10 +1,8 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
-head();
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
+
 $db=connect();
 
 $url=explode('?connect=',$_SERVER['REQUEST_URI']);
@@ -47,7 +45,7 @@ if (isset($url_m[1]) && $url_m[1]=='done')
                         ?>
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3">
                     <div class="card h-100 panneau m-1">
-                        <img src="../../public/img/<?= $cafe_sel->photoCafe ?>" class="card-img-top h-50" alt="...">
+                        <?php if($cafe_sel->stockCafe==0){echo'<img class="card-img-top h-50" src="public/img/epuise.png">' ;}else{ ?><img src="public/img/<?= $cafe_sel->photoCafe ?>" class="card-img-top h-50" alt="..."><?php ;} ?>
                         <div class="card-body bg-marron2 d-flex flex-column justify-content-between">
                             <div>
                                 <h4 class="card-title"><?= $cafe_sel->nomCafe ?></h4>
@@ -58,14 +56,14 @@ if (isset($url_m[1]) && $url_m[1]=='done')
                             </div>
                             <p class="card-text"><?= $cafe_sel->resumeCafe ?></p>
                             <div class="d-flex justify-content-between">
-                                <form method="get" action="voirplus.php" class="form-inline">
+                                <form method="get" action="detail" class="form-inline">
                                     <input type="number" value="<?= $cafe_sel->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="selection" name="page" class="d-none"/>
                                     <button class="btn btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                                 </form>
                                 <?php if(isset($_SESSION['role']) && $_SESSION['role']==="admin")
                                     { ?>
-                                <form method="get" action="modifcafe.php" class="form-inline">
+                                <form method="get" action="modification" class="form-inline">
                                     <input type="number" value="<?= $cafe_sel->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                     <input type="text" value="selection" name="page" class="d-none"/>
                                     <button class="btn btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
@@ -83,5 +81,4 @@ if (isset($url_m[1]) && $url_m[1]=='done')
         </div>
     </div>
 </div>
-<?php
-footer();
+

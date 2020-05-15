@@ -1,10 +1,9 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
-head();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
+
 $db=connect();
 
 $sqlSelCaf='SELECT * FROM cafe
@@ -103,8 +102,7 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
 
                 <div class="row justify-content-between">
                     <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mb-3">
-                        <img src="../../public/img/<?= $tab_cafe[0]->photoCafe ?>" class="panneau w-100 bg-light rounded"
-                             alt="...">
+                        <?php if($tab_cafe[0]->stockCafe==0){echo'<img class="panneau w-100 bg-light rounded" src="public/img/epuise.png">' ;}else{ ?><img src="public/img/<?= $tab_cafe[0]->photoCafe ?>" class="panneau w-100 bg-light rounded" alt="..."><?php ;} ?>
                         <div class="d-flex justify-content-between mt-3">
                             <p><span>Pays:</span><span
                                         class="p-2 m-1 rounded bg-wheat font-weight-bold"><?= $tab_cafe[0]->nomPays ?></span>
@@ -117,10 +115,10 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3 d-flex flex-column justify-content-between">
                         <div>
                             <div class="d-flex justify-content-between mb-3 ">
-                                <img src="../../public/img/deca.png" class="w-25 <?php if ($tab_cafe[0]->decafCafe !== "1") {
+                                <img src="public/img/deca.png" class="w-25 <?php if ($tab_cafe[0]->decafCafe !== "1") {
                                     echo 'invisible';
                                 } ?>">
-                                <img src="../../public/img/bio.png" class="w-50 <?php if ($tab_cafe[0]->bioCafe !== "1") {
+                                <img src="public/img/bio.png" class="w-50 <?php if ($tab_cafe[0]->bioCafe !== "1") {
                                     echo 'invisible';
                                 } ?>">
                             </div>
@@ -132,13 +130,13 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
                                 <p>Prix:<span class="font-weight-bold p-2"><?= $tab_cafe[0]->prixCafe ?>€</span><?= $suffixe ?>
                                 <p>
                             </div>
-                            <form method="get" action="voirplus.php" class="d-flex justify-content-end">
+                            <form method="get" action="detail" class="d-flex justify-content-end">
                                 <div class="d-flex">
-                                    <label for="quantite" class="mr-2 col-form-label  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">Qté:</label>
-                                    <input type="number" name="quantite" id="quantite" class=" form-control w-25  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">
+                                    <label for="quantite" class="mr-2 col-form-label  <?php if(!isset($_SESSION['iduser']) || $tab_cafe[0]->stockCafe==0){echo'd-none';} ?>">Qté:</label>
+                                    <input type="number" name="quantite" id="quantite" class=" form-control w-25  <?php if(!isset($_SESSION['iduser'])|| $tab_cafe[0]->stockCafe==0){echo'd-none';} ?>">
                                     <input type="number" name="id" value="<?= $tab_cafe[0]->idcafe ?>" class="d-none"/>
                                 </div>
-                                <button type="submit" class="btn btn-marron  <?php if(!isset($_SESSION['iduser'])){echo'd-none';} ?>">Ajouter au panier</button>
+                                <button type="submit" class="btn btn-marron  <?php if(!isset($_SESSION['iduser'])|| $tab_cafe[0]->stockCafe==0){echo'd-none';} ?>">Ajouter au panier</button>
                             </form>
                             <?php if(!isset($_SESSION['iduser'])){echo '<p> Vous devez être connecté pour ajouter des articles dans le panier</p>';} ?>
                         </div>
@@ -149,6 +147,3 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
                 </div>
             </div>
         </div>
-
-        <?php
-footer();
