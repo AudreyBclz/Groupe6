@@ -1,13 +1,15 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
-head();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
 $db=connect();
 
-if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"]) && isset($_POST["prix"]) &&
+if(!isset($_SESSION['role']) && $_SESSION['role']!=="admin")
+{
+    header('Location:accueil');
+}
+elseif (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"]) && isset($_POST["prix"]) &&
     isset($_POST["resume"]) && isset($_POST["description"]))
 {
     $nomcafe=htmlspecialchars(trim($_POST["nomCafe"]));
@@ -68,7 +70,7 @@ if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"
             $reqInsertCafe->bindParam(':id_p',$idpays);
             $reqInsertCafe->bindParam(':id_f',$_POST['fournisseur']);
             $reqInsertCafe->execute();
-            move_uploaded_file($_FILES['picture']['tmp_name'],'../../public/img/'.basename($_FILES['picture']['name']));
+            move_uploaded_file($_FILES['picture']['tmp_name'],'public/img/'.basename($_FILES['picture']['name']));
             echo '<div class="alert-success p-2 text-center">Le café a bien été ajouté</div>';
         }
 }
@@ -84,7 +86,7 @@ while($data=$reqSelFourn->fetchObject())
 <div class="container">
     <div class="arr_plan justify-content-center">
         <h1 class="text-center titre">Admin: Ajout Café</h1>
-        <form method="post" action="ajoutcafe.php" enctype="multipart/form-data">
+        <form method="post" action="ajoutCafe" enctype="multipart/form-data">
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                     <div >
@@ -156,9 +158,8 @@ while($data=$reqSelFourn->fetchObject())
             </div>
         </form>
         <div class="text-center">
-            <img src="../../public/img/cafe-vrac.png" class="w-25"/>
+            <img src="public/img/cafe-vrac.png" class="w-25"/>
         </div>
     </div>
 </div>
-<?php
-footer();
+

@@ -1,9 +1,8 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
 $db=connect();
 
 if (isset($_POST['societe']) && isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) && isset($_POST["mdp"])
@@ -96,13 +95,12 @@ if (isset($_POST['societe']) && isset($_POST["nom"]) && isset($_POST["prenom"]) 
         }
     }
 }
-head();
 ?>
     <div class="container mx-auto">
         <div class="arr_plan row justify-content-center">
             <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 d-flex flex-column">
                 <h1 class="text-center titre">Admin: Inscription fournisseur</h1>
-                <form method="post" action="inscription_fournisseur.php" class="m-1" id="form_inscription">
+                <form method="post" action="ajout_fournisseur" class="m-1" id="form_inscription">
                     <div class="row">
                         <label for="societe">Nom de la société :</label>
                         <input type="text" name="societe" id="societe" class="form-control">
@@ -157,9 +155,7 @@ head();
                     </div>
                 </form>
                 <div class="container text-center m-0">
-                    <img src="../../public/img/tasseCafe.png" id="logo">
+                    <img src="public/img/tasseCafe.png" id="logo">
                 </div>
             </div>
         </div>
-<?php
-footer();

@@ -1,12 +1,11 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require'../../vendor/autoload.php';
-session_start();
-head();
+require'vendor/autoload.php';
+
+
 
 if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && isset($_POST['message']))
 {
@@ -47,7 +46,7 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && i
     </div>
     <div class="row m-auto">
         <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex flex-column">
-            <form method="post" action="contact.php" id="form_contact">
+            <form method="post" action="contact" id="form_contact">
                 <div class="row">
                     <label for="nom">Nom :</label>
                     <input type="text" name="nom" id="nom" class="form-control"required="required"/>
@@ -77,5 +76,4 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && i
         </div>
     </div>
 </div>
-<?php
-footer();
+

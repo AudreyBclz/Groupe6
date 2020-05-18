@@ -1,12 +1,11 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notconnect.php';
-session_start();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
+
 $db=connect();
-head();
+
 notco();
 
 if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) && isset($_POST['codePost']) && isset($_POST['ville'])) {
@@ -164,15 +163,12 @@ while ($data = $reqSelPan->fetchObject()) {
     </div>
     <div class="row">
         <div class="col-xl-5=7 col-lg-7 col-md-12 col-sm-12 d-flex justify-content-between">
-            <a href="paiement.php" class="btn btn-marron">Confirmer</a>
-            <button type="button" class="btn btn-marron">Annuler</button>
+            <a href="paiement" class="btn btn-marron">Confirmer</a>
+            <a href="selection" class="btn btn-marron">Annuler</a>
         </div>
     </div>
     <div class="row justify-content-center">
-        <img src="../../public/img/ter_paiement.png" class="w-50">
+        <img src="public/img/ter_paiement.png" class="w-50">
     </div>
 
     </div>
-    <?php
-
-footer();

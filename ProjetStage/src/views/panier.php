@@ -1,11 +1,10 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-session_start();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+
 $db=connect();
-head();
+
 
 $url=explode('action=',$_SERVER['REQUEST_URI']);
 if (isset($url[1]))
@@ -26,7 +25,7 @@ if (isset($url[1]))
 if ((!(isset($_SESSION['nom']) && isset($_SESSION['prenom']) && isset($_SESSION['iduser']) && isset($_SESSION['role']))))
 {
     echo '<p class="row justify-content-center align-items-center mt-5"> Vous devez être connecté pour voir votre panier :
-            <a href="connexion.php" class="btn btn-marron">Connexion</a></p>';
+            <a href="connexion&ins" class="btn btn-marron">Connexion</a></p>';
 }
 else {
     $cpteArticle = 'SELECT COUNT(*) as nbarticle FROM panier
@@ -71,8 +70,8 @@ else {
         ?>
         <div class="container">
             <div class="arr_plan justify-content-center">
-                <h1 class="text-center titre"><img src="../../public/img/panier.png">Mon panier<img
-                        src="../../public/img/panier.png"></h1>
+                <h1 class="text-center titre"><img src="public/img/panier.png">Mon panier<img
+                        src="public/img/panier.png"></h1>
                 <div class="row">
 
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 m-auto">
@@ -86,7 +85,7 @@ else {
                             </tr>
                             </thead>
                             <tbody>
-                            <form method="post" action="panier.php" id="form_panier">
+                            <form method="post" action="monpanier" id="form_panier">
                             <?php if (empty($tab_pan)) { ?>
                                 <tr>
                                     <td colspan="4">Votre panier est vide</td>
@@ -106,7 +105,7 @@ else {
                                                        value="<?= intval($article->quantite) ?>" maxlength="3"
                                                        class="w-30 quantite text-center rounded">
                                         </td>
-                                        <td scope="col"><a href="panier.php?action=delete?id=<?= $article->idcafe ?>"><img src="../../public/img/poubelle.png"></a></td>
+                                        <td scope="col"><a href="monpanier?action=delete?id=<?= $article->idcafe ?>"><img src="public/img/poubelle.png"></a></td>
                                         <td scope="col"><?= $total ?>€</td>
                                     </tr>
                                 <?php } ?>
@@ -122,14 +121,12 @@ else {
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex flex-column justify-content-between">
                         <div class=" d-flex justify-content-between">
-                            <a href="selection.php" class="btn btn-marron">Poursuivre mes achats</a>
-                            <a href="adresse_paiement.php" class="btn btn-marron <?php if(empty($tab_pan)){echo'd-none';} ?>">Commander</a>
+                            <a href="selection" class="btn btn-marron">Poursuivre mes achats</a>
+                            <a href="livraison" class="btn btn-marron <?php if(empty($tab_pan)){echo'd-none';} ?>">Commander</a>
                         </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
-    }
-footer();
+<?php } ?>

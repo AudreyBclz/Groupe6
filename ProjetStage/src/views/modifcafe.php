@@ -1,15 +1,13 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
 
-session_start();
+
 $db=connect();
-head();
+
 if(!isset($_SESSION['role']) && $_SESSION['role']!=='admin')
 {
-    header('Location:../../index.php');
+    header('Location:accueil');
 }
 
     $sqlSelCaf='SELECT * FROM cafe
@@ -85,7 +83,13 @@ isset($_POST["resume"]) && isset($_POST["description"]))
         $reqUp->bindParam(':id_p', $idpays);
         $reqUp->bindParam(':id_c', $_POST["id_c"]);
         $reqUp->execute();
-        header('Location:' . $_POST['page'] . '.php?modify=done');
+        if($_POST['page']==="plusvendus") {
+            header('Location:lesplusvendus?modify=done');
+        }
+        else
+        {
+            header('Location:'.$_POST["page"].'?modify=done');
+        }
 }
 $sqlSelFourn='SELECT * FROM fournisseur';
 $reqSelFourn=$db->prepare($sqlSelFourn);
@@ -107,7 +111,7 @@ function selec($value,$tri)
 <div class="container">
     <div class="arr_plan justify-content-center">
         <h1 class="text-center titre">Admin: Modification Café</h1>
-        <form method="post" action="modifcafe.php" enctype="multipart/form-data">
+        <form method="post" action="modification" enctype="multipart/form-data">
             <div class="row justify-content-between">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                     <?php foreach ($tab_caf as $cafe)
@@ -185,9 +189,8 @@ function selec($value,$tri)
             </div>
         </form>
         <div class="text-center">
-            <img src="../../public/img/cafe-vrac.png" class="w-25"/>
+            <img src="public/img/cafe-vrac.png" class="w-25"/>
         </div>
     </div>
 </div>
-<?php
-footer();
+

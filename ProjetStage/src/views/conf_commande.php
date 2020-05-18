@@ -1,11 +1,10 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../config/config.php';
-require_once '../models/connect.php';
-require_once '../models/notconnect.php';
-session_start();
-head();
+
+require_once 'src/config/config.php';
+require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
+
+
 notco();
 $db=connect();
 $sqlSelPan = 'SELECT * FROM panier
@@ -51,6 +50,6 @@ $reqDelPan=$db->prepare($sqlDelPan);
 $reqDelPan->execute();
 
 echo'<div class="alert-success p-5 m-auto text-center"> Votre Commande a bien été enregistrée, Merci de votre confiance.</div>';
-footer();
+
 
 

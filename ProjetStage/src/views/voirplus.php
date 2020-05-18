@@ -100,7 +100,7 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
             <div class="arr_plan row justify-content-center">
                 <h1 class="text-center titre"><?= $tab_cafe[0]->nomCafe ?></h1>
 
-                <div class="row justify-content-between">
+                <div class="row justify-content-between align-items-center">
                     <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mb-3">
                         <?php if($tab_cafe[0]->stockCafe==0){echo'<img class="panneau w-100 bg-light rounded" src="public/img/epuise.png">' ;}else{ ?><img src="public/img/<?= $tab_cafe[0]->photoCafe ?>" class="panneau w-100 bg-light rounded" alt="..."><?php ;} ?>
                         <div class="d-flex justify-content-between mt-3">

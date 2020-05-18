@@ -11,7 +11,7 @@ function head()
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="public/css/index.css">
-    <link rel="stylesheet" href="../../public/css/index.css">
+
 
     <title></title>
 </head>
@@ -20,37 +20,55 @@ function head()
     <nav class="bg-marron navbar-light text-center d-none" id="navigation" role="navigation">
         <div class="h-100 d-flex flex-column justify-content-between" id="navbarNav">
             <div>
-                <a class="navbar-brand" href="../../index.php"><img src="../../public/img/tasseCafe64.png"></a>
+                <a class="navbar-brand" href="accueil"><img src="public/img/tasseCafe64.png"></a>
                 <ul class="nav navbar-light flex-column">
+                    <?php if(isset($_SESSION['nom']) && isset($_SESSION['prenom']))
+                        { ?>
+                    <li class="mb-5 mt-1">
+                        <span class=" text-light font-weight-bold">Bonjour <?= $_SESSION['prenom'].' '.$_SESSION['nom'] ?></span>
+                    </li>
+                            <?php } ?>
+                    <?php if(isset($_SESSION['iduser']))
+                        { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="panier.php">Mon panier</a>
+                        <a class="nav-link" href="monpanier">Mon panier</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="connexion.php">Connexion<span class="d-none d-lg-block m-0">/Inscription</span></a>
+                        <a class="nav-link" href="historique_commande">Historique des commandes</a>
+                    </li>
+                            <?php }
+                            if(!isset($_SESSION['iduser']))
+                                { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="connexion&ins">Connexion<span class="d-none d-lg-block m-0">/Inscription</span></a>
                     </li>
                     <li class="nav-item d-lg-none">
-                        <a class="nav-link" href="inscription.php">Inscription</a>
+                        <a class="nav-link" href="inscription">Inscription</a>
+                    </li>
+                                <?php } ?>
+                    <li class="nav-item">
+                        <a class=" nav-link active" href="selection">Sélection de la semaine</a>
                     </li>
                     <li class="nav-item">
-                        <a class=" nav-link active" href="selection.php">Sélection de la semaine</a>
+                        <a class="nav-link" href="lesplusvendus">Les + vendus</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="plusvendus.php">Les + vendus</a>
+                        <a class="nav-link" href="nosproduits">Tous nos produits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="nosproduits.php">Tous nos produits</a>
+                        <a class="nav-link" href="contact">Contact</a>
+                    </li>
+                    <?php if(isset($_SESSION['role']) && $_SESSION['role']==='admin')
+                        { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ajoutCafe">Ajout Café</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link" href="ajout_fournisseur">Ajout fournisseur</a>
                     </li>
+                            <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="ajoutcafe.php">Ajout Café</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="modifcafe.php">Modification Café</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Déconnexion</a>
+                        <a class="nav-link" href="deconnexion">Déconnexion</a>
                     </li>
                 </ul>
             </div>
@@ -62,7 +80,7 @@ SARL Paradise Coffee<br/>
 </li>
                 <li class="nav-item text-light">
 Contact:<br/>
-                    paradise.coffee@aol.fr
+                    06-05-04-03-02
 </li>
             </ul>
         </div>

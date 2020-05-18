@@ -68,7 +68,7 @@ $total=0;
                                 {
                                     $total=$total+$achat->quantite * $achat->prixCafe; ?>
                                         <tr>
-                                            <td class="bg-wheat"><a href="voirplus.php?id=<?= $achat->idcafe ?>" class="text-dark"> <?= $achat->nomCafe ?></a></td>
+                                            <td class="bg-wheat"><a href="detail?id=<?= $achat->idcafe ?>" class="text-dark"> <?= $achat->nomCafe ?></a></td>
                                             <td class="bg-wheat"><?= $achat->quantite ?></td>
                                             <td class="bg-wheat"><?= $achat->quantite * $achat->prixCafe ?>€</td>
                                         </tr>
@@ -133,7 +133,7 @@ $total=0;
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="bg-wheat"><a class="text-dark" href="voirplus.php?id=<?= $achat->idcafe ?>"><?= $achat->nomCafe ?></a></td>
+                                            <td class="bg-wheat"><a class="text-dark" href="detail?id=<?= $achat->idcafe ?>"><?= $achat->nomCafe ?></a></td>
                                             <td class="bg-wheat"><?= $achat->quantite ?></td>
                                             <td class="bg-wheat"><?= $achat->quantite * $achat->prixCafe ?>€</td>
                                             <?php $total=$total+$achat->quantite * $achat->prixCafe?>

@@ -1,9 +1,8 @@
 <?php
-require_once 'elements/head.php';
-require_once 'elements/footer.php';
-require_once '../models/notconnect.php';
-session_start();
-head();
+
+require_once 'src/models/notconnect.php';
+
+
 notco();
 ?>
 <div class="container">
@@ -15,12 +14,12 @@ notco();
                     Adresse de Facturation: Celle du compte
                 </div>
                 <div class="d-flex flex-column mb-5">
-                    <img src="../../public/img/camion.png" class="w-30"/>
-                    <img src="../../public/img/Colissimo.png" class="w-30">
+                    <img src="public/img/camion.png" class="w-30"/>
+                    <img src="public/img/Colissimo.png" class="w-30">
                 </div>
             </div>
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 m-1">
-                <form method="post" action="recap.php" id="form_ad">
+                <form method="post" action="recapitulatif" id="form_ad">
 
                     <div class="row custom-control custom-checkbox mb-3">
                         <input type="checkbox" name="same" id="livraison" value="same" class="custom-control-input"/>
@@ -60,5 +59,4 @@ notco();
         </div>
     </div>
 </div>
-<?php
-footer();
+
