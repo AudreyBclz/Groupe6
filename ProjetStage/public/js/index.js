@@ -105,6 +105,33 @@ function controle_inscription()
 }
 $("#inscription").on("click",controle_inscription);
 
+function code_postal()
+{
+    var cp=document.getElementById("codePost").value;
+    if (cp==13000)
+    {
+        document.getElementById("option").value="Marseille";
+        document.getElementById("option").innerText="Marseille";
+        document.getElementById("pays").value="France";
+    }
+    else if (cp==75000) {
+        document.getElementById("option").value="Paris";
+        document.getElementById("option").innerText = "Paris";
+        document.getElementById("pays").value="France";
+    }
+    else if(cp==69000) {
+        document.getElementById("option").value="Lyon";
+        document.getElementById("option").innerText="Lyon";
+        document.getElementById("pays").value="France";
+    }
+    else{
+        $("#form_ins").submit();
+    }
+}
+$("#codePost").on("change",code_postal);
+
+
+
 function controle_contact()
 {
     var cp=document.getElementById("codePost").value;
