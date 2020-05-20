@@ -8,19 +8,23 @@ $db=connect();
 
 notco();
 
-if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) && isset($_POST['codePost']) && isset($_POST['ville'])) {
+if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) && isset($_POST['codePost']) && isset($_POST['ville']) && isset($_POST['pays']))
+{
+    $pays=htmlspecialchars(trim($_POST['pays']));
     $nom = htmlspecialchars(trim($_POST['nom']));
     $prenom = htmlspecialchars(trim($_POST['prenom']));
     $adresse = htmlspecialchars(trim($_POST['adresse']));
     $complement = htmlspecialchars(trim($_POST['complement']));
     $ville = htmlspecialchars(trim($_POST['ville']));
     $sqlSelAd = 'SELECT idadresse FROM adresse
+                INNER JOIN pays ON pays_idpays=idpays
                 WHERE adresse1=:ad
                 AND adressePrenom=:prenom
                 AND adresseNom=:nom
                 AND adresse2=:ad2
                 AND adresseCP=:cp
-                AND adresseVille=:ville';
+                AND adresseVille=:ville
+                AND nomPays=:pays';
     $reqSelAd = $db->prepare($sqlSelAd);
     $reqSelAd->bindParam(':prenom', $prenom);
     $reqSelAd->bindParam(':nom', $nom);
@@ -28,6 +32,7 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) 
     $reqSelAd->bindParam(':ad2', $complement);
     $reqSelAd->bindParam(':cp', $_POST['codePost']);
     $reqSelAd->bindParam(':ville', $ville);
+    $reqSelAd->bindParam(':pays',$pays);
     $reqSelAd->execute();
     $tab_ad = array();
     while ($data = $reqSelAd->fetchObject()) {
@@ -36,15 +41,38 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) 
     if (!empty($tab_ad)) {
         $idAd = intval($tab_ad[0]->idadresse);
     } else {
-        $sqlInsAd = 'INSERT INTO adresse (adressePrenom, adresseNom,adresse1,adresse2,adresseCP,adresseVille)
-                    VALUES (:prenom,:nom,:ad1,:ad2,:cp,:ville)';
+        $sqlSelPays='SELECT idpays FROM pays
+                     WHERE nomPays=:pays';
+        $reqSelPays=$db->prepare($sqlSelPays);
+        $reqSelPays->bindParam(':pays',$pays);
+        $reqSelPays->execute();
+        $tab_pays=array();
+        while($data=$reqSelPays->fetchObject())
+        {
+            array_push($tab_pays,$data);
+        }
+        if(!empty($tab_pays))
+        {
+            $idPays=intval($tab_pays[0]->idpays);
+        }
+        else
+        {
+            $sqlInsPays='INSERT INTO pays (nomPays) VALUES (:pays)';
+            $reqInsPays=$db->prepare($sqlInsPays);
+            $reqInsPays->bindParam(':pays',$pays);
+            $reqInsPays->execute();
+            $idPays=intval($db->lastInsertId());
+        }
+        $sqlInsAd = 'INSERT INTO adresse (adressePrenom, adresseNom,adresse1,adresse2,adresseCP,adresseVille,pays_idpays)
+                    VALUES (:prenom,:nom,:ad1,:ad2,:cp,:ville,:id_p)';
         $reqInsAd = $db->prepare($sqlInsAd);
-        $reqInsAd->bindParam(':nom', $nom);
         $reqInsAd->bindParam(':prenom', $prenom);
+        $reqInsAd->bindParam(':nom', $nom);
         $reqInsAd->bindParam(':ad1', $adresse);
         $reqInsAd->bindParam(':ad2', $complement);
         $reqInsAd->bindParam(':cp', $_POST['codePost']);
         $reqInsAd->bindParam(':ville', $ville);
+        $reqInsAd->bindParam(':id_p',$idPays);
         $reqInsAd->execute();
         $idAd = intval($db->lastInsertId());
     }

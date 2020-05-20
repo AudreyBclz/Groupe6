@@ -31,8 +31,8 @@ notco();
                             <label for="prenom" class="label">Prénom :</label>
                         </div>
                         <div class="row justify-content-between">
-                            <input type="text" name="prenom" id="prenom" class="form-control w-45"/>
                             <input type="text" name="nom" id="nom" class="form-control w-45">
+                            <input type="text" name="prenom" id="prenom" class="form-control w-45"/>
                         </div>
                         <div class="row">
                             <label for="adresse">Adresse :</label>
@@ -47,8 +47,14 @@ notco();
                             <label for="ville" class="label">Ville :</label>
                         </div>
                         <div class="row justify-content-between">
-                            <input type="number" name="codePost" id="cp" class="form-control w-30" />
+                            <input type="text" name="codePost" id="cp" class="form-control w-30" />
                             <input type="text" name="ville" id="ville" class="form-control w-45" />
+                        </div>
+                        <div class="row">
+                            <label for="pays">Pays :</label>
+                        </div>
+                        <div class="row">
+                            <input type="text" name="pays" id="pays" class="form-control w-45"/>
                         </div>
                     </div>
                     <div class="row">
