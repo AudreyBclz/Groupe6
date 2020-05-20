@@ -23,13 +23,16 @@ while($data=$reqCommande->fetchObject())
 {
     array_push($tab_commande,$data);
 }
+
  if(isset($tab_commande[0]))
  {
      $date=$tab_commande[0]->date_c;
+     $date_avt=$tab_commande[0]->dateCommande; //date utile pour récupérer la livraison
  }
-$total=0;
+$total=0; //déclaration globale du total pour le récupérer en sortant de la boucle
  $sqlFac='SELECT * FROM users
           INNER JOIN adresse ON adresse_idadresse=idadresse
+          INNER JOIN pays ON pays_idpays=idpays
           WHERE idUsers=:id';
  $reqFac=$db->prepare($sqlFac);
  $reqFac->bindParam(':id',$_SESSION['iduser']);
@@ -66,13 +69,26 @@ $total=0;
                             {
                                 if ($achat->date_c === $date)
                                 {
-                                    $total=$total+$achat->quantite * $achat->prixCafe; ?>
+                                   $total=$total+$achat->quantite * $achat->prixCafe; ?>
                                         <tr>
                                             <td class="bg-wheat"><a href="detail?id=<?= $achat->idcafe ?>" class="text-dark"> <?= $achat->nomCafe ?></a></td>
                                             <td class="bg-wheat"><?= $achat->quantite ?></td>
                                             <td class="bg-wheat"><?= $achat->quantite * $achat->prixCafe ?>€</td>
                                         </tr>
-                                        <?php $date=$achat->date_c; } else { ?>
+                                        <?php $date=$achat->date_c; }
+                                            else{ $sqlLiv='SELECT * FROM commande
+                                                            INNER JOIN adresse ON adresse_idadresse=idadresse
+                                                            INNER JOIN pays ON pays_idpays=idpays
+                                                            WHERE dateCommande=:date_co';
+                                            $reqLiv=$db->prepare($sqlLiv);
+                                            $reqLiv->bindParam(':date_co',$date_avt);
+                                            $reqLiv->execute();
+                                            $tab_liv=array();
+                                            while($data=$reqLiv->fetchObject())
+                                            {
+                                                array_push($tab_liv,$data);
+                                            }
+                                    ?>
                                             <tr>
                                                 <th class="bg-wheat"></th>
                                                 <th class="bg-wheat">Total</th>
@@ -89,31 +105,32 @@ $total=0;
                                                 <?= $tab_Fac[0]->adresse1 ?><br/>
                                                 <?php if (strlen($tab_Fac[0]->adresse2)!==0) {
                                                     echo $tab_Fac[0]->adresse2 . '<br/>';}
-                                                echo $tab_Fac[0]->adresseCP . ' ' . $tab_Fac[0]->adresseVille; ?>
+                                                echo $tab_Fac[0]->adresseCP . ' ' . $tab_Fac[0]->adresseVille.'<br>'.$tab_Fac[0]->nomPays ; ?>
                                             </div>
                                             <div>
                                                 <span class="font-weight-bold">Adresse de Livraison:</span><br/>
-                                                <?php if (isset($achat->adressePrenom))
-                                                {
-                                                    echo $achat->adressePrenom.' ';
-                                                }else
-                                                {
-                                                    echo $tab_Fac[0]->prenomUsers.' ';
-                                                }
-                                                if (isset($achat->adresseNom))
-                                                {
-                                                    echo $achat->adresseNom;
-                                                }
-                                                else
-                                                {
-                                                    echo $tab_Fac[0]->nomUsers;
-                                                }
+                                                <?php if(isset($tab_liv[0]->adressePrenom))
+                                                    {
+                                                        echo $tab_liv[0]->adressePrenom.' ';
+                                                    }
+                                                    else
+                                                        {
+                                                            echo $tab_Fac[0]->prenomUsers.' ';
+                                                        }
+                                                    if(isset($tab_liv[0]->adresseNom))
+                                                        {
+                                                            echo $tab_liv[0]->adresseNom;
+                                                        }
+                                                    else
+                                                        {
+                                                            echo $tab_Fac[0]->nomUsers;
+                                                        }
                                                 ?><br/>
-                                                <?= $achat->adresse1 ?><br/>
-                                                <?php if (strlen($achat->adresse2) !== 0) {
-                                                    echo $achat->adresse2 . '<br/>';
+                                                <?= $tab_liv[0]->adresse1 ?><br/>
+                                                <?php if (strlen($tab_liv[0]->adresse2) !== 0) {
+                                                    echo $tab_liv[0]->adresse2 . '<br/>';
                                                 }
-                                                echo $achat->adresseCP . ' ' . $achat->adresseVille; ?>
+                                                echo $tab_liv[0]->adresseCP . ' ' . $tab_liv[0]->adresseVille; ?>
                                             </div>
                                         </div>
                                             <?php $total=0; ?>
@@ -139,7 +156,8 @@ $total=0;
                                             <?php $total=$total+$achat->quantite * $achat->prixCafe?>
                                         </tr>
 
-<?php  $date=$achat->date_c;}
+<?php  $date=$achat->date_c;
+       $date_avt=$achat->dateCommande; }
 } ?>
                                         <tr>
                                             <th class="bg-wheat"></th>
@@ -157,7 +175,7 @@ $total=0;
                                             <?= $tab_Fac[count($tab_Fac)-1]->adresse1 ?><br/>
                                             <?php if (strlen($tab_Fac[count($tab_Fac)-1]->adresse2)!==0) {
                                                 echo $tab_Fac[count($tab_Fac)-1]->adresse2 . '<br/>';}
-                                            echo $tab_Fac[count($tab_Fac)-1]->adresseCP . ' ' . $tab_Fac[count($tab_Fac)-1]->adresseVille; ?>
+                                            echo $tab_Fac[count($tab_Fac)-1]->adresseCP . ' ' . $tab_Fac[count($tab_Fac)-1]->adresseVille.'<br>'.$tab_Fac[count($tab_Fac)-1]->nomPays; ?>
                                         </div>
                                         <div>
                                             <span class="font-weight-bold">Adresse de Livraison:</span><br/>
@@ -188,4 +206,5 @@ $total=0;
                                     </div>
                                 </div>
                                                  <?php   }
+
 
