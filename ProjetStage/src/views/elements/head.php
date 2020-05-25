@@ -66,6 +66,9 @@ function head()
                     <li class="nav-item">
                         <a class="nav-link" href="ajout_fournisseur">Ajout fournisseur</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dateLivraison">Mettre en livraison les commandes</a>
+                    </li>
                             <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="deconnexion">Déconnexion</a>
