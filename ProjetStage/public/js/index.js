@@ -67,8 +67,8 @@ function controle_inscription()
     var email_conf=document.getElementById("conf_email").value;
     var mdp=document.getElementById("mdp").value;
     var conf_mdp=document.getElementById("conf_mdp").value;
-    var test_mdp=/^[a-zA-Z0-9.-_]*[A-Z]{1}[a-zA-Z0-9.-_]*$/;
-    var test_mail=/^[a-zA-Z]{1}[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-z]{2,6}$/;
+    var test_mdp=/^[a-zA-Z0-9.-_*/&é"'êîïùèçà@]*[A-Z]{1}[a-zA-Z0-9.-_*/&é"'êîïùèçà@]*$/;
+    var test_mail=/^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-z]{2,6}$/;
     var testForm = true;
 
     if(!test_mail.test(email))
@@ -110,18 +110,18 @@ function code_postal()
     var cp=document.getElementById("codePost").value;
     if (cp==13000)
     {
-        document.getElementById("option").value="Marseille";
-        document.getElementById("option").innerText="Marseille";
+        document.getElementById("ville").value="Marseille";
+        document.getElementById("ville").innerText="Marseille";
         document.getElementById("pays").value="France";
     }
     else if (cp==75000) {
-        document.getElementById("option").value="Paris";
-        document.getElementById("option").innerText = "Paris";
+        document.getElementById("ville").value="Paris";
+        document.getElementById("ville").innerText = "Paris";
         document.getElementById("pays").value="France";
     }
     else if(cp==69000) {
-        document.getElementById("option").value="Lyon";
-        document.getElementById("option").innerText="Lyon";
+        document.getElementById("ville").value="Lyon";
+        document.getElementById("ville").innerText="Lyon";
         document.getElementById("pays").value="France";
     }
     else{
@@ -219,3 +219,12 @@ function controle_adresse()
     }
 }
 $('#suivant').on('click',controle_adresse);
+
+/*
+let putDeliveryBtn=$(".putDelivery button");
+putDeliveryBtn.on("click",function(){
+    let id= this.id;
+    $.ajax({ url:"../../index.php",method:"POST",dataType:"json",data:{"infos":id},success:function(){
+            console.log('coucou');
+        }})
+})*/

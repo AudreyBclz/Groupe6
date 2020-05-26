@@ -58,7 +58,14 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
     $adresse=htmlspecialchars(trim($_POST['adresse']));
     $complement=htmlspecialchars(trim($_POST['complement']));
     $ville=htmlspecialchars(trim($_POST['ville']));
+    $cp=htmlspecialchars(trim($_POST['codePost']));
 
+    if($pays==""||$nom==""||$prenom==""||$email==""||$mdp==""||$adresse==""||$ville==""||$cp=="")
+    {
+        echo'<div class="alert-warning p-2 text-center">Des champs sont manquants veuillez les remplir.</div>';
+
+    }
+    else{
     $sqlSelAd='SELECT idadresse,pays_idpays FROM adresse
                 INNER JOIN pays ON pays_idpays=idpays
                 WHERE adresse1=:ad
@@ -69,7 +76,7 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
     $reqSelAd=$db->prepare($sqlSelAd);
     $reqSelAd->bindParam(':ad',$adresse);
     $reqSelAd->bindParam(':ad2',$complement);
-    $reqSelAd->bindParam(':cp',$_POST['codePost']);
+    $reqSelAd->bindParam(':cp',$cp);
     $reqSelAd->bindParam(':ville',$ville);
     $reqSelAd->bindParam(':pays',$pays);
     $reqSelAd->execute();
@@ -114,7 +121,7 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
         $reqInsAd=$db->prepare($sqlInsAd);
         $reqInsAd->bindParam(':ad1',$adresse);
         $reqInsAd->bindParam(':ad2',$complement);
-        $reqInsAd->bindParam(':cp',$_POST['codePost']);
+        $reqInsAd->bindParam(':cp',$cp);
         $reqInsAd->bindParam(':ville',$ville);
         $reqInsAd->bindParam(':pays',$idPays);
         $reqInsAd->execute();
@@ -157,6 +164,7 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
         $_POST['codePost']="";
         $_POST['pays']="";
     }
+}
 }
 function aff_champ($name_champ)
 {
@@ -255,7 +263,7 @@ function aff_champ($name_champ)
                                 <select class="form-control w-45" name="ville" id="ville">
                                     <?php foreach ($tab_ville as $ville)
                                     { ?>
-                                        <option id="option" value="<?= $ville->placeName ?>"><?= $ville->placeName ?></option>
+                                        <option id="ville" value="<?= $ville->placeName ?>"><?= $ville->placeName ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -263,27 +271,27 @@ function aff_champ($name_champ)
                             <label for="pays">Pays :</label>
                         </div>
                         <div class="row">
-                            <input type="text" value="<?= $tab->country ?>" class="form-control w-45" name="pays" id="pays"/>
+                            <input type="text" value="<?= $tab->country ?>" class="form-control w-45" name="pays" id="pays" required="required"/>
                         </div>
                         <?php }
                         else
                         { ?>
-                        <input type="text" id="option" class="form-control w-45" name="ville"/>
+                        <input type="text" id="ville" class="form-control w-45" name="ville" required="required"/>
                 </div>
                 <div class="row">
                     <label for="pays">Pays :</label>
                 </div>
                 <div class="row">
-                    <input type="text" class="form-control w-45" name="pays" id="pays"/>
+                    <input type="text" class="form-control w-45" name="pays" id="pays" required="required"/>
                 </div>
                 <?php  } } else {?>
-                <input type="text" id="option" class="form-control w-45" name="ville"/>
+                <input type="text" id="ville" class="form-control w-45" name="ville" required="required"/>
             </div>
             <div class="row">
                 <label for="pays">Pays :</label>
             </div>
             <div class="row">
-                <input type="text" class="form-control w-45" name="pays" id="pays"/>
+                <input type="text" class="form-control w-45" name="pays" id="pays" required="required"/>
             </div>
             <?php } ?>
                             <div class="row mt-3">
