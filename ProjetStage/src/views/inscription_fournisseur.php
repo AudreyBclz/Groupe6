@@ -2,8 +2,15 @@
 
 require_once 'src/config/config.php';
 require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
 
+notco();
 $db=connect();
+
+if($_SESSION['role']!=="admin")
+{
+    header('Location:accueil');
+}
 
 if (isset($_POST['societe']) && isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) && isset($_POST["mdp"])
     && isset($_POST["conf_email"]) && isset($_POST["conf_mdp"]) && isset($_POST["adresse"]) &&
@@ -208,7 +215,7 @@ function aff_champ($name_champ)
                     <select class="form-control w-45" name="ville" id="ville">
                         <?php foreach ($tab_ville as $ville)
                         { ?>
-                            <option id="option" value="<?= $ville->placeName ?>"><?= $ville->placeName ?></option>
+                            <option id="ville" value="<?= $ville->placeName ?>"><?= $ville->placeName ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -221,7 +228,7 @@ function aff_champ($name_champ)
                 <?php }
                 else
                 { ?>
-                <input type="text" id="option" class="form-control w-45" name="ville"/>
+                <input type="text" id="ville" class="form-control w-45" name="ville"/>
         </div>
         <div class="row">
             <label for="pays">Pays :</label>
@@ -230,7 +237,7 @@ function aff_champ($name_champ)
             <input type="text" class="form-control w-45" name="pays" id="pays"/>
         </div>
         <?php  } } else {?>
-        <input type="text" id="option" class="form-control w-45" name="ville"/>
+        <input type="text" id="ville" class="form-control w-45" name="ville"/>
     </div>
     <div class="row">
         <label for="pays">Pays :</label>

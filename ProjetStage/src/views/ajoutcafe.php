@@ -2,10 +2,12 @@
 
 require_once 'src/config/config.php';
 require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
 
+notco();
 $db=connect();
 
-if(!isset($_SESSION['role']) && $_SESSION['role']!=="admin")
+if($_SESSION['role']!=="admin")
 {
     header('Location:accueil');
 }
@@ -15,7 +17,7 @@ elseif (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["t
     $nomcafe=htmlspecialchars(trim($_POST["nomCafe"]));
     $payscafe=htmlspecialchars(trim($_POST["paysCafe"]));
     $resume=htmlspecialchars(trim($_POST["resume"]));
-    $description=htmlspecialchars(trim($_POST["description"]));
+    $description=nl2br(htmlspecialchars(trim($_POST["description"])));
     $sqlSelect='SELECT idcafe FROM cafe
                 WHERE nomCafe = :nom';
     $reqSelect=$db->prepare($sqlSelect);

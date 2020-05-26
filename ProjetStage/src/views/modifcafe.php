@@ -1,11 +1,12 @@
 <?php
 require_once 'src/config/config.php';
 require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
 
-
+notco();
 $db=connect();
 
-if(!isset($_SESSION['role']) && $_SESSION['role']!=='admin')
+if($_SESSION['role']!=='admin')
 {
     header('Location:accueil');
 }
@@ -29,7 +30,7 @@ isset($_POST["resume"]) && isset($_POST["description"]))
     $nomcafe=htmlspecialchars(trim($_POST["nomCafe"]));
     $payscafe=htmlspecialchars(trim($_POST["paysCafe"]));
     $resume=htmlspecialchars(trim($_POST["resume"]));
-    $description=htmlspecialchars(trim($_POST["description"]));
+    $description=nl2br((trim($_POST["description"])));
 
     $sqlSelPays='SELECT idpays FROM pays
                  WHERE nomPays=:pays';
@@ -175,7 +176,7 @@ function selec($value,$tri)
                     </div>
                     <div>
                         <label for="description" class="col-form-label">Description :</label>
-                        <textarea name="description" id="description" class="form-control" required="required"><?= $cafe->descCafe ?></textarea>
+                        <textarea name="description" id="description" class="form-control" required="required"><?= str_replace('<br />',"",$cafe->descCafe) ?></textarea>
                     </div>
                     <div class="mt-3">
                         <label for="image" class="col-form-label">Photos :</label>
