@@ -1,9 +1,12 @@
 <?php
 
 require_once 'src/models/notconnect.php';
-
-
 notco();
+
+if (!isset($_POST['panier']))
+{
+    header('Location:accueil');
+}
 ?>
 <div class="container">
     <div class="arr_plan justify-content-center">
@@ -20,7 +23,7 @@ notco();
             </div>
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 m-1">
                 <form method="post" action="recapitulatif" id="form_ad">
-
+                    <input type="text" name="add_adresse" value="ok" class="d-none">
                     <div class="row custom-control custom-checkbox mb-3">
                         <input type="checkbox" name="same" id="livraison" value="same" class="custom-control-input"/>
                         <label for="livraison" class="custom-control-label">Adresse de Livraison identique à celle de facturation</label>
@@ -57,12 +60,12 @@ notco();
                             <input type="text" name="pays" id="pays" class="form-control w-45"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row justify-content-between">
                         <button type="submit" class="btn btn-marron mt-3" id="suivant">Suivant</button>
+                        <a href="selection" class="btn btn-marron mt-3">Annuler</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

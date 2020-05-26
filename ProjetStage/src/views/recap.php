@@ -7,6 +7,10 @@ require_once 'src/models/notconnect.php';
 $db=connect();
 
 notco();
+if(!isset($_POST['add_adresse']))
+{
+    header('Location:accueil');
+}
 
 if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) && isset($_POST['codePost']) && isset($_POST['ville']) && isset($_POST['pays']))
 {
@@ -86,6 +90,7 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) 
 }
     $sqlAdFacture = 'SELECT * FROM users
                     INNER JOIN adresse ON adresse_idadresse=idadresse
+                    INNER JOIN pays ON pays_idpays=idpays
                    WHERE idUsers=:id';
     $reqAdFacture = $db->prepare($sqlAdFacture);
     $reqAdFacture->bindParam(':id', $_SESSION['iduser']);
@@ -109,7 +114,7 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['adresse']) 
 $sqlSelPan = 'SELECT * FROM panier
                             INNER JOIN cafe ON cafe_idcafe=idcafe
                             INNER JOIN adresse ON adresse_idadresse=idadresse
-                            INNER JOIN users on users_idUsers=idUsers
+                            INNER JOIN users ON users_idUsers=idUsers
                             WHERE users_idUsers =:id';
 $reqSelPan = $db->prepare($sqlSelPan);
 $reqSelPan->bindParam(':id', $_SESSION['iduser']);
@@ -120,7 +125,18 @@ $i = 0;
 while ($data = $reqSelPan->fetchObject()) {
     array_push($tab_pan, $data);
 }
-
+$sqlPays='SELECT * FROM panier
+            INNER JOIN adresse ON adresse_idadresse=idadresse
+            INNER JOIN pays ON pays_idpays=idpays
+            WHERE users_idUsers=:id';
+$reqPays=$db->prepare($sqlPays);
+$reqPays->bindParam(':id',$_SESSION['iduser']);
+$reqPays->execute();
+$tabAffPays=array();
+while($data=$reqPays->fetchObject())
+{
+    array_push($tabAffPays,$data);
+}
 ?>
 <div class="container arr_plan mx-auto">
     <h1 class="text-center titre">Récapitulatif de la commande</h1>
@@ -143,7 +159,7 @@ while ($data = $reqSelPan->fetchObject()) {
                         $i = $i + 1;
                     ?>
                 <tr class="bg-wheat">
-                    <td scope="col"><?=$panier->nomCafe ?></td>
+                    <td scope="col"><a class="text-dark" href="detail?id=<?= $panier->idcafe?>"><?=$panier->nomCafe ?></a></td>
                     <td scope="col"><?= $panier->quantite ?></td>
                     <td scope="col"><?= $total ?>€</td>
                 </tr>
@@ -164,7 +180,7 @@ while ($data = $reqSelPan->fetchObject()) {
                <?= $tab_ad_fact[0]->adresse1 ?><br/>
                  <?php if (strlen($tab_ad_fact[0]->adresse2)!==0) {
     echo $tab_pan[0]->adresse2 . '<br/>';}
-    echo $tab_ad_fact[0]->adresseCP . ' ' . $tab_ad_fact[0]->adresseVille; ?>
+    echo $tab_ad_fact[0]->adresseCP . ' ' . $tab_ad_fact[0]->adresseVille.'<br>'.$tab_ad_fact[0]->nomPays; ?>
     </div>
     <div>
         <span class="font-weight-bold">Adresse de Livraison:</span><br/>
@@ -185,13 +201,16 @@ while ($data = $reqSelPan->fetchObject()) {
         <?php if (strlen($tab_pan[0]->adresse2) !== 0) {
             echo $tab_pan[0]->adresse2 . '<br/>';
         }
-        echo $tab_pan[0]->adresseCP . ' ' . $tab_pan[0]->adresseVille; ?>
+        echo $tab_pan[0]->adresseCP . ' ' . $tab_pan[0]->adresseVille.'<br>'.$tabAffPays[0]->nomPays; ?>
     </div>
     </div>
     </div>
     <div class="row">
         <div class="col-xl-5=7 col-lg-7 col-md-12 col-sm-12 d-flex justify-content-between">
-            <a href="paiement" class="btn btn-marron">Confirmer</a>
+            <form method="post" action="paiement">
+                <input type="text" name="recap" value="ok" class="d-none">
+                <button type="submit" class="btn btn-marron">Confirmer</button>
+            </form>
             <a href="selection" class="btn btn-marron">Annuler</a>
         </div>
     </div>

@@ -2,6 +2,9 @@
 
 require_once 'src/config/config.php';
 require_once 'src/models/connect.php';
+require_once 'src/models/notconnect.php';
+
+notco();
 
 $db=connect();
 
@@ -41,16 +44,36 @@ else {
 
     for ($ind=1; $ind<=$nbArticle; $ind++) {
         if (isset($_POST['quantite_' . $ind])) {
-            $sqlUpPan = 'UPDATE panier SET
+
+            $sqlSelArticle='SELECT * FROM panier
+                            INNER JOIN cafe ON cafe_idcafe=idcafe
+                            WHERE users_idUsers=:id
+                            AND cafe_idcafe=:id_c';
+            $reqSelArticle=$db->prepare($sqlSelArticle);
+            $reqSelArticle->bindParam(':id', $_SESSION['iduser']);
+            $reqSelArticle->bindParam('id_c', $_POST['id_' . $ind]);
+            $reqSelArticle->execute();
+            $tab_article=array();
+            while($data=$reqSelArticle->fetchObject())
+            {
+                array_push($tab_article,$data);
+            }
+            if($_POST['quantite_'.$ind] > $tab_article[0]->stockCafe)
+            {
+                echo'<div class="alert-warning p-2 text-center">Quantité supérieur au stock du produit</div>';
+            }
+            else {
+
+                $sqlUpPan = 'UPDATE panier SET
                        quantite=:qte
                        WHERE users_idUsers=:id
                        AND cafe_idcafe=:id_c';
-            $reqUpPan = $db->prepare($sqlUpPan);
-            $reqUpPan->bindParam(':qte', $_POST['quantite_' . $ind]);
-            $reqUpPan->bindParam(':id', $_SESSION['iduser']);
-            $reqUpPan->bindParam('id_c', $_POST['id_' . $ind]);
-            $reqUpPan->execute();
-
+                $reqUpPan = $db->prepare($sqlUpPan);
+                $reqUpPan->bindParam(':qte', $_POST['quantite_' . $ind]);
+                $reqUpPan->bindParam(':id', $_SESSION['iduser']);
+                $reqUpPan->bindParam('id_c', $_POST['id_' . $ind]);
+                $reqUpPan->execute();
+            }
         }
 
         }
@@ -73,13 +96,12 @@ else {
                 <h1 class="text-center titre"><img src="public/img/panier.png">Mon panier<img
                         src="public/img/panier.png"></h1>
                 <div class="row">
-
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 m-auto">
                         <table class="table">
                             <thead class="bg-marron">
                             <tr class="text-light">
                                 <th scope="col">Nom du produit</th>
-                                <th scope="col" class="w-30">Quantité</th>
+                                <th scope="col" class="w-30">Quantité *</th>
                                 <th scope="col">Action</th>
                                 <th scope="col">Prix</th>
                             </tr>
@@ -97,7 +119,7 @@ else {
                                     $i = $i + 1;
                                     ?>
                                     <tr class="bg-wheat">
-                                        <td scope="col"><?= $article->nomCafe ?></td>
+                                        <td scope="col"><a class="text-dark" href="detail?id=<?= $article->idcafe ?>"><?= $article->nomCafe ?></a></td>
                                         <td scope="col">
                                                 <input type="number" name="id_<?= $i ?>" value="<?= $article->idcafe ?>"
                                                        class="d-none">
@@ -118,11 +140,18 @@ else {
 
                             </tbody>
                         </table>
+                    </form>
+                        <div>
+                            <small class="font-italic">*(modifiable)</small>
+                        </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex flex-column justify-content-between">
                         <div class=" d-flex justify-content-between">
                             <a href="selection" class="btn btn-marron">Poursuivre mes achats</a>
-                            <a href="livraison" class="btn btn-marron <?php if(empty($tab_pan)){echo'd-none';} ?>">Commander</a>
+                            <form method="post" action="livraison">
+                                <input type="text" name="panier" value="ok" class="d-none">
+                                <button type="submit" class="btn btn-marron <?php if(empty($tab_pan)){echo'd-none';} ?>">Commander</button>
+                            </form>
                         </div>
                         </form>
                     </div>

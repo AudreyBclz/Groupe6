@@ -3,11 +3,17 @@
 require_once 'src/models/notconnect.php';
 
 notco();
+if(!isset($_POST['recap']))
+{
+    header('Location:accueil');
+}
+else{
 ?>
 <div class="container m-auto">
     <div class="arr_plan">
         <h1 class="text-center titre">Paiement</h1>
         <form method="post" action="confirmation">
+            <input type="text" name="pay" value="ok" class="d-none">
             <div class="row justify-content-between">
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12  align-items-center">
                     <div class="d-flex flex-column">
@@ -51,4 +57,4 @@ notco();
 </div>
 </div>
 </div>
-
+<?php } ?>
