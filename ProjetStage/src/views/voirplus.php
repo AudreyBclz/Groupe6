@@ -63,7 +63,7 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
             $reqUpPan->bindParam(':id', $_SESSION['iduser']);
             $reqUpPan->bindParam(':id_c', $_GET['id']);
             $reqUpPan->execute();
-            echo '<div class="alert-info p-2 text-center">Articles ajouté à votre panier</div>';
+            echo '<div class="alert-info p-2 text-center">Article(s) ajouté(s) à votre panier</div>';
         } }
         else {
             $sqlSelAd = 'SELECT adresse_idadresse FROM users
@@ -93,7 +93,6 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
         echo'<div class="alert-warning p-2 text-center">Vous devez vous connecter pour ajouter dans votre panier <a href="connexion.php" class="btn btn-marron">Connexion</a></div>';
     }
 }
-
 ?>
 
         <div class="container">
@@ -115,12 +114,14 @@ if(isset($_GET['id']) && isset($_GET['quantite']))
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3 d-flex flex-column justify-content-between">
                         <div>
                             <div class="d-flex justify-content-between mb-3 ">
+                                <?php if($tab_cafe[0]->decafCafe=="1" || $tab_cafe[0]->bioCafe=="1")
+                                    { ?>
                                 <img src="public/img/deca.png" class="w-25 <?php if ($tab_cafe[0]->decafCafe !== "1") {
                                     echo 'invisible';
                                 } ?>">
                                 <img src="public/img/bio.png" class="w-50 <?php if ($tab_cafe[0]->bioCafe !== "1") {
                                     echo 'invisible';
-                                } ?>">
+                                } ?>"> <?php } ?>
                             </div>
                             <div class="bg-marron2 p-3 rounded">
                                 <p class="card-text"><?= $tab_cafe[0]->descCafe ?></p>

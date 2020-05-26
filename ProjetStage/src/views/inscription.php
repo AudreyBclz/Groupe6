@@ -18,6 +18,7 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
     $complement=htmlspecialchars(trim($_POST['complement']));
     $ville=htmlspecialchars(trim($_POST['ville']));
 
+    //on vérifie si la
     $sqlSelAd='SELECT idadresse,pays_idpays FROM adresse
                 INNER JOIN pays ON pays_idpays=idpays
                 WHERE adresse1=:ad
@@ -105,6 +106,8 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["email"]) &&
         $reqInsUser->bindParam(':ad',$idAd);
         $reqInsUser->execute();
         echo '<div class="alert-success p-2 text-center">Votre inscription a bien été enregistrée</div>';
+
+        // efface les champs après l'inscription car la fonction aff les affiche encore
         $_POST['nom']="";
         $_POST['prenom']="";
         $_POST['email']="";
