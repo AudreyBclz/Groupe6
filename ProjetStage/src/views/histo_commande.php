@@ -8,13 +8,15 @@ require_once 'src/models/notconnect.php';
 $db=connect();
 notco();
 
-
+// récupérer le contenu des commandes
 $sqlCommande='SELECT *,
               DATE_FORMAT(dateCommande,\'%d/%m/%Y à %Hh %imin %ss\') AS date_c
               FROM commande
               INNER JOIN cafe ON cafe_idcafe=idcafe
               INNER JOIN adresse ON adresse_idadresse=idadresse
-              WHERE users_idUsers=:id';
+              WHERE users_idUsers=:id
+              ORDER BY dateCommande DESC';
+
 $reqCommande=$db->prepare($sqlCommande);
 $reqCommande->bindParam(':id',$_SESSION['iduser']);
 $reqCommande->execute();
@@ -30,6 +32,8 @@ while($data=$reqCommande->fetchObject())
      $date_avt=$tab_commande[0]->dateCommande; //date utile pour récupérer la livraison
  }
 $total=0; //déclaration globale du total pour le récupérer en sortant de la boucle
+
+//récupération adresse de facturation
  $sqlFac='SELECT * FROM users
           INNER JOIN adresse ON adresse_idadresse=idadresse
           INNER JOIN pays ON pays_idpays=idpays
@@ -76,7 +80,10 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
                                             <td class="bg-wheat"><?= $achat->quantite * $achat->prixCafe ?>€</td>
                                         </tr>
                                         <?php $date=$achat->date_c; }
-                                            else{ $sqlLiv='SELECT * FROM commande
+                                            else{/* Récupération de l'adresse de livraison */
+                                                $sqlLiv='SELECT *, 
+                                                            DATE_FORMAT(dateLivCommande,\'%d/%m/%Y \') AS date_liv
+                                                            FROM commande
                                                             INNER JOIN adresse ON adresse_idadresse=idadresse
                                                             INNER JOIN pays ON pays_idpays=idpays
                                                             WHERE dateCommande=:date_co';
@@ -96,6 +103,9 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
                                             </tr>
                                     </tbody>
                                 </table>
+                                <div>
+                                    Livraison : <?php if (strlen($tab_liv[0]->date_liv)==0){echo'Commande pas encore expédiée.';}else{echo'Commande expédiée le '.$tab_liv[0]->date_liv;} ?>
+                                </div>
                                     </div>
                                     <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                                         <div class="d-flex justify-content-between mb-5 mt-5">
@@ -130,7 +140,7 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
                                                 <?php if (strlen($tab_liv[0]->adresse2) !== 0) {
                                                     echo $tab_liv[0]->adresse2 . '<br/>';
                                                 }
-                                                echo $tab_liv[0]->adresseCP . ' ' . $tab_liv[0]->adresseVille; ?>
+                                                echo $tab_liv[0]->adresseCP . ' ' . $tab_liv[0]->adresseVille.'<br>'.$tab_liv[0]->nomPays ?>
                                             </div>
                                         </div>
                                             <?php $total=0; ?>
@@ -158,7 +168,23 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
 
 <?php  $date=$achat->date_c;
        $date_avt=$achat->dateCommande; }
-} ?>
+}
+                            //récupération de la dernière adresse de livraison
+                            $sqlLiv='SELECT * ,
+                                     DATE_FORMAT(dateLivCommande,\'%d/%m/%Y \') AS date_liv
+                                     FROM commande
+                                    INNER JOIN adresse ON adresse_idadresse=idadresse
+                                    INNER JOIN pays ON pays_idpays=idpays
+                                    WHERE dateCommande=:date_co';
+                                            $reqLiv=$db->prepare($sqlLiv);
+                                            $reqLiv->bindParam(':date_co',$date_avt);
+                                            $reqLiv->execute();
+                                            $tab_liv=array();
+                                            while($data=$reqLiv->fetchObject())
+                                            {
+                                                array_push($tab_liv,$data);
+                                            }
+                            ?>
                                         <tr>
                                             <th class="bg-wheat"></th>
                                             <th class="bg-wheat">Total</th>
@@ -166,16 +192,19 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
                                         </tr>
                                 </tbody>
                                 </table>
+                                  <div>
+                                    Livraison : <?php if (strlen($tab_liv[0]->date_liv)==0){echo'Commande pas encore expédiée.';}else{echo'Commande expédiée le '.$tab_liv[0]->date_liv;} ?>
+                                </div>
                                 </div>
                                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
                                     <div class="d-flex justify-content-between mb-5 mt-5">
                                         <div>
                                             <span class="font-weight-bold">Adresse de Facturation :</span><br/>
-                                            <?= $tab_Fac[count($tab_Fac)-1]->prenomUsers ?> <?=$tab_Fac[count($tab_Fac)-1]->nomUsers ?><br/>
-                                            <?= $tab_Fac[count($tab_Fac)-1]->adresse1 ?><br/>
+                                            <?= $tab_Fac[0]->prenomUsers ?> <?=$tab_Fac[0]->nomUsers ?><br/>
+                                            <?= $tab_Fac[0]->adresse1 ?><br/>
                                             <?php if (strlen($tab_Fac[count($tab_Fac)-1]->adresse2)!==0) {
-                                                echo $tab_Fac[count($tab_Fac)-1]->adresse2 . '<br/>';}
-                                            echo $tab_Fac[count($tab_Fac)-1]->adresseCP . ' ' . $tab_Fac[count($tab_Fac)-1]->adresseVille.'<br>'.$tab_Fac[count($tab_Fac)-1]->nomPays; ?>
+                                                echo $tab_Fac[0]->adresse2 . '<br/>';}
+                                            echo $tab_Fac[0]->adresseCP . ' ' . $tab_Fac[0]->adresseVille.'<br>'.$tab_Fac[0]->nomPays; ?>
                                         </div>
                                         <div>
                                             <span class="font-weight-bold">Adresse de Livraison:</span><br/>
@@ -199,7 +228,7 @@ $total=0; //déclaration globale du total pour le récupérer en sortant de la b
                                             <?php if (strlen($achat->adresse2) !== 0) {
                                                 echo $achat->adresse2 . '<br/>';
                                             }
-                                            echo $achat->adresseCP . ' ' . $achat->adresseVille; ?>
+                                            echo $achat->adresseCP . ' ' . $achat->adresseVille.'<br>'.$tab_liv[0]->nomPays ?>
                                         </div>
                                         </div>
                                             <?php $total=0; ?>
