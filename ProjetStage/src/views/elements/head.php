@@ -31,6 +31,9 @@ function head()
                     <?php if(isset($_SESSION['iduser']))
                         { ?>
                     <li class="nav-item">
+                        <a class="nav-link" href="monCompte">Mon compte</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="monpanier">Mon panier</a>
                     </li>
                     <li class="nav-item">

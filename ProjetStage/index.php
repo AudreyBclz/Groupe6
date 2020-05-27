@@ -24,6 +24,7 @@ $router->map('GET|POST','/ajout_fournisseur','ajout_fournisseur',"ajout_fourniss
 $router->map('GET|POST','/historique_commande','histo_com',"histo_com");
 $router->map('GET|POST','/deconnexion','deconnexion',"deconnexion");
 $router->map('GET|POST','/dateLivraison','dateLivraison','dateLivraison');
+$router->map('GET|POST','/monCompte',"moncompte",'moncompte');
 
 $match= $router->match();
 require 'src/views/elements/head.php';
@@ -70,6 +71,8 @@ if($match["target"] === "accueil"){
     require'src/models/disconnect.php';
 }elseif($match["target"] === "dateLivraison"){
     require 'src/views/admin_livraison.php';
+}elseif($match["target"] === "moncompte"){
+    require 'src/views/moncompte.php';
 }else{
     require 'src/views/home.php';
 }
