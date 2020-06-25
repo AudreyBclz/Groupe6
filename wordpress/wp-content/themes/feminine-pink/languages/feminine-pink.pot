@@ -1,0 +1,513 @@
+# <!=Copyright (C) 2020 Rara Theme
+# This file is distributed under the GNU General Public License v3 or later.=!>
+msgid ""
+msgstr ""
+"Project-Id-Version: Feminine Pink 1.0.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/feminine-pink\n"
+"POT-Creation-Date: 2020-06-12 15:31:47+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: footer.php:54
+#. translators: %s: Current Year
+msgid "Copyright &copy; %s "
+msgstr ""
+
+#: footer.php:54
+msgid "Y"
+msgstr ""
+
+#: footer.php:61
+msgid "Feminine Pink | Developed By"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Rara Theme"
+msgstr ""
+
+#: footer.php:65
+msgid "Powered by: %s"
+msgstr ""
+
+#: footer.php:65
+msgid "https://wordpress.org/"
+msgstr ""
+
+#: functions.php:122
+msgid "Information Links"
+msgstr ""
+
+#: functions.php:132
+msgid "Need help?"
+msgstr ""
+
+#: functions.php:133
+msgid "View demo"
+msgstr ""
+
+#: functions.php:133 functions.php:134 functions.php:135 functions.php:136
+#: functions.php:137
+msgid "here"
+msgstr ""
+
+#: functions.php:134
+msgid "View documentation"
+msgstr ""
+
+#: functions.php:135
+msgid "Theme info"
+msgstr ""
+
+#: functions.php:136
+msgid "Support ticket"
+msgstr ""
+
+#: functions.php:137
+msgid "More WordPress Themes"
+msgstr ""
+
+#: functions.php:141
+msgid "About Feminine Pink"
+msgstr ""
+
+#: functions.php:200
+msgid "Site Title Font"
+msgstr ""
+
+#: functions.php:201
+msgid "Site title and tagline font."
+msgstr ""
+
+#: functions.php:223
+msgid "Site Title Font Size"
+msgstr ""
+
+#: functions.php:224
+msgid "Change the font size of your site title."
+msgstr ""
+
+#: functions.php:249
+msgid "Choose Slider Type"
+msgstr ""
+
+#: functions.php:252
+msgid "Category Posts"
+msgstr ""
+
+#: functions.php:253
+msgid "Single Posts"
+msgstr ""
+
+#: functions.php:254
+msgid "Latest Posts"
+msgstr ""
+
+#: functions.php:274
+msgid "Choose Number of slides"
+msgstr ""
+
+#: functions.php:306
+msgid "Read More"
+msgstr ""
+
+#: header.php:26
+msgid "Skip to content (Press Enter)"
+msgstr ""
+
+#: header.php:86
+msgid "Primary Menu"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:202
+#: inc/custom-controls/typography/class-typography-control.php:92
+msgid "Ultra-Light 100"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:203
+#: inc/custom-controls/typography/class-typography-control.php:93
+msgid "Ultra-Light 100 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:204
+#: inc/custom-controls/typography/class-typography-control.php:94
+msgid "Light 200"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:205
+#: inc/custom-controls/typography/class-typography-control.php:95
+msgid "Light 200 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:206
+#: inc/custom-controls/typography/class-typography-control.php:96
+msgid "Book 300"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:207
+#: inc/custom-controls/typography/class-typography-control.php:97
+msgid "Book 300 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:208
+#: inc/custom-controls/typography/class-typography-control.php:98
+msgid "Normal 400"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:209
+#: inc/custom-controls/typography/class-typography-control.php:99
+msgid "Normal 400 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:210
+#: inc/custom-controls/typography/class-typography-control.php:100
+msgid "Medium 500"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:211
+#: inc/custom-controls/typography/class-typography-control.php:101
+msgid "Medium 500 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:212
+#: inc/custom-controls/typography/class-typography-control.php:102
+msgid "Semi-Bold 600"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:213
+#: inc/custom-controls/typography/class-typography-control.php:103
+msgid "Semi-Bold 600 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:214
+#: inc/custom-controls/typography/class-typography-control.php:104
+msgid "Bold 700"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:215
+#: inc/custom-controls/typography/class-typography-control.php:105
+msgid "Bold 700 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:216
+#: inc/custom-controls/typography/class-typography-control.php:106
+msgid "Extra-Bold 800"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:217
+#: inc/custom-controls/typography/class-typography-control.php:107
+msgid "Extra-Bold 800 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:218
+#: inc/custom-controls/typography/class-typography-control.php:108
+msgid "Ultra-Bold 900"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:219
+#: inc/custom-controls/typography/class-typography-control.php:109
+msgid "Ultra-Bold 900 Italic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:46
+msgid "ON"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:47
+msgid "OFF"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:48
+msgid "All"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:49
+msgid "Cyrillic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:50
+msgid "Cyrillic Extended"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:51
+msgid "Devanagari"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:52
+msgid "Greek"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:53
+msgid "Greek Extended"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:54
+msgid "Khmer"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:55
+msgid "Latin"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:56
+msgid "Latin Extended"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:57
+msgid "Vietnamese"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:58
+msgid "Hebrew"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:59
+msgid "Arabic"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:60
+msgid "Bengali"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:61
+msgid "Gujarati"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:62
+msgid "Tamil"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:63
+msgid "Telugu"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:64
+msgid "Thai"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:68
+msgid "Font Family"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:69
+msgid "Font Size"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:70
+msgid "Font Weight"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:71
+msgid "Line Height"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:72
+msgid "Font Style"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:73
+msgid "Letter Spacing"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:74
+msgid "Text Align"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:75
+msgid "Text Transform"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:76
+msgid "None"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:77
+msgid "Uppercase"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:78
+msgid "Lowercase"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:79
+msgid "Top"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:80
+msgid "Bottom"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:81
+msgid "Left"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:82
+msgid "Right"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:83
+msgid "Center"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:84
+msgid "Justify"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:85
+msgid "Color"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:86
+msgid "Select a font-family"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:87
+msgid "Variant"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:88
+msgid "Style"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:89
+msgid "Size"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:90
+msgid "Height"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:91
+msgid "Spacing"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:110
+msgid "Invalid Value"
+msgstr ""
+
+#. Theme Name of the plugin/theme
+msgid "Feminine Pink"
+msgstr ""
+
+#. Theme URI of the plugin/theme
+msgid "https://rarathemes.com/wordpress-themes/feminine-pink/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Feminine Pink is a child theme for Elegant Pink WordPress theme. The theme "
+"is a versatile masonry based, feminine WordPress theme that can be used for "
+"building lively and eye-catching websites. The theme can be used to build "
+"beautiful blog or magazine related to photography, nature, art and design, "
+"lifestyle, food, fashion, babies, kids, wedding or any other creative image "
+"centric websites. The masonry works by placing elements in the optimal "
+"position based on the available space so that your posts are automatically "
+"presented in the most visually pleasing and organized way. The theme is "
+"speed optimized, SEO friendly, mobile friendly and translation ready.  It "
+"is loaded with theme options and provides several features to make "
+"user-friendly, interactive and visually stunning website.The pinterest "
+"style layout makes the theme an ideal option for blogs, portfolios, "
+"magazine and other creative websites. Whether you are a fashion blogger or "
+"simply want to share your wedding experiences in a beautiful and "
+"sophisticated website, Feminine Pink is an ideal choice for you. Check the "
+"demo at Check demo at "
+"https://rarathemes.com/previews/?theme=feminine-pink/, documentation at "
+"https://docs.rarathemes.com/docs/feminine-pink/, and get support at "
+"https://rarathemes.com/support-ticket/."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://rarathemes.com/"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:94
+msgctxt "font style"
+msgid "Georgia"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:98
+msgctxt "font style"
+msgid "Palatino Linotype, Book Antiqua, Palatino"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:102
+msgctxt "font style"
+msgid "Times New Roman, Times"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:106
+msgctxt "font style"
+msgid "Arial, Helvetica"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:110
+msgctxt "font style"
+msgid "Arial Black, Gadget"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:114
+msgctxt "font style"
+msgid "Comic Sans MS, cursive"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:118
+msgctxt "font style"
+msgid "Impact, Charcoal"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:122
+msgctxt "font style"
+msgid "Lucida Sans Unicode, Lucida Grande"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:126
+msgctxt "font style"
+msgid "Tahoma, Geneva"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:130
+msgctxt "font style"
+msgid "Trebuchet MS, Helvetica"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:134
+msgctxt "font style"
+msgid "Verdana, Geneva"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:138
+msgctxt "font style"
+msgid "Courier New, Courier"
+msgstr ""
+
+#: inc/custom-controls/typography/class-fonts.php:142
+msgctxt "font style"
+msgid "Lucida Console, Monaco"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:65
+msgctxt "font style"
+msgid "Serif"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:66
+msgctxt "font style"
+msgid "Sans Serif"
+msgstr ""
+
+#: inc/custom-controls/typography/class-typography-control.php:67
+msgctxt "font style"
+msgid "Monospace"
+msgstr ""
+
+#: inc/typography.php:18
+#. Translators: If there are characters in your language that are not supported
+#. by respective fonts, translate this to 'off'. Do not translate into your own
+#. language.
+msgctxt "Site Title Font: on or off"
+msgid "on"
+msgstr ""
