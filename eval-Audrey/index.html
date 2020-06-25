@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Forum</title>
+    <link href="css/eval.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    <img src="img/forum.png"/>
+</header>
+<main>
+    <div id="acceuil">
+        <div id="partie_gauche">
+            <h1> Bienvenue sur le Forum</h1>
+
+            <p id="intro"> Ici vous trouverez un endroit où vous pourrez échanger librement avec les autres utilisateurs. Soyez poli et respectueux envers les autres. Tout problème pourra engendrer une exclusion du site</p>
+        </div>
+        <div id="partie_droite">
+            <img src="img/respect.png" id="respect"/>
+            <figure> Le respect est primordial sur le forum</figure>
+        </div>
+    </div>
+    <button id="affiche_Ins">Inscription</button>
+    <button id="affiche_Co">Connexion</button><br/>
+    <div id="notation">
+        *champs obligatoire, mot de passe 8 caractères minimum ou contenant un chiffre et une majuscule.
+    </div>
+    <form id="inscription" class="d_none form" action="forum.html">
+        <label for="pseudo">Pseudo* :</label><br/>
+        <input type="text" id="pseudo" name="pseudo" required="required"/><br/>
+        <label for="mail">Mail* :</label><br/>
+        <input type="email" id="mail" name="mail" required="required"/><br/>
+        <label for="password"> Mot de passe* :</label><br/>
+        <input type="password" id="password" name="password" required="required"/><br/>
+        <label for="password_conf">Confirmation mot de passe*:</label><br/>
+        <input type="password" id="password_conf" name="password_conf" required="required"/><br/>
+        <label for="nom">Nom* :</label><br/>
+        <input type="text" id="nom" name="nom" required="required"/><br/>
+        <label for="prenom">Prénom* :</label><br/>
+        <input type="text" id="prenom" name="prenom" required="required"/><br/>
+        <label>Sexe* :</label>
+        M<input type="radio" id="sexeM" name="sexe" VALUE="M"required="required"/> F<input type="radio" id="sexeF" name="sexe" VALUE="F" required="required"/><br/>
+        <label for="age">Age :</label><br/>
+        <input type="number" id="age" name="age"/><br/>
+        <label for="ville">Ville :</label><br/>
+        <input type="text" id="ville" name="ville"/><br/>
+        <input type="button" name="inscrire" value="S'inscrire" class="btn" id="inscrire"/>
+    </form>
+    <form id="connexion"class="d_none form" action="forum.html">
+        <label for="pseudoMailCo">Pseudo ou Mail* :</label><br/>
+        <input type="text"id="pseudoMailCo" name="pseudoMailCo" required="required"/><br/>
+        <label for="pass_co">Mot de passe* :</label><br/>
+        <input type="password" id="pass_co" name="pass_co" required="required"/><br/>
+        <input type="button" id="connecter" name="connecter" value="Se connecter" class="btn"/>
+
+    </form>
+
+</main>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/eval.js"></script>
+</body>
+</html>

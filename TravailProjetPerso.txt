@@ -1,0 +1,12 @@
+Le 08/06 et 09/06:20 travail sur mon projet perso branche formphp
+affichage des prono et cote de la semaine, création de la page cote de la semaine pour mobile,ajout dans la navbar du lien cote, petite modif chat
+
+
+Le 05/06/20 travail sur mon projet perso branche formphp
+https://github.com/AudreyBclz/Projet-Audrey
+modification de la base de donnée donc des requêtes sql, ajout chat en BD et création d'un bouton refresh
+
+Le 04/06/20 travail sur mon projet perso branche formphp
+https://github.com/AudreyBclz/Projet-Audrey
+modification aperçu des articles en carousel, ajout des articles en BD et  renommage des images
+Ajout de la page article pour afficher l'article entier en php

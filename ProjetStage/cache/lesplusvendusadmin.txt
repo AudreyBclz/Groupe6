@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="arr_plan row justify-content-center">
+        <h1 class="text-center titre">Les plus vendus</h1>
+        <div class="card-deck">
+            <div class="row">
+                           <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-3">
+                <div class="card h-100 panneau">
+                    <img src="public/img/Cafe-En-Grain.jpg" class="card-img-top h-50" alt="...">                    <div class="card-body bg-marron2 d-flex flex-column justify-content-between">
+                        <div>
+                            <h4 class="card-title">Robusta</h4>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-bold">En grain</h6>
+                            <span class="card-text text-light font-weight-bold">Kenya</span>
+                        </div>
+                        <p class="card-text">Une belle amertume en bouche!</p>
+                        <div class="d-flex justify-content-between">
+                            <form method="get" action="detail" class="form-inline">
+                                <input type="number" value="3" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                            </form>
+                                                                <form method="get" action="modification" class="form-inline">
+                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="3" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p><span class="font-weight-bold">21.53€</span> le sachet d'1 kg</p>
+                        </div>
+                    </div>
+            </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-3">
+                <div class="card h-100 panneau">
+                    <img src="public/img/paquet.png" class="card-img-top h-50" alt="...">                    <div class="card-body bg-marron2 d-flex flex-column justify-content-between">
+                        <div>
+                            <h4 class="card-title">Arabica Moulu</h4>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-bold">Moulu</h6>
+                            <span class="card-text text-light font-weight-bold">Honduras</span>
+                        </div>
+                        <p class="card-text">Un très bon café moulu léger et subtile!</p>
+                        <div class="d-flex justify-content-between">
+                            <form method="get" action="detail" class="form-inline">
+                                <input type="number" value="2" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                            </form>
+                                                                <form method="get" action="modification" class="form-inline">
+                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="2" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p><span class="font-weight-bold">9.52€</span> le paquet de 250g</p>
+                        </div>
+                    </div>
+            </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-3">
+                <div class="card h-100 panneau">
+                    <img src="public/img/cafe-vrac.png" class="card-img-top h-50" alt="...">                    <div class="card-body bg-marron2 d-flex flex-column justify-content-between">
+                        <div>
+                            <h4 class="card-title">Arabica</h4>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-bold">En grain</h6>
+                            <span class="card-text text-light font-weight-bold">Honduras</span>
+                        </div>
+                        <p class="card-text">Un très bon café léger et subtile!</p>
+                        <div class="d-flex justify-content-between">
+                            <form method="get" action="detail" class="form-inline">
+                                <input type="number" value="1" name="id" readonly="readonly" class="d-none"/>
+                                <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
+                            </form>
+                                                                <form method="get" action="modification" class="form-inline">
+                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="text" value="nosproduits" name="page" class="d-none"/>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="1" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p><span class="font-weight-bold">20.00€</span> le sachet d'1 kg</p>
+                        </div>
+                    </div>
+            </div>
+                    
