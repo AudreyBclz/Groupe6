@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\cafe;
+use App\Models\pays;
 require_once 'src/config/config.php';
 require_once 'src/config/connect.php';
 require_once 'src/config/notconnect.php';
@@ -13,106 +14,53 @@ if($_SESSION['role']!=='admin')
     header('Location:accueil');
 }
 else {
-    //on récupère les infos du café grâce à son id
-    $sqlSelCaf='SELECT * FROM cafe
-                INNER JOIN pays ON pays_idpays=idpays
-                WHERE idcafe=:id';
-    $reqSelCaf=$db->prepare($sqlSelCaf);
-    $reqSelCaf->bindParam(':id',$_GET['id']);
-    $reqSelCaf->execute();
-    $tab_caf=array();
-    while ($data=$reqSelCaf->fetchObject())
+    $cafe = new cafe($db);
+    if (isset($_GET['id']))
     {
-        array_push($tab_caf,$data);
+        $tab_caf = $cafe->aff_un_cafe()[1];
     }
 
 if (isset($_POST["nomCafe"]) && isset($_POST["paysCafe"]) && isset($_POST["type"]) && isset($_POST["prix"]) &&
 isset($_POST["resume"]) && isset($_POST["description"]))
 {
+    $cafe->setNomCafe($_POST['nomCafe']);
+    $cafe->setTypeCafe($_POST['type']);
+    $cafe->setPrixCafe($_POST['prix']);
+    $cafe->setResumeCafe($_POST['resume']);
+    $cafe->setDescCafe($_POST['description']);
+    $cafe->setStockCafe($_POST['stock']);
+    $cafe->setFournisseurIdfournisseur($_POST['fournisseur']);
+    $cafe->setSelectCafe($_POST['select']);
+    $cafe->setDecafCafe($_POST['deca']);
+    $cafe->setBioCafe($_POST['bio']);
+    $cafe->setPhotoCafe($_FILES['image']['name']);
 
-    $nomcafe=htmlspecialchars(trim($_POST["nomCafe"]));
-    $payscafe=htmlspecialchars(trim($_POST["paysCafe"]));
-    $resume=htmlspecialchars(trim($_POST["resume"]));
-    $description=nl2br((trim($_POST["description"])));
 
-    //on vérifie si le pays est en db et si oui on récupère l'id
-    $sqlSelPays='SELECT idpays FROM pays
-                 WHERE nomPays=:pays';
-    $reqSelPays=$db->prepare($sqlSelPays);
-    $reqSelPays->bindParam(':pays',$payscafe);
-    $reqSelPays->execute();
-    $tab_pays=array();
-    while($data=$reqSelPays->fetchObject())
+    $pays=new pays($db);
+    $pays->setNomPays($_POST['paysCafe']);
+    $idpays=$pays->select_champ($pays->getChamps(),$pays->getNomPays())[0]->idpays;
+    if(empty($idpays))
     {
-        array_push($tab_pays,$data);
+        $idpays=$pays->insert_pays();
     }
-    if(!empty($tab_pays))
+    $cafe->setPaysIdpays($idpays);
+
+    $cafe->update_cafe();
+
+
+    move_uploaded_file($_FILES['image']['tmp_name'],'public/img/'.basename($_FILES['image']['name']));
+
+    //on fait une redirection sur la page précédente
+    if($_POST['page']==="plusvendus") {
+        header('Location:lesplusvendus?modify=done');
+    }
+    else
     {
-        $idpays=intval($tab_pays[0]->idpays);
+        header('Location:'.$_POST["page"].'?modify=done');
     }
-    else {
-        //s'il n'existe pas on l'insère et on récupère l'id
-        $sqlInsPays = 'INSERT INTO pays (nomPays) VALUES (:pays)';
-        $reqInsPays = $db->prepare($sqlInsPays);
-        $reqInsPays->bindParam(':pays', $payscafe);
-        $reqInsPays->execute();
-        $idpays = intval($db->lastInsertId());
-    }
-
-    //on met à jour le café
-        $sqlUp = 'UPDATE cafe SET
-            stockCafe=:stock,
-            fournisseur_idfournisseur=:fourn,
-            nomCafe=:nom,
-            typeCafe=:type_c,
-            decafCafe=:deca,
-            bioCafe=:bio,
-            prixCafe=:prix,
-            resumeCafe=:resume,
-            descCafe=:descr,
-            photoCafe=:photo,
-            date_modifCafe= NOW(),
-            selectCafe=:select_c,
-            pays_idpays=:id_p
-            WHERE idcafe=:id_c';
-        $reqUp=$db->prepare($sqlUp);
-        $reqUp->bindParam(':stock', $_POST['stock']);
-        $reqUp->bindParam(':fourn', $_POST['fournisseur']);
-        $reqUp->bindParam(':nom', $nomcafe);
-        $reqUp->bindParam(':type_c', $_POST["type"]);
-        $reqUp->bindParam(':deca', $_POST["deca"]);
-        $reqUp->bindParam(':bio', $_POST["bio"]);
-        $reqUp->bindParam(':prix', $_POST["prix"]);
-        $reqUp->bindParam(':resume', $resume);
-        $reqUp->bindParam(':descr', $description);
-        $reqUp->bindParam(':photo', $_FILES["image"]["name"]);
-        $reqUp->bindParam('select_c', $_POST["select"]);
-        $reqUp->bindParam(':id_p', $idpays);
-        $reqUp->bindParam(':id_c', $_POST["id_c"]);
-        $reqUp->execute();
-        $log= new \Core\Log();
-        $log->write($_SESSION['prenom'].' '.$_SESSION['nom'].' a modifié le café  '.$_POST['nomCafe'].' dont l\'ID est : '.$_POST['id_c']);
-
-
-        //on fait une redirection sur la page précédente
-        if($_POST['page']==="plusvendus") {
-            header('Location:lesplusvendus?modify=done');
-        }
-        else
-        {
-            header('Location:'.$_POST["page"].'?modify=done');
-        }
 }
-
-//on récupère la liste des fournisseurs
-$sqlSelFourn='SELECT * FROM fournisseur';
-$reqSelFourn=$db->prepare($sqlSelFourn);
-$reqSelFourn->execute();
-$tab_fourn=array();
-while($data=$reqSelFourn->fetchObject())
-{
-    array_push($tab_fourn,$data);
-}
+$fournisseur=new \App\models\Fournisseur($db);
+$tab_fourn=$fournisseur->select_fournisseur();
 
 //fonction pour sélectionner le bon fournisseur et le bon type
 function selec($value,$tri)

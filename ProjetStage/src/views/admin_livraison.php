@@ -12,11 +12,7 @@ if( $_SESSION['role']!=="admin")
         header('Location:accueil');
     }
 
-$url=explode('?liv=',$_SERVER['REQUEST_URI']);
-if(isset($url[1]) && $url[1]==='ok')
-    {
-         echo'<div class= "alert-success p-2 text-center">Commande bien mise à jour</div>';
-    }
+
 
 //récupération du contenu de la commande
 $sqlCommande='SELECT *,

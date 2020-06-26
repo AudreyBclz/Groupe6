@@ -6,7 +6,7 @@ namespace App\models;
 
 class db
 {
-    private $db;
+   public $db;
 
     /**
      * @return mixed
@@ -30,8 +30,7 @@ class db
     {
         try
         {
-            $db = new \PDO('mysql:host='.LOCALHOST.';dbname='.DBNAME.';charset=utf8',DBID,DBMDP);
-            $this->setDb($db);
+            $this->db = new \PDO('mysql:host='.LOCALHOST.';dbname='.DBNAME.';charset=utf8',DBID,DBMDP);
         }
         catch(\Exception $e)
         {

@@ -13,8 +13,8 @@ $cafe=new cafe($db);
 $panier=new Panier($db);
 $user=new User($db);
 
-$suffixe=($cafe->aff_un_cafe())[0];
-$tab_cafe=($cafe->aff_un_cafe()[1]);
+$suffixe=$cafe->aff_un_cafe()[0];
+$tab_cafe=$cafe->aff_un_cafe()[1];
 
 if(isset($_GET['id']) && isset($_GET['quantite']))
 {

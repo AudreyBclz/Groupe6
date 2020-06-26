@@ -489,9 +489,9 @@ class cafe extends Model
                             <?php if(isset($_SESSION['role']) && $_SESSION['role']==="admin")
                                 { ?>
                                     <form method="get" action="modification" class="form-inline">
-                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="number" value="<?= $cafe->idcafe ?>" name="id" readonly="readonly" class="d-none"/>
                                         <input type="text" value="nosproduits" name="page" class="d-none"/>
-                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="<?= $cafe->idcafe ?>" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                     </form>
                                 <?php } ?>
                             </div>
@@ -528,5 +528,42 @@ class cafe extends Model
         }
         return array($suffixe,$tab_cafe);
 
+    }
+
+    public function update_cafe()
+    {
+        //on met à jour le café
+        $sqlUp = 'UPDATE cafe SET
+            stockCafe=:stock,
+            fournisseur_idfournisseur=:fourn,
+            nomCafe=:nom,
+            typeCafe=:type_c,
+            decafCafe=:deca,
+            bioCafe=:bio,
+            prixCafe=:prix,
+            resumeCafe=:resume,
+            descCafe=:descr,
+            photoCafe=:photo,
+            date_modifCafe= NOW(),
+            selectCafe=:select_c,
+            pays_idpays=:id_p
+            WHERE idcafe=:id_c';
+        $reqUp=$this->getDb()->prepare($sqlUp);
+        $reqUp->bindParam(':stock', $this->stockCafe);
+        $reqUp->bindParam(':fourn', $this->fournisseur_idfournisseur);
+        $reqUp->bindParam(':nom', $this->nomCafe);
+        $reqUp->bindParam(':type_c', $this->typeCafe);
+        $reqUp->bindParam(':deca', $this->decafCafe);
+        $reqUp->bindParam(':bio', $this->bioCafe);
+        $reqUp->bindParam(':prix', $this->prixCafe);
+        $reqUp->bindParam(':resume', $this->resumeCafe);
+        $reqUp->bindParam(':descr', $this->descCafe);
+        $reqUp->bindParam(':photo', $this->photoCafe);
+        $reqUp->bindParam('select_c', $this->selectCafe);
+        $reqUp->bindParam(':id_p', $this->pays_idpays);
+        $reqUp->bindParam(':id_c', $_POST["id_c"]);
+        $reqUp->execute();
+        $log= new \Core\Log();
+        $log->write($_SESSION['prenom'].' '.$_SESSION['nom'].' a modifié le café  '.$_POST['nomCafe'].' dont l\'ID est : '.$_POST['id_c']);
     }
 }

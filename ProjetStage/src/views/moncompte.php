@@ -1,7 +1,5 @@
 <?php
-use App\Models\User;
-use App\Models\Adresse;
-use App\Models\pays;
+
 
 require_once 'src/config/config.php';
 require_once 'src/config/connect.php';
@@ -35,72 +33,12 @@ function aff_champ($name_champ)
         return false;
     }
 }
-if (isset($_POST['nom']))
-{
-    $user= new User($db);
-    $user->setNomUsers($_POST['nom']);
-    $user->setPrenomUsers($_POST['prenom']);
-    $user->setMailUsers($_POST['email']);
 
-    $pays_m= new pays($db);
-    $pays_m->setNomPays($_POST['pays']);
-
-    $adresse_m= new Adresse($db);
-    $adresse_m->setAdresse1($_POST['adresse']);
-    $adresse_m->setAdresse2($_POST['complement']);
-    $adresse_m->setAdresseCP($_POST['codePost']);
-    $adresse_m->setAdresseVille($_POST['ville']);
-
-    if(!empty($user->getErrors()))
-    {
-        foreach ($user->getErrors() as $error)
-        {
-            echo '<div class="alert-warning p-2 text-center">' . $error . '</div>';
-        }
-    }
-    elseif (!empty($adresse_m->getErrors()))
-    {
-        foreach ($adresse_m->getErrors() as $error)
-        {
-            echo '<div class="alert-warning p-2 text-center">' . $error . '</div>';
-        }
-    }
-    elseif (!empty($pays_m->getErrors()))
-    {
-        echo '<div class="alert-warning p-2 text-center">' . $error . '</div>';
-    }
-    else
-        {
-            $idpays = $pays_m->select_champ($pays_m->getChamps(),$pays_m->getNomPays())[0]->idpays;
-            if (empty($idpays)) {
-                $idpays = $pays_m->insert_pays();
-            }
-            $idAdresse = $adresse_m->check_adresse($pays_m,0);
-            $adresse_m->setPaysIdpays($idpays);
-            if ($idAdresse == '') {
-                $idAdresse = $adresse_m->insert_adresse(0);
-            }
-            $user->setAdresseIdadresse($idAdresse);
-
-            $user->update_user();
-
-            echo '<div class="alert-success p-2 text-center">Modification du compte bien effectuée.</div>';
-
-            $_POST['nom']="";
-            $_POST['prenom']="";
-            $_POST['email']="";
-            $_POST['adresse']="";
-            $_POST['complement']="";
-            $_POST['codePost']="";
-            $_POST['ville']="";
-            $_POST['pays']="";
-        }
-}
 ?>
 <div class="container">
     <div class="arr_plan">
         <h1 class="text-center titre">Modifcation des informations du compte</h1>
-          <form method="post" action="monCompte" class="m-1" id="form_ins">
+         <!-- <form method="post" action="monCompte" class="m-1" id="form_ins"> -->
             <div class="col-12">
                 <div class="row justify-content-between mt-3">
                     <label for="nom" class="label">Nom :</label>
@@ -197,10 +135,10 @@ if (isset($_POST['nom']))
                   <input type="checkbox" value="ok" name="robot" id="robot" class="form-check" />
               </div>
               <div class="row justify-content-between">
-                  <button type="submit" class="btn btn-marron mt-3" id="inscription">Modifier</button>
+                  <button type="button" class="btn btn-marron mt-3 modif_compte" id="modif">Modifier</button>
                   <a href="selection" class="btn btn-marron mt-3">Retour</a>
               </div>
-    </form>
+   <!-- </form> -->
     </div>
 
 

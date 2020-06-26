@@ -21,9 +21,9 @@
                                 <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                             </form>
                                                                 <form method="get" action="modification" class="form-inline">
-                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="number" value="2" name="id" readonly="readonly" class="d-none"/>
                                         <input type="text" value="nosproduits" name="page" class="d-none"/>
-                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="2" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                     </form>
                                                             </div>
                         </div>
@@ -50,9 +50,9 @@
                                 <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                             </form>
                                                                 <form method="get" action="modification" class="form-inline">
-                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="number" value="3" name="id" readonly="readonly" class="d-none"/>
                                         <input type="text" value="nosproduits" name="page" class="d-none"/>
-                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="3" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                     </form>
                                                             </div>
                         </div>
@@ -79,9 +79,9 @@
                                 <button class="btn btn-sm btn-primary mr-1" type="submit"> Voir <i class="fa fa-plus" aria-hidden="true"></i> </button>
                             </form>
                                                                 <form method="get" action="modification" class="form-inline">
-                                        <input type="number" value=" //$cafe->idcafe " name="id" readonly="readonly" class="d-none"/>
+                                        <input type="number" value="5" name="id" readonly="readonly" class="d-none"/>
                                         <input type="text" value="nosproduits" name="page" class="d-none"/>
-                                        <button class="btn btn-sm btn-warning mr-1" type="submit" id="5" data-page=""><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
+                                        <button class="btn btn-sm btn-warning mr-1" type="submit"><i class="fa fa-spinner" aria-hidden="true"></i> Modifier</button>
                                     </form>
                                                             </div>
                         </div>
@@ -90,4 +90,7 @@
                         </div>
                     </div>
             </div>
-                    
+                                </div>
+        </div>
+    </div>
+</div>

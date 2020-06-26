@@ -187,7 +187,6 @@ putDeliveryBtn.on("click", function () {
         method: "POST",
         data: {"id_user": id, "date": date},
         success: function (data) {
-            console.log(data);
             $("button[data-type='"+date+"']").before(data);
         },
         error: function (resultat, statut, erreur) {
@@ -198,6 +197,34 @@ putDeliveryBtn.on("click", function () {
 
     })
 })
+
+let bouton=$('.modif_compte');
+bouton.on("click",function(){
+    let nom= $('input[name="nom"]').val();
+    let prenom=$('input[name="prenom"]').val();
+    let email=$('input[name="email"]').val();
+    let adresse=$('input[name="adresse"]').val();
+    let complement=$('input[name="complement"]').val();
+    let codePostal=$('input[name="codePost"]').val();
+    let ville=$('input[name="ville"]').val();
+    let pays=$('input[name="pays"]').val();
+    $.ajax({
+        url:"src/views/ajax/ajax.php",
+        method: "POST",
+        data: { "nom":nom,
+                "prenom":prenom,
+                "email":email,
+                "adresse":adresse,
+                "complement":complement,
+                "codePost":codePostal,
+                "ville":ville,
+                "pays":pays},
+        success: function (data){
+            $(".container").prepend(data);
+        }
+    })
+    }
+)
 
 function control_modif_mdp() {
     var mdp = document.getElementById("mdp").value;

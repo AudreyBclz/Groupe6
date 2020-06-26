@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\Panier;
 require_once 'src/config/config.php';
 require_once 'src/config/connect.php';
 require_once 'src/config/notconnect.php';
@@ -8,15 +8,16 @@ require_once 'src/config/notconnect.php';
 notco();
 $db=connect();
 $isOk=true;
-
+$panier=new Panier($db);
 //On vérifie si on vient de la page paiement
 if(!isset($_POST['pay']))
 {
     header('Location:accueil');
 }
 else {
+    $tab_pan=$panier->aff_panier();
     // on récupère le panier de l'utilisateur
-    $sqlSelPan = 'SELECT * FROM panier
+    /*$sqlSelPan = 'SELECT * FROM panier
               INNER JOIN cafe ON cafe_idcafe=idcafe
               WHERE users_idUsers =:id';
     $reqSelPan = $db->prepare($sqlSelPan);
@@ -24,7 +25,7 @@ else {
     $reqSelPan->execute();
     $tab_pan = array();
     while ($data = $reqSelPan->fetchObject()) {
-        array_push($tab_pan, $data);
+        array_push($tab_pan, $data);*/
     }
 
     // pour chaque article on regarde si la quantité est inférieur au stock du café
