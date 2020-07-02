@@ -12,8 +12,28 @@
                 <td>{{ vehicule.id }}</td>
             </tr>
             <tr>
+                <th>Marque</th>
+                <td>{{ vehicule.marque.nomMarque }}</td>
+            </tr>
+            <tr>
                 <th>NomVehicule</th>
                 <td>{{ vehicule.nomVehicule }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ vehicule.typeVehicule.nomTypeVehicule }}</td>
+            </tr>
+            <tr>
+                <th>Energie</th>
+                <td>{{ vehicule.energy.nomEnergy }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ vehicule.color.nomColor}}</td>
+            </tr>
+            <tr>
+                <th>Option</th>
+                <td>{{ vehicule.options.nomOption }}</td>
             </tr>
             <tr>
                 <th>NumImmat</th>
@@ -27,6 +47,8 @@
                 <th>NbPorte</th>
                 <td>{{ vehicule.nbPorte }}</td>
             </tr>
+
+
         </tbody>
     </table>
 

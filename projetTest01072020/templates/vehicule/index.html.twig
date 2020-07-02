@@ -9,15 +9,11 @@
             <thead>
             <tr>
                 <th>Id</th>
-                <th>NomVehicule</th>
-                <th>NumImmat</th>
-                <th>PrixHt</th>
-                <th>NbPorte</th>
                 <th>Marque</th>
-                <th>Options</th>
-                <th>Type véhicule</th>
-                <th>Couleur</th>
+                <th>Nom Véhicule</th>
+                <th>Type</th>
                 <th>Energie</th>
+                <th>Prix Hors taxe</th>
                 {% if is_granted('ROLE_ADMIN') %}
                     <th>actions</th>
                 {% endif %}
@@ -27,40 +23,27 @@
             {% for vehicule in vehicules %}
                 <tr>
                     <td>{{ vehicule.id }}</td>
-                    <td>{{ vehicule.nomVehicule }}</td>
-                    <td>{{ vehicule.numImmat }}</td>
-                    <td>{{ vehicule.prixHt }}</td>
-                    <td>{{ vehicule.nbPorte }}</td>
-
                     {% if vehicule.marque %}
                         <td>{{ vehicule.marque.nomMarque }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
-
-                    {% if vehicule.options %}
-                        <td>{{ vehicule.options.nomOption }}</td>
+                    {% if vehicule.marque %}
+                        <td>{{ vehicule.nomVehicule }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
-
                     {% if vehicule.typeVehicule %}
-                        <td>{{ vehicule.typeVehicule.nomTypeVehicule }}</td>
+                         <td>{{ vehicule.typeVehicule.nomTypeVehicule }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
-
-                    {% if vehicule.color %}
-                        <td>{{ vehicule.color.nomColor }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-
                     {% if vehicule.energy %}
                         <td>{{ vehicule.energy.nomEnergy }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
+                    <td>{{ vehicule.prixHt }}</td>
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>
