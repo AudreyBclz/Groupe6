@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Energy{% endblock %}
+
+{% block body %}
+    <h1>Energy</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ energy.id }}</td>
+            </tr>
+            <tr>
+                <th>NomEnergy</th>
+                <td>{{ energy.nomEnergy }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('energy_index') }}">back to list</a>
+
+    <a href="{{ path('energy_edit', {'id': energy.id}) }}">edit</a>
+
+    {{ include('admin/energy/_delete_form.html.twig') }}
+{% endblock %}
