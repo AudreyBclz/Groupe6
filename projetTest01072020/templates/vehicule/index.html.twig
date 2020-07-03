@@ -14,6 +14,7 @@
                 <th>Type</th>
                 <th>Energie</th>
                 <th>Prix Hors taxe</th>
+                <th>Photos</th>
                 {% if is_granted('ROLE_ADMIN') %}
                     <th>actions</th>
                 {% endif %}
@@ -21,7 +22,7 @@
             </thead>
             <tbody>
             {% for vehicule in vehicules %}
-                <tr>
+                <tr class="">
                     <td>{{ vehicule.id }}</td>
                     {% if vehicule.marque %}
                         <td>{{ vehicule.marque.nomMarque }}</td>
@@ -44,6 +45,11 @@
                         <td></td>
                     {% endif %}
                     <td>{{ vehicule.prixHt }}</td>
+                    {% if vehicule.photo %}
+                    <td><img class="image" src="{{ vich_uploader_asset(vehicule,'imageFile') }}"></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>

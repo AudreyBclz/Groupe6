@@ -13,6 +13,7 @@ use App\Repository\OptionsRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,6 +61,9 @@ class VehiculeType extends AbstractType
                 'choice_label' => 'nomEnergy',
                 'multiple' => false,
                 'required' => false
+            ))
+            ->add('imageFile',FileType::class,array(
+                'required'=>false
             ))
         ;
     }
