@@ -46,7 +46,7 @@ class Gender
 
     public function setNameGender(string $nameGender): self
     {
-        $this->nameGender = $nameGender;
+        $this->nameGender = htmlspecialchars(trim($nameGender));
 
         return $this;
     }

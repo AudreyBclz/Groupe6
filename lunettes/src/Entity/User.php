@@ -61,6 +61,11 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="users")
+     */
+    private $address;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,7 +78,7 @@ class User implements UserInterface
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = htmlspecialchars(trim($email));
 
         return $this;
     }
@@ -146,7 +151,7 @@ class User implements UserInterface
 
     public function setCivUser(string $civUser): self
     {
-        $this->civUser = $civUser;
+        $this->civUser = htmlspecialchars(trim($civUser));
 
         return $this;
     }
@@ -158,7 +163,7 @@ class User implements UserInterface
 
     public function setFirstNameUser(string $firstNameUser): self
     {
-        $this->firstNameUser = $firstNameUser;
+        $this->firstNameUser = htmlspecialchars(trim($firstNameUser));
 
         return $this;
     }
@@ -170,7 +175,7 @@ class User implements UserInterface
 
     public function setLastNameUser(string $lastNameUser): self
     {
-        $this->lastNameUser = $lastNameUser;
+        $this->lastNameUser = htmlspecialchars(trim($lastNameUser));
 
         return $this;
     }
@@ -182,7 +187,7 @@ class User implements UserInterface
 
     public function setTelUser(?string $telUser): self
     {
-        $this->telUser = $telUser;
+        $this->telUser = htmlspecialchars(trim($telUser));
 
         return $this;
     }
@@ -195,6 +200,18 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }

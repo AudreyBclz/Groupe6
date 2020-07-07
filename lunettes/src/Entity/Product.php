@@ -125,7 +125,7 @@ class Product
 
     public function setNameProduct(string $nameProduct): self
     {
-        $this->nameProduct = $nameProduct;
+        $this->nameProduct = htmlspecialchars(trim($nameProduct));
 
         return $this;
     }
@@ -137,7 +137,7 @@ class Product
 
     public function setDescrProduct(string $descrProduct): self
     {
-        $this->descrProduct = $descrProduct;
+        $this->descrProduct = htmlspecialchars(trim($descrProduct));
 
         return $this;
     }
@@ -149,7 +149,7 @@ class Product
 
     public function setPriceProduct(float $priceProduct): self
     {
-        $this->priceProduct = $priceProduct;
+        $this->priceProduct = htmlspecialchars(trim($priceProduct));
 
         return $this;
     }
@@ -161,7 +161,7 @@ class Product
 
     public function setDateCreaProduct(\DateTimeInterface $dateCreaProduct): self
     {
-        $this->dateCreaProduct = $dateCreaProduct;
+        $this->dateCreaProduct = htmlspecialchars(trim($dateCreaProduct));
 
         return $this;
     }
@@ -173,7 +173,7 @@ class Product
 
     public function setDateModifProduct(?\DateTimeInterface $dateModifProduct): self
     {
-        $this->dateModifProduct = $dateModifProduct;
+        $this->dateModifProduct = htmlspecialchars(trim($dateModifProduct));
 
         return $this;
     }
@@ -197,7 +197,7 @@ class Product
 
     public function setPhotoProduct(?string $photoProduct): self
     {
-        $this->photoProduct = $photoProduct;
+        $this->photoProduct = htmlspecialchars(trim($photoProduct));
 
         return $this;
     }
@@ -209,7 +209,7 @@ class Product
 
     public function setStockProduct(int $stockProduct): self
     {
-        $this->stockProduct = $stockProduct;
+        $this->stockProduct = htmlspecialchars(trim($stockProduct));
 
         return $this;
     }
@@ -221,7 +221,7 @@ class Product
 
     public function setCategory(?Category $category): self
     {
-        $this->category = $category;
+        $this->category = htmlspecialchars(trim($category));
 
         return $this;
     }
@@ -233,7 +233,7 @@ class Product
 
     public function setGender(?Gender $gender): self
     {
-        $this->gender = $gender;
+        $this->gender = htmlspecialchars(trim($gender));
 
         return $this;
     }

@@ -46,7 +46,7 @@ class Category
 
     public function setNameCategory(string $nameCategory): self
     {
-        $this->nameCategory = $nameCategory;
+        $this->nameCategory = htmlspecialchars(trim($nameCategory));
 
         return $this;
     }
