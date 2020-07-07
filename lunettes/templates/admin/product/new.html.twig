@@ -34,6 +34,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ path('home') }}">Partie client <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('list') }}">List <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
@@ -61,6 +64,6 @@
 
     {{ include('product/_form.html.twig') }}
 
-    <div class="center"><a href="{{ path('product_index') }}">back to list</a></div>
+    <div class="center"><a href="{{ path('list') }}">back to list</a></div>
     </body>
 {% endblock %}
