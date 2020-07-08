@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Gender;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,17 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findByGender($gender)
+    {
+        $query=$this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin(Gender::class,'g','WITH','p.gender = g.id')
+            ->where('g.nameGender = :gender')
+            ->orWhere('g.nameGender = :uni')
+            ->setParameters(['gender'=>$gender,'uni'=>"Unisexe"]);
+
+        return $query->getQuery()->getResult();
+    }
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

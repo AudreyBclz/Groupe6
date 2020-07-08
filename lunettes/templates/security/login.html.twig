@@ -13,7 +13,7 @@
                     <div class="content">
 
                         <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1">Sign in</h1>
-                        <form method="post" action-xhr="#">
+                        <form method="post">
                             {% if error %}
                                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %}

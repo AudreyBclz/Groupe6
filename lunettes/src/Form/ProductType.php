@@ -19,7 +19,6 @@ class ProductType extends AbstractType
             ->add('nameProduct')
             ->add('descrProduct')
             ->add('priceProduct')
-            ->add('dateCreaProduct')
             ->add('statusProduct')
             ->add('imageFile', FileType::class, array(
                 'required' => false

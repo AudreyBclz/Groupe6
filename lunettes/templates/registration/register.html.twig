@@ -8,8 +8,8 @@
 
 
         <div class="container-fluid mbr-white">
-            {{ form_start(registrationForm,{'attr': {'action-xhr' :'#'}}) }}
-            <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1">Register</h1>
+            {{ form_start(registrationForm) }}
+            <h1 class="mbr-section-title mbr-fonts-style align-center mbr-pb display-1">Register</h1>
             <div class="mbr-row">
                 <div class="mbr-col-lg-5 mbr-col-md-12 mbr-m-auto mbr-col-sm-12 md-pb">
                         {% for flashError in app.flashes('verify_email_error') %}

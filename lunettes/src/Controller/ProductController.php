@@ -57,11 +57,11 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_show", methods={"GET"})
+     * @Route("/admin/{id}", name="product_show", methods={"GET"})
      */
     public function show(Product $product): Response
     {
-        return $this->render('product/show.html.twig', [
+        return $this->render('admin/product/show.html.twig', [
             'product' => $product,
         ]);
     }
@@ -87,7 +87,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="product_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Product $product): Response
     {
