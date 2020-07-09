@@ -32,17 +32,29 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropProduct" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product</a>
+                    <div class="dropdown-menu" aria-labelledby="DropProduct">
+                        <a class="dropdown-item" href="{{ path('list') }}">List</a>
+                        <a class="dropdown-item" href="{{ path('product_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                    <div class="dropdown-menu" aria-labelledby="DropCategory">
+                        <a class="dropdown-item" href="{{ path('category_index') }}">List</a>
+                        <a class="dropdown-item" href="{{ path('category_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                    <div class="dropdown-menu" aria-labelledby="DropAddress">
+                        <a class="dropdown-item" href="{{ path('address_index') }}">List</a>
+                        <a class="dropdown-item" href="{{ path('address_new') }}">Create</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('home') }}">Partie client <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('list') }}">List <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Create</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Edit <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -63,10 +75,9 @@
 
     {{ include('product/_form.html.twig') }}
 
-    <div class="center"><a href="{{ path('list') }}">back to list</a></div>
+    <div class="center"><a href="{{ path('list') }}"><button class="btn btn-white">back to list</button></a></div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
 {% endblock %}

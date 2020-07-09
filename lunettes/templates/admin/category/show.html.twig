@@ -18,10 +18,8 @@
     <script async custom-element="amp-bind" src="{{ asset('https://cdn.ampproject.org/v0/amp-bind-0.1.js') }}"></script>
     <script async custom-template="amp-mustache" src="{{ asset('https://cdn.ampproject.org/v0/amp-mustache-0.2.js') }}"></script>
     <script async custom-element="amp-iframe" src="{{ asset('https://cdn.ampproject.org/v0/amp-iframe-0.1.js') }}"></script>
-    <script async custom-element="amp-sidebar" src="{{ asset('https://cdn.ampproject.org/v0/amp-sidebar-0.1.js') }}"></script>
 
 
-    <script async custom-element="amp-user-notification" src="{{ asset('https://cdn.ampproject.org/v0/amp-user-notification-0.1.js') }}"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('libs/css/main.css') }}">
 {% endblock %}
@@ -45,6 +43,13 @@
                     <div class="dropdown-menu" aria-labelledby="DropCategory">
                         <a class="dropdown-item" href="{{ path('category_index') }}">List</a>
                         <a class="dropdown-item" href="{{ path('category_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Address</a>
+                    <div class="dropdown-menu" aria-labelledby="DropAddress">
+                        <a class="dropdown-item" href="{{ path('address_index') }}">List</a>
+                        <a class="dropdown-item" href="{{ path('address_new') }}">Create</a>
                     </div>
                 </li>
                 <li class="nav-item">

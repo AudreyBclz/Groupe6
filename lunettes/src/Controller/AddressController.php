@@ -20,13 +20,13 @@ class AddressController extends AbstractController
      */
     public function index(AddressRepository $addressRepository): Response
     {
-        return $this->render('address/index.html.twig', [
+        return $this->render('admin/address/index.html.twig', [
             'addresses' => $addressRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="address_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="address_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -42,24 +42,24 @@ class AddressController extends AbstractController
             return $this->redirectToRoute('address_index');
         }
 
-        return $this->render('address/new.html.twig', [
+        return $this->render('admin/address/new.html.twig', [
             'address' => $address,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="address_show", methods={"GET"})
+     * @Route("/admin/{id}", name="address_show", methods={"GET"})
      */
     public function show(Address $address): Response
     {
-        return $this->render('address/show.html.twig', [
+        return $this->render('admin/address/show.html.twig', [
             'address' => $address,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="address_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="address_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Address $address): Response
     {
@@ -72,14 +72,14 @@ class AddressController extends AbstractController
             return $this->redirectToRoute('address_index');
         }
 
-        return $this->render('address/edit.html.twig', [
+        return $this->render('admin/address/edit.html.twig', [
             'address' => $address,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="address_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="address_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Address $address): Response
     {
