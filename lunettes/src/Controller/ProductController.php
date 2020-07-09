@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
+use App\Form\OrderType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +24,9 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $order = new Order();
+        $form= $this->createForm(OrderType::class,$order);
+        $form->handleRequest($request);
         $lunettes=$productRepository->findAll();
 
         $pagination= $paginator->paginate(
@@ -29,7 +35,9 @@ class ProductController extends AbstractController
             3 /*limit per page*/
         );
         return $this->render('product/index.html.twig', [
-            'pagination'=>$pagination
+            'controller_name'=>'ProductController',
+            'pagination'=>$pagination,
+            'formorder'=>$form->createView()
         ]);
     }
 

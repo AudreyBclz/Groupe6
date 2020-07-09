@@ -10,6 +10,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,6 +31,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, RegistrationAuthenticator $authenticator): Response
     {
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -43,7 +45,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setRoles(["ROLE_ADMIN"]);
+            $user->setRoles(["ROLE_USER"]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

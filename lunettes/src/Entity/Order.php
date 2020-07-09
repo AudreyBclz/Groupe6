@@ -54,6 +54,11 @@ class Order
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->dateOrder = new \DateTime('now');
+    }
+
     public function getId(): ?int
     {
         return $this->id;

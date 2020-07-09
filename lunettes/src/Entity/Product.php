@@ -221,7 +221,7 @@ class Product
 
     public function setCategory(?Category $category): self
     {
-        $this->category = htmlspecialchars(trim($category));
+        $this->category = $category;
 
         return $this;
     }
@@ -233,7 +233,7 @@ class Product
 
     public function setGender(?Gender $gender): self
     {
-        $this->gender = htmlspecialchars(trim($gender));
+        $this->gender = $gender;
 
         return $this;
     }

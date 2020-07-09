@@ -64,17 +64,17 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="users", cascade={"persist"})
      */
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity=LivAddress::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=LivAddress::class, inversedBy="users", cascade={"persist"})
      */
     private $livAddress;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user", cascade={"persist"})
      */
     private $orders;
 
@@ -275,4 +275,11 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->email;
+    }
+
+
 }
