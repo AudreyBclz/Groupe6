@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,13 +15,12 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nameProductOrder',NULL,['attr'=>['value'=>'pag.nameProduct']])
-            ->add('priceProductOrder')
             ->add('quantityProductOrder')
-            ->add('dateDeliveryOrder')
-            ->add('statusOrder')
-            ->add('user')
-        ;
+            ->add('submit',SubmitType::class,array(
+                'label'=>'Ajouter au panier',
+                'attr'=>['class'=>'btn btn-black item-box-btn display-4']
+            ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

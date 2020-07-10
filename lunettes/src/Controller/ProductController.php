@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\OrderType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
@@ -24,10 +25,11 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $order = new Order();
-        $form= $this->createForm(OrderType::class,$order);
-        $form->handleRequest($request);
         $lunettes=$productRepository->findAll();
+
+        $order= new Order();
+        $form=$this->createForm(OrderType::class,$order);
+        $form->handleRequest($request);
 
         $pagination= $paginator->paginate(
             $lunettes, /* query NOT result */
@@ -42,6 +44,34 @@ class ProductController extends AbstractController
     }
 
     /**
+    * @Route("/profile/order/{id}", name="order", methods={"GET","POST"})
+     */
+
+    public function order(ProductRepository $product,int $id , Request $request)
+    {
+        $order= new Order();
+        $prod=$product->find($id);
+        $order->setNameProductOrder($prod->getNameProduct());
+        $order->setPriceProductOrder($prod->getPriceProduct());
+        $user=$this->getUser();
+        $order->setUser($user);
+        $form=$this->createForm(OrderType::class,$order);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($order);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_index');
+        }
+
+        return $this->render('product/index.html.twig', [
+            'controller_name'=>'ProductController',
+        ]);
+
+    }
+    /**
      * @Route("/admin/new", name="product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -55,7 +85,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('list');
         }
 
         return $this->render('admin/product/new.html.twig', [
