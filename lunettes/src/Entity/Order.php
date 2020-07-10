@@ -54,6 +54,12 @@ class Order
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function __construct()
     {
         $this->dateOrder = new \DateTime('now');
@@ -144,6 +150,18 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

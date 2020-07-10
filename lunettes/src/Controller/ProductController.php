@@ -7,7 +7,9 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Form\OrderType;
 use App\Form\ProductType;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,27 +49,56 @@ class ProductController extends AbstractController
     * @Route("/profile/order/{id}", name="order", methods={"GET","POST"})
      */
 
-    public function order(ProductRepository $product,int $id , Request $request)
+    public function order(ProductRepository $product,int $id , Request $request, PaginatorInterface $paginator)
     {
+        $lunettes=$product->findAll();
+
+        $pagination= $paginator->paginate(
+            $lunettes, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+
         $order= new Order();
         $prod=$product->find($id);
         $order->setNameProductOrder($prod->getNameProduct());
         $order->setPriceProductOrder($prod->getPriceProduct());
+        $order->setProduct($prod);
         $user=$this->getUser();
         $order->setUser($user);
         $form=$this->createForm(OrderType::class,$order);
         $form->handleRequest($request);
+        $inorder=$this->getDoctrine()->getRepository(Order::class)->findOneBy(["user"=>$order->getUser(),"product"=>$order->getProduct()]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($order);
-            $entityManager->flush();
+        if (!empty($inorder))
+        {
+            $qte1=$order->getQuantityProductOrder();
+            $qte2=$inorder->getQuantityProductOrder();
+            $qte=$qte1+$qte2;
+            dump($order);
+            dump($inorder->getQuantityProductOrder());
+            dump($qte);
 
-            return $this->redirectToRoute('product_index');
+            if($qte< $prod->getStockProduct())
+            {
+                $order=$this->getDoctrine()->getRepository(Order::class)->find($id);
+                $order->setQuantityProductOrder($qte);
+                $this->getDoctrine()->getManager()->flush();
+
+            }
         }
-
+        else
+            {
+            if ($order->getQuantityProductOrder() <= $prod->getStockProduct()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($order);
+                $entityManager->flush();
+            }
+        }
         return $this->render('product/index.html.twig', [
             'controller_name'=>'ProductController',
+            'pagination'=>$pagination,
+            'formorder'=>$form->createView()
         ]);
 
     }
