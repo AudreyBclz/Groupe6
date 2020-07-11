@@ -110,8 +110,9 @@
             <div class="menu-container container-fluid mbr-px-2">
                 <!-- SHOW LOGO -->
                 <div class="navbar-brand">
-
-                    <span class="navbar-caption-wrap"><a class="navbar-caption  text-black display-6 display-5" href="#">ProductAMP</a></span>
+                    {% if session is defined %}
+                    <span class="navbar-caption-wrap"><a class="navbar-caption  text-black display-6 display-5" href="#">{{ session.getName }}</a></span>
+                    {% endif %}
                 </div>
                 <!-- SHOW LOGO END -->
                 <!-- COLLAPSED MENU -->
@@ -186,6 +187,7 @@
         <!-- </div> -->
     </section>
 {% endblock %}
+{% block message %}{% endblock %}
 {% block header %}
     <section class="header1 cid-s0bsc2KgEB" id="header01-1">
 

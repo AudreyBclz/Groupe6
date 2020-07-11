@@ -4,17 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
-use App\Entity\User;
 use App\Form\OrderType;
 use App\Form\ProductType;
-use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
-use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -59,6 +55,8 @@ class ProductController extends AbstractController
             3 /*limit per page*/
         );
 
+        $msgOk='';
+        $msgError="";
         $order= new Order();
         $prod=$product->find($id);
         $order->setNameProductOrder($prod->getNameProduct());
@@ -75,16 +73,33 @@ class ProductController extends AbstractController
             $qte1=$order->getQuantityProductOrder();
             $qte2=$inorder->getQuantityProductOrder();
             $qte=$qte1+$qte2;
-            dump($order);
-            dump($inorder->getQuantityProductOrder());
-            dump($qte);
 
-            if($qte< $prod->getStockProduct())
+            if($qte<= $prod->getStockProduct())
             {
-                $order=$this->getDoctrine()->getRepository(Order::class)->find($id);
+                $order=$this->getDoctrine()->getRepository(Order::class)->findOneBy(["user"=>$order->getUser(),"product"=>$order->getProduct()]);
                 $order->setQuantityProductOrder($qte);
                 $this->getDoctrine()->getManager()->flush();
+                $msgOk='Article(s) ajouté(s) au panier.';
+                return $this->render('product/index.html.twig', [
+                    'controller_name'=>'ProductController',
+                    'pagination'=>$pagination,
+                    'formorder'=>$form->createView(),
+                    'msgOk'=>$msgOk,
+                    'msgError'=>$msgError
+                ]);
 
+
+            }
+            else
+            {
+                $msgError='Quantité supérieur au stock, réessayer.';
+                return $this->render('product/index.html.twig', [
+                    'controller_name'=>'ProductController',
+                    'pagination'=>$pagination,
+                    'formorder'=>$form->createView(),
+                    'msgOk'=>$msgOk,
+                    'msgError'=>$msgError
+                ]);
             }
         }
         else
@@ -93,13 +108,29 @@ class ProductController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($order);
                 $entityManager->flush();
+                $msgOk='Article(s) ajouté(s) au panier.';
+                return $this->render('product/index.html.twig', [
+                    'controller_name'=>'ProductController',
+                    'pagination'=>$pagination,
+                    'formorder'=>$form->createView(),
+                    'msgOk'=>$msgOk,
+                    'msgError'=>$msgError
+                ]);
+            }
+            else
+            {
+                $msgError='Quantité supérieur au stock, réessayer.';
+                return $this->render('product/index.html.twig', [
+                    'controller_name'=>'ProductController',
+                    'pagination'=>$pagination,
+                    'formorder'=>$form->createView(),
+                    'msgOk'=>$msgOk,
+                    'msgError'=>$msgError
+                ]);
+
             }
         }
-        return $this->render('product/index.html.twig', [
-            'controller_name'=>'ProductController',
-            'pagination'=>$pagination,
-            'formorder'=>$form->createView()
-        ]);
+
 
     }
     /**

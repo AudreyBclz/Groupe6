@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Mime\Address;
+use App\Entity\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -31,10 +31,34 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, RegistrationAuthenticator $authenticator): Response
     {
-
+        $msg='';
         $user = new User();
+        $session= new Session();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        if($user->getEmail()!== NULL)
+        {
+            $email=$this->getDoctrine()->getRepository(User::class)->findOneBy(['email'=>$user->getEmail()]);
+            dump($email);
+           /* if($email->getId()!==NULL)
+            {
+                $msg='Adresse mail déjà utilisée';
+            }*/
+
+
+
+            $f_address=$user->getAddress()->getFirstAddress();
+            $s_address=$user->getAddress()->getSecondAddress();
+            $zip=$user->getAddress()->getZipcodeAddress();
+            $town=$user->getAddress()->getTownAddress();
+            $country=$user->getAddress()->getCountryAddress();
+
+            $adress=$this->getDoctrine()->getRepository(Address::class)->findOneBy(['firstAddress'=>$f_address,'secondAddress'=>$s_address,'zipcodeAddress'=>$zip,'townAddress'=>$town,'countryAddress'=>$country]);
+            $user->setAddress($adress);
+
+        }
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -50,6 +74,8 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+
 
             // generate a signed url and email it to the user
             /*$this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -71,6 +97,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'msgError'=>$msg,
         ]);
     }
 

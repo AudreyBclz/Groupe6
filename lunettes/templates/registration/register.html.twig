@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Register{% endblock %}
-
+{% block message %}
+    {% if msgError is defined %}
+        <div class="align-center erreur bg-danger">{{ msgError }}</div>
+    {% elseif msgOk is defined %}
+    <div class="align-center success bg-danger">{{ msgOk }}</div>
+    {% endif %}
+{% endblock %}
 {% block header %}
 
     <section class="header1 cid-s0bsc2KgEB" id="header01-1">

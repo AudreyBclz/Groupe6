@@ -22,3 +22,15 @@
 {
     display: none;
 }
+.erreur
+{
+    font-size: 2em;
+    color: brown;
+    font-weight: bold;
+}
+.success
+{
+    font-size: 2em;
+    color: green;
+    font-weight: bold;
+}
