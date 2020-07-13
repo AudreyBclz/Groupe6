@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+{% block header %}{% endblock %}
+{% block body %}
+<h1 class="align-center mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1 ">Mon panier</h1>
+    <table class=" mx-auto table-auto mx-4 my-2">
+    <thead>
+        <tr>
+            <th class="border border-gray-600 px-4 py-2 text-gray-800">Nom</th>
+            <th class="border border-gray-600 px-4 py-2 text-gray-800">Prix</th>
+            <th class="border border-gray-600 px-4 py-2 text-gray-800">Quantité</th>
+            <th class="border border-gray-600 px-4 py-2 text-gray-800">Total</th>
+            <th class="border border-gray-600 px-4 py-2 text-gray-800">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if panier is empty %}
+    <tr>
+        <td colspan="5" class="align-center px-4 py-4">Votre panier est vide</td>
+    </tr>
+    {% else %}
+    {% set prixTotal =0 %}
+        {% for pan in panier %}
+          {% set prixTotal= prixTotal +(pan.quantityProductOrder * pan.priceProductOrder) %}
+        <tr class="bg-gray-400">
+            <td class="align-center border border-gray-600 px-4 py-2">{{ pan.nameProductOrder }}</td>
+            <td class="align-center border border-gray-600 px-4 py-2">{{ pan.priceProductOrder }} €</td>
+            <td class="align-center border border-gray-600 px-4 py-2">{{ pan.quantityProductOrder }}</td>
+            <td class="align-center border border-gray-600 px-4 py-2">{{ pan.quantityProductOrder * pan.priceProductOrder }} €</td>
+            <td class="align-center border border-gray-600 px-4 py-2"><a href="{{path('panier_delete',{id: pan.id})}}"><button type="button" class="btn">Supprimer</button></a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2"></td>
+            <th class="align-center px-4 py-4">Prix du panier</th>
+            <td class="align-center px-4 py-4">{{ prixTotal }} €</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock %}

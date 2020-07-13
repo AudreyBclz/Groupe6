@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+{% block header %}{% endblock %}
+
+{% block body %}
+    <div class="bg-green-800 text-white py-10">
+        <h1 class="align-center mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2 ">Suppression Article(s)</h1>
+        <div class="mbr-row">
+            <div class="mbr-col-lg-12 mbr-col-md-12 mbr-col-sm-12">
+                <div class="flex justify-center">
+                    <table class="table border px-4 py-2 mx-2 text-white">
+                        <tbody>
+                            <tr>
+                                <th class="bg-gray-400 border border-white-600 px-4 py-2 text-gray-800">NameProductOrder</th>
+                                <td class="border border-white-600 px-4 py-2">{{ order.nameProductOrder }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-gray-400 border border-white-600 px-4 py-2 text-gray-800">PriceProductOrder</th>
+                                <td class="border border-white-600 px-4 py-2">{{ order.priceProductOrder }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-gray-400 border border-white-600 px-4 py-2 text-gray-800">QuantityProductOrder</th>
+                                <td class="border border-white-600 px-4 py-2">{{ order.quantityProductOrder }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        {{ include('order/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
