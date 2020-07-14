@@ -26,18 +26,24 @@ class ProductController extends AbstractController
         $lunettes=$productRepository->findAll();
 
         $order= new Order();
-        $form=$this->createForm(OrderType::class,$order);
-        $form->handleRequest($request);
+
 
         $pagination= $paginator->paginate(
             $lunettes, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
+        $tab_form=array();
+        foreach ($pagination as $pag)
+        {
+            $form=$this->createForm(OrderType::class,$order);
+            $form->handleRequest($request);
+            array_push($tab_form,$form->createView());
+        }
         return $this->render('product/index.html.twig', [
             'controller_name'=>'ProductController',
             'pagination'=>$pagination,
-            'formorder'=>$form->createView()
+            'tab_form'=>$tab_form
         ]);
     }
 
@@ -64,6 +70,13 @@ class ProductController extends AbstractController
         $order->setProduct($prod);
         $user=$this->getUser();
         $order->setUser($user);
+        $tab_form=array();
+        foreach ($pagination as $pag)
+        {
+            $form=$this->createForm(OrderType::class,$order);
+            $form->handleRequest($request);
+            array_push($tab_form,$form->createView());
+        }
         $form=$this->createForm(OrderType::class,$order);
         $form->handleRequest($request);
         $inorder=$this->getDoctrine()->getRepository(Order::class)->findOneBy(["user"=>$order->getUser(),"product"=>$order->getProduct()]);
@@ -83,7 +96,7 @@ class ProductController extends AbstractController
                 return $this->render('product/index.html.twig', [
                     'controller_name'=>'ProductController',
                     'pagination'=>$pagination,
-                    'formorder'=>$form->createView(),
+                    'tab_form'=>$tab_form,
                     'msgOk'=>$msgOk,
                     'msgError'=>$msgError
                 ]);
@@ -96,7 +109,7 @@ class ProductController extends AbstractController
                 return $this->render('product/index.html.twig', [
                     'controller_name'=>'ProductController',
                     'pagination'=>$pagination,
-                    'formorder'=>$form->createView(),
+                    'tab_form'=>$tab_form,
                     'msgOk'=>$msgOk,
                     'msgError'=>$msgError
                 ]);
@@ -112,7 +125,7 @@ class ProductController extends AbstractController
                 return $this->render('product/index.html.twig', [
                     'controller_name'=>'ProductController',
                     'pagination'=>$pagination,
-                    'formorder'=>$form->createView(),
+                    'tab_form'=>$tab_form,
                     'msgOk'=>$msgOk,
                     'msgError'=>$msgError
                 ]);
@@ -123,7 +136,7 @@ class ProductController extends AbstractController
                 return $this->render('product/index.html.twig', [
                     'controller_name'=>'ProductController',
                     'pagination'=>$pagination,
-                    'formorder'=>$form->createView(),
+                    'tab_form'=>$tab_form,
                     'msgOk'=>$msgOk,
                     'msgError'=>$msgError
                 ]);

@@ -64,8 +64,8 @@
                                         </div>
 
                                         <div class="item-box-footer">
-                                            {{ form_start(formorder, {'action' : path('order', {id: pag.id})}) }}
-                                            {{ form_end(formorder) }}
+                                            {{ form_start(tab_form[(loop.index)-1], {'action' : path('order', {id: pag.id})}) }}
+                                            {{ form_end(tab_form[(loop.index)-1]) }}
                                         </div>
 
                                     </div>
