@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LivAddress{% endblock %}
+
+{% block body %}
+    <h1>LivAddress</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liv_address.id }}</td>
+            </tr>
+            <tr>
+                <th>FirstNameLiv</th>
+                <td>{{ liv_address.firstNameLiv }}</td>
+            </tr>
+            <tr>
+                <th>LastNameLiv</th>
+                <td>{{ liv_address.lastNameLiv }}</td>
+            </tr>
+            <tr>
+                <th>FirstAdLiv</th>
+                <td>{{ liv_address.firstAdLiv }}</td>
+            </tr>
+            <tr>
+                <th>SecondAdLiv</th>
+                <td>{{ liv_address.secondAdLiv }}</td>
+            </tr>
+            <tr>
+                <th>ZipcodeLiv</th>
+                <td>{{ liv_address.zipcodeLiv }}</td>
+            </tr>
+            <tr>
+                <th>TownLiv</th>
+                <td>{{ liv_address.townLiv }}</td>
+            </tr>
+            <tr>
+                <th>CountryLiv</th>
+                <td>{{ liv_address.countryLiv }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('liv_address_index') }}">back to list</a>
+
+    <a href="{{ path('liv_address_edit', {'id': liv_address.id}) }}">edit</a>
+
+    {{ include('liv_address/_delete_form.html.twig') }}
+{% endblock %}

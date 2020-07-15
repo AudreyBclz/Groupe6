@@ -2,6 +2,8 @@
 
 {% block title %}Hello PanierController!{% endblock %}
 {% block header %}{% endblock %}
+{% block men_or_women %}{% endblock %}
+{% block product_care %}{% endblock %}
 {% block body %}
 <h1 class="align-center mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1 ">Mon panier</h1>
     <table class=" mx-auto table-auto mx-4 my-2">
@@ -34,9 +36,12 @@
         <tr>
             <td colspan="2"></td>
             <th class="align-center px-4 py-4">Prix du panier</th>
-            <td class="align-center px-4 py-4">{{ prixTotal }} €</td>
+            <th class="align-center px-4 py-4">{{ prixTotal }} €</th>
         </tr>
     {% endif %}
     </tbody>
 </table>
+    <div class="align-center">
+        <a href="{{ path('liv_address_new') }}"><button class="btn btn-black">Poursuivre la commande</button></a>
+    </div>
 {% endblock %}

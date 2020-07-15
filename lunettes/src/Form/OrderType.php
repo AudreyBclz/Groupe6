@@ -15,10 +15,11 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quantityProductOrder')
+            ->add('quantityProductOrder',NULL,array(
+                'label'=>'Quantité'
+            ))
             ->add('submit',SubmitType::class,array(
-                'label'=>'Ajouter au panier',
-                'attr'=>['class'=>'btn btn-black item-box-btn display-4']
+                'label'=>'Ajouter au panier'
             ));
 
     }

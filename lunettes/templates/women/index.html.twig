@@ -84,7 +84,16 @@
                                                 {{ pag.descrProduct }}
                                             </p>
                                         </div>
-                                        <div class="item-box-footer"><a href="" class="btn item-box-btn btn-black display-4" target="_blank"><span>Buy Now</span></a>
+                                        <div class="item-box-footer">
+                                            {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                                            {{ form_start(tab_form[(loop.index)-1], {'action' : path('order', {id: pag.id})}) }}
+                                                {{ form_widget(tab_form[(loop.index)-1].quantityProductOrder,{'attr' : {'class':'w-1/3 mb-8'}}) }}
+                                                {{ form_widget(tab_form[(loop.index)-1].submit,{'attr' : {'class':'btn btn-black'}}) }}
+                                            {{ form_end(tab_form[(loop.index)-1]) }}
+                                            {% endif %}
+                                            {% if  not is_granted('ROLE_USER') or not is_granted('ROLE_ADMIN') %}
+                                            <p>You have to connect if you want to buy<a href="{{ path('app_login') }}" class="btn">Connect</a></p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +121,7 @@
                             <div class="item-content align-center">
 
                                 <div class="item-box-footer mbr-pt-3">
-                                    <a href="" class="btn item-box-btn btn-black display-4" target="_blank"><span>Buy Now</span></a>
+                                    <a id="showLightbox4-0-{{ pag.id }}" class="btn item-box-btn btn-black display-4" target="_blank"><span>Buy Now</span></a>
                                 </div>
                             </div>
                         </div>
