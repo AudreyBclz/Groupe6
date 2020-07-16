@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\LivAddress;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,17 @@ class LivAddressRepository extends ServiceEntityRepository
         parent::__construct($registry, LivAddress::class);
     }
 
+    public function livaddress($id)
+    {
+
+        $query=$this->createQueryBuilder('l')
+            ->select('l')
+            ->innerJoin(User::class,'u','WITH','l.id = u.livAddress')
+            ->where('u.id=:id')
+            ->setParameter('id',$id);
+        return $query->getQuery()->getResult();
+
+    }
     // /**
     //  * @return LivAddress[] Returns an array of LivAddress objects
     //  */

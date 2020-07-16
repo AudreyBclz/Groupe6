@@ -51,6 +51,8 @@ class LivAddressController extends AbstractController
             $user=$this->getDoctrine()->getRepository(User::class)->findOneBy(['email'=>$this->getUser()->getUsername()]);
             $user->setLivAddress($address);
             $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('recap');
         }
         elseif ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -59,7 +61,7 @@ class LivAddressController extends AbstractController
             $this->getUser()->setLivAddress($livAddress);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('recap');
         }
 
         return $this->render('liv_address/new.html.twig', [

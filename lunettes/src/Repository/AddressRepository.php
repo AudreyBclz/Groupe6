@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Address;
+use App\Entity\LivAddress;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +21,17 @@ class AddressRepository extends ServiceEntityRepository
         parent::__construct($registry, Address::class);
     }
 
+    public function address($id)
+    {
+
+        $query=$this->createQueryBuilder('a')
+            ->select('a')
+            ->innerJoin(User::class,'u','WITH','a.id = u.address')
+            ->where('u.id=:id')
+            ->setParameter('id',$id);
+        return $query->getQuery()->getResult();
+
+    }
     // /**
     //  * @return Address[] Returns an array of Address objects
     //  */

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Address;
 use App\Entity\Order;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -19,7 +20,6 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
-
 
     // /**
     //  * @return Order[] Returns an array of Order objects

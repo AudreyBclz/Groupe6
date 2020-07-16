@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecapController!{% endblock %}
+{% block header%}{% endblock %}
+
+{% block body %}
+<section class="header1 cid-s0bsc2KgEB" id="header01-1">
+    <h1 class="align-center mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1 text-white">Order Summary </h1>
+    <div class="mbr-row mt-8">
+        <div class="mbr-col-lg-6 mbr-col-md-6 mbr-col-sm-12">
+            <table class=" mx-auto table-auto mx-4 my-2">
+                <thead>
+                <tr>
+                    <th class="border border-white-600 px-4 py-2 text-white">Name</th>
+                    <th class="border border-white-600 px-4 py-2 text-white">Price</th>
+                    <th class="border border-white-600 px-4 py-2 text-white">Mount</th>
+                    <th class="border border-white-600 px-4 py-2 text-white">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if order is empty %}
+                    <tr>
+                        <td colspan="5" class="align-center px-4 py-4">Votre panier est vide</td>
+                    </tr>
+                {% else %}
+                    {% set prixTotal =0 %}
+                    {% for pan in order %}
+                        {% set prixTotal= prixTotal +(pan.quantityProductOrder * pan.priceProductOrder) %}
+                        <tr class="bg-gray-400">
+                            <td class="align-center border border-white-600 px-4 py-2">{{ pan.nameProductOrder }}</td>
+                            <td class="align-center border border-white-600 px-4 py-2">{{ pan.priceProductOrder }} €</td>
+                            <td class="align-center border border-white-600 px-4 py-2">{{ pan.quantityProductOrder }}</td>
+                            <td class="align-center border border-white-600 px-4 py-2">{{ pan.quantityProductOrder * pan.priceProductOrder }} €</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2"></td>
+                        <th class="align-center px-4 py-4 text-white">Total cost</th>
+                        <th class="align-center px-4 py-4 text-white">{{ prixTotal }} €</th>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mbr-col-lg-3 mbr-col-md-3 mbr-col-sm-6 text-white">
+            <p><span class="font-bold text-black">Bill Address</span><br><br>
+                {{ app.user.firstNameUser }} {{ app.user.lastNameUser }}<br>
+                {{ address[0].firstAddress }}<br>
+                {% if address[0].secondAddress is not null %}
+                {{ address[0].secondAddress }}<br>
+                {% endif %}
+                {{ address[0].zipcodeAddress }} {{ address[0].townAddress }}<br>
+                {{ address[0].countryAddress }}
+            </p>
+        </div>
+        <div class="mbr-col-lg-3 mbr-col-md-3 mbr-col-sm-6 text-white">
+            <p><span class="font-bold text-black">Delivery Address</span><br><br>
+                {{ livAddress[0].firstNameLiv }} {{ livAddress[0].lastNameLiv }}<br>
+                {{ livAddress[0].firstAdLiv }}<br>
+                {% if livAddress[0].secondAdLiv is not null %}
+                    {{ livAddress[0].secondAdLiv }}<br>
+                {% endif %}
+                {{ livAddress[0].zipcodeLiv }} {{ livAddress[0].townLiv }}<br>
+
+                {{ livAddress[0].countryLiv }}
+        </div>
+    </div>
+    <div class="mbr-row">
+        <div class="m-auto">
+            <button class="btn btn-black align-center p-8"><a class="px-8 text-white" href="#">Pay</a></button>
+        </div>
+    </div>
+</section>
+{% endblock %}
