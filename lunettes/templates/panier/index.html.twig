@@ -42,6 +42,9 @@
     </tbody>
 </table>
     <div class="align-center">
+    {% if panier is not empty %}
         <a href="{{ path('liv_address_new') }}"><button class="btn btn-black">Continue Order</button></a>
+    {% endif %}
+        <a href="{{ path('home') }}"><button class="btn">Back home</button></a>
     </div>
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandController!{% endblock %}
+{% block header %}{% endblock %}
+
+{% block body %}
+    {% if msg is defined %}
+    <div class="align-center success bg-danger">{{ msg }}</div>
+    {% endif %}
+{% endblock %}
