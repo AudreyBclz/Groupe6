@@ -31,6 +31,17 @@ class ProductRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function findKid()
+    {
+        $query=$this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin(Gender::class,'g','WITH','p.gender = g.id')
+            ->where('g.nameGender = :gender')
+            ->setParameters(['gender'=>'Enfant']);
+
+        return $query->getQuery()->getResult();
+    }
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
