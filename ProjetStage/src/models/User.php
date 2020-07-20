@@ -211,7 +211,7 @@ class User extends Model
      */
     public function setPassUsers($passUsers)
     {
-        $test_mdp="#^[a-zA-Z0-9.-_*/&é\"'êîïùèçà@]*[A-Z]{1}[a-zA-Z0-9.-_*/&é\"'êîïùèçà@]*$#";
+        $test_mdp="#[A-Z]{1}#";
         if($passUsers!=='')
         {
             if(!preg_match($test_mdp,$passUsers))
