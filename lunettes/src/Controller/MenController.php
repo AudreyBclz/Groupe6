@@ -17,7 +17,7 @@ class MenController extends AbstractController
      * @Route("/men", name="men")
      */
 
-    public function index(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request)
+    public function index(PaginatorInterface $paginator, Request $request)
     {
         $lunettes=$this->getDoctrine()->getRepository(Product::class)->findByGender('Homme');
 

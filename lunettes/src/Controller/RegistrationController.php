@@ -36,11 +36,11 @@ class RegistrationController extends AbstractController
         $session= new Session();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-        if($user->getEmail()!== NULL)
+        if(!is_null($user->getEmail()))
         {
             $email=$this->getDoctrine()->getRepository(User::class)->findOneBy(['email'=>$user->getEmail()]);
             dump($email);
-            if($email->getId()!==NULL)
+            if(!is_null($email))
             {
                 $msg='Adresse mail déjà utilisée';
             }
@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
 
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && is_null($user->getError())) {
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

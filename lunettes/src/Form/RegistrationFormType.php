@@ -11,17 +11,38 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('civUser')
-            ->add('firstNameUser')
-            ->add('lastNameUser')
-            ->add('telUser')
-            ->add('email')
+            ->add('civUser',NULL,array(
+                'constraints'=>new NotBlank([
+                    'message'=>'This cannot be empty'
+                ])
+            ))
+            ->add('firstNameUser',NULL,array(
+                'constraints'=>new NotBlank([
+                    'message'=>'First Name cannot be empty'
+                ])
+            ))
+            ->add('lastNameUser',NULL,array(
+                'constraints'=>new NotBlank([
+                    'message'=>'Last Name cannot be empty'
+                ])
+            ))
+            ->add('telUser',NULL,array(
+                'constraints'=>new NotBlank([
+                    'message'=>'Telephone cannot be empty'
+                ])
+            ))
+            ->add('email',NULL,array(
+                'constraints'=>new NotBlank([
+                    'message'=>'Email cannot be empty'
+                ])
+            ))
             ->add('address',AddressType::class,array())
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -39,8 +60,14 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
+                    new Regex([
+                        'pattern'=>"/[A-Z]/",
+                        'match'=>true,
+                        'message'=>'Your password must contain at least one uppercase.'
+
+                    ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 8,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,

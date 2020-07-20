@@ -78,6 +78,11 @@ class User implements UserInterface
      */
     private $orders;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $error;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -279,6 +284,18 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->email;
+    }
+
+    public function getError(): ?string
+    {
+        return $this->error;
+    }
+
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+
+        return $this;
     }
 
 

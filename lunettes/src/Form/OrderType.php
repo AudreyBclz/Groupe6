@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class OrderType extends AbstractType
 {
@@ -16,10 +17,13 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('quantityProductOrder',NULL,array(
-                'label'=>'Quantité'
+                'label'=>'Quantity',
+                'constraints'=>new NotBlank([
+                    'message'=>'Quantity cannot be empty'
+                ])
             ))
             ->add('submit',SubmitType::class,array(
-                'label'=>'Ajouter au panier'
+                'label'=>'Add to cart',
             ));
 
     }
