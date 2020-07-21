@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Gender;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,6 +40,17 @@ class ProductRepository extends ServiceEntityRepository
             ->innerJoin(Gender::class,'g','WITH','p.gender = g.id')
             ->where('g.nameGender = :gender')
             ->setParameters(['gender'=>'Enfant']);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findByCat($category)
+    {
+        $query=$this->createQueryBuilder('p')
+            ->select('p')
+            ->innerJoin(Category::class,'c','WITH','p.category = c.id')
+            ->where('c.nameCategory = :cat')
+            ->setParameter('cat',$category);
 
         return $query->getQuery()->getResult();
     }

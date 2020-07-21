@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class HelpController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/help", name="help")
      */
     public function index(Request $request,\Swift_Mailer $mailer):Response
     {
@@ -42,8 +42,9 @@ class HomeController extends AbstractController
             $entityManager->flush();
             $message='Thank you! Your message has been sent.';
         }
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+
+        return $this->render('help/index.html.twig', [
+            'controller_name' => 'HelpController',
             'form'=>$form->createView(),
             'message'=>$message
         ]);
