@@ -66,6 +66,9 @@ class LivAddressType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => LivAddress::class,
+            'attr'=>array(
+                'class'=>'form'
+            )
         ]);
     }
 }

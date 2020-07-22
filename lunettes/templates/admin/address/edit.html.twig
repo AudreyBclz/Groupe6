@@ -42,17 +42,29 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropProduct" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order</a>
+                    <div class="dropdown-menu" aria-labelledby="DropProduct">
+                        <a class="dropdown-item" href="{{ path('order_index') }}">List</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="DropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
                     <div class="dropdown-menu" aria-labelledby="DropCategory">
                         <a class="dropdown-item" href="{{ path('category_index') }}">List</a>
                         <a class="dropdown-item" href="{{ path('category_new') }}">Create</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="DropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Address</a>
                     <div class="dropdown-menu" aria-labelledby="DropCategory">
                         <a class="dropdown-item" href="{{ path('address_index') }}">List</a>
                         <a class="dropdown-item" href="{{ path('address_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delivery Address</a>
+                    <div class="dropdown-menu" aria-labelledby="DropAddress">
+                        <a class="dropdown-item" href="{{ path('liv_address_index') }}">List</a>
                     </div>
                 </li>
                 <li class="nav-item">

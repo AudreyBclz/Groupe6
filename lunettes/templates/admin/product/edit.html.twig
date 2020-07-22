@@ -41,6 +41,12 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropProduct" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order</a>
+                    <div class="dropdown-menu" aria-labelledby="DropProduct">
+                        <a class="dropdown-item" href="{{ path('order_index') }}">List</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="DropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
                     <div class="dropdown-menu" aria-labelledby="DropCategory">
                         <a class="dropdown-item" href="{{ path('category_index') }}">List</a>
@@ -48,10 +54,16 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Address</a>
                     <div class="dropdown-menu" aria-labelledby="DropAddress">
                         <a class="dropdown-item" href="{{ path('address_index') }}">List</a>
                         <a class="dropdown-item" href="{{ path('address_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delivery Address</a>
+                    <div class="dropdown-menu" aria-labelledby="DropAddress">
+                        <a class="dropdown-item" href="{{ path('liv_address_index') }}">List</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -75,6 +87,8 @@
     <h2 class="main-title mbr-fonts-style mbr-pb-2 align-center display-2">Edit Product</h2>
 
     {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-white" href="{{ path('list') }}">back to list</a>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -27,6 +27,9 @@ class Order1Type extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Order::class,
+            'attr'=>array(
+                'class'=>'form'
+            )
         ]);
     }
 }

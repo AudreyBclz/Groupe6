@@ -38,6 +38,12 @@
                         <a class="dropdown-item" href="{{ path('product_new') }}">Create</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropProduct" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order</a>
+                    <div class="dropdown-menu" aria-labelledby="DropProduct">
+                        <a class="dropdown-item" href="{{ path('order_index') }}">List</a>
+                    </div>
+                </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="DropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
                     <div class="dropdown-menu" aria-labelledby="DropCategory">
@@ -50,6 +56,12 @@
                     <div class="dropdown-menu" aria-labelledby="DropAddress">
                         <a class="dropdown-item" href="{{ path('address_index') }}">List</a>
                         <a class="dropdown-item" href="{{ path('address_new') }}">Create</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="DropAddress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delivery Address</a>
+                    <div class="dropdown-menu" aria-labelledby="DropAddress">
+                        <a class="dropdown-item" href="{{ path('liv_address_index') }}">List</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -71,6 +83,7 @@
 {% block features %}{% endblock %}
 
 {% block body %}
+    <h2 class="main-title mbr-fonts-style mbr-pb-2 align-center display-2">Categories</h2>
     <table class="table bg-light">
         <thead>
             <tr>

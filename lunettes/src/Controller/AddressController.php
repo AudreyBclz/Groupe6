@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Address;
 use App\Form\AddressType;
 use App\Repository\AddressRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,17 @@ class AddressController extends AbstractController
     /**
      * @Route("/", name="address_index", methods={"GET"})
      */
-    public function index(AddressRepository $addressRepository): Response
+    public function index(AddressRepository $addressRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $add_list=$addressRepository->findAll();
+
+        $addresses= $paginator->paginate(
+            $add_list, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
         return $this->render('admin/address/index.html.twig', [
-            'addresses' => $addressRepository->findAll(),
+            'addresses' => $addresses,
         ]);
     }
 

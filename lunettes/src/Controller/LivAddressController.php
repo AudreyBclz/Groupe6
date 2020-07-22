@@ -7,6 +7,7 @@ use App\Entity\LivAddress;
 use App\Entity\User;
 use App\Form\LivAddressType;
 use App\Repository\LivAddressRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class LivAddressController extends AbstractController
 {
     /**
-     * @Route("/", name="liv_address_index", methods={"GET"})
+     * @Route("/admin/", name="liv_address_index", methods={"GET"})
      */
-    public function index(LivAddressRepository $livAddressRepository): Response
+    public function index(LivAddressRepository $livAddressRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('liv_address/index.html.twig', [
-            'liv_addresses' => $livAddressRepository->findAll(),
+        $liv_list=$livAddressRepository->findAll();
+
+        $liv_addresses= $paginator->paginate(
+            $liv_list, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+        return $this->render('admin/liv_address/index.html.twig', [
+            'liv_addresses' => $liv_addresses,
         ]);
     }
 
@@ -71,17 +79,17 @@ class LivAddressController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="liv_address_show", methods={"GET"})
+     * @Route("/admin/{id}", name="liv_address_show", methods={"GET"})
      */
     public function show(LivAddress $livAddress): Response
     {
-        return $this->render('liv_address/show.html.twig', [
+        return $this->render('admin/liv_address/show.html.twig', [
             'liv_address' => $livAddress,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="liv_address_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="liv_address_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, LivAddress $livAddress): Response
     {
@@ -94,14 +102,14 @@ class LivAddressController extends AbstractController
             return $this->redirectToRoute('liv_address_index');
         }
 
-        return $this->render('liv_address/edit.html.twig', [
+        return $this->render('admin/liv_address/edit.html.twig', [
             'liv_address' => $livAddress,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="liv_address_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="liv_address_delete", methods={"DELETE"})
      */
     public function delete(Request $request, LivAddress $livAddress): Response
     {
