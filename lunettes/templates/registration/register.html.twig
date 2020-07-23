@@ -29,13 +29,16 @@
                         {{ form_row(registrationForm.telUser) }}
                         {{ form_row(registrationForm.civUser) }}
                         {{ form_row(registrationForm.email) }}
-                        {{ form_row(registrationForm.plainPassword, {
-                            label: 'Password'
-                        }) }}
+                        {{ form_row(registrationForm.plainPassword,{'attr':{'class':'mb-6'}}) }}
+
                 </div>
                 <div class="mbr-col-lg-5 mbr-col-md-12 mbr-m-auto mbr-col-sm-12 md-pb">
-                        {{ form_row(registrationForm.address) }}
-                        {{ form_row(registrationForm.agreeTerms) }}
+                        {{ form_row(registrationForm.address.firstAddress) }}
+                        {{ form_row(registrationForm.address.secondAddress) }}
+                        {{ form_row(registrationForm.address.zipcodeAddress) }}
+                        {{ form_row(registrationForm.address.townAddress) }}
+                        {{ form_row(registrationForm.address.countryAddress) }}
+                        {{ form_row(registrationForm.agreeTerms,{'attr' :{'class':'mb-4'}}) }}
 
                         <button type="submit" class="btn">Register</button>
                         {{ form_end(registrationForm) }}

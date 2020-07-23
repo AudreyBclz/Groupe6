@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
         if(!is_null($user->getEmail()))
         {
             $email=$this->getDoctrine()->getRepository(User::class)->findOneBy(['email'=>$user->getEmail()]);
-            dump($email);
+
             if(!is_null($email))
             {
                 $msg='Adresse mail déjà utilisée';

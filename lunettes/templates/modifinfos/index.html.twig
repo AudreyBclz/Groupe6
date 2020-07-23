@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ModifinfosController!{% endblock %}
+{% block header %}{% endblock %}
+{% block body %}
+
+{{ form_start(form) }}
+    <h1 class="mbr-section-title mbr-fonts-style align-center mbr-pb display-1">Update account</h1>
+    <div class="mbr-row bg-primary p-3 rounded-lg">
+        <div class="mbr-col-lg-6 mbr-col-md-6 mbr-col-sm-6">
+            {{form_row(form.civUser,{'attr': {'value' : info.civUser}}) }}
+            {{form_row(form.firstNameUser,{'attr': {'value' : info.firstNameUser}}) }}
+            {{form_row(form.lastNameUser,{'attr': {'value' : info.lastNameUser}}) }}
+            {{form_row(form.password) }}
+            {{form_row(form.telUser,{'attr': {'value' : info.telUser,'class': 'mb-4'}}) }}
+            {{ form_row(form.submit) }}
+        </div>
+        <div class="mbr-col-lg-6 mbr-col-md-6 mbr-col-sm-6">
+            {{ form_row(form.address.firstAddress,{'attr': {'value' : address.firstAddress}}) }}
+            {{ form_row(form.address.secondAddress,{'attr': {'value' : address.secondAddress}}) }}
+            {{ form_row(form.address.zipcodeAddress,{'attr': {'value' : address.zipcodeAddress}}) }}
+            {{ form_row(form.address.townAddress,{'attr': {'value' : address.townAddress}}) }}
+            {{ form_row(form.address.countryAddress,{'attr': {'value' : address.countryAddress}}) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
