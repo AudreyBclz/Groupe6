@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,6 +22,16 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    public function findCommand($user)
+    {
+        $query=$this->createQueryBuilder('o');
+         $result=$query->select('o')
+            ->where('o.user = :use')
+             ->setParameter('use',$user)
+            ->andWhere($query->expr()->isNotNull('o.statusOrder'))
+            ->getQuery()->getResult();
+        return $result;
+    }
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */

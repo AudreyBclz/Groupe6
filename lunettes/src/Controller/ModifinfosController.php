@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Address;
 use App\Entity\User;
-use App\Form\AddressType;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

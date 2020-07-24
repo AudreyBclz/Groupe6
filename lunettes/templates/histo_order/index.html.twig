@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HistoOrderController!{% endblock %}
+{% block header %}{% endblock %}
+{% block body %}
+    <h1 class="align-center mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-1 ">My Orders</h1>
+    <div class="bg-gray-300">
+    <div class="mbr-row mx-auto justify-center pt-4">
+        <div class="mbr-col-lg-6 mbr-col-md-6 mbr-col-sm_12">
+        {% if orders is not empty %}
+            <p class="mx-auto">{{ orders[0].statusOrder }}</p>
+        {% endif %}
+            <table class="table-auto mb-8">
+            <tr>
+                <th class="border border-gray-600 px-4 py-2">Product</th>
+                <th class="border border-gray-600 px-4 py-2">Unit Price</th>
+                <th class="border border-gray-600 px-4 py-2">Quantity</th>
+                <th class="border border-gray-600 px-4 py-2">Price</th>
+            </tr>
+            {% if orders is empty %}
+            <tr>
+                You didn't order yet
+            </tr>
+            {% else %}
+                {% set status = orders[0].statusOrder %}
+                {% set total =0 %}
+
+                {% for order in orders %}
+                    {% if status == order.statusOrder %}
+                        {% set total= total+(order.quantityProductOrder * order.priceProductOrder) %}
+                <tr>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.nameProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.priceProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.quantityProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.quantityProductOrder * order.priceProductOrder}}€</td>
+
+                </tr>
+                    {% set status = order.statusOrder %}
+                    {% else %}
+                <tr>
+                    <td class="align-right font-bold" colspan="4">Total price: {{ total }}€</td>
+                </tr>
+                {% set total=0 %}
+                </table>
+        </div>
+        <div class="mbr-col-lg-2 mbr-col-md-3 mbr-col-sm-6 mt-4">
+            <p class="font-bold">Billing Address</p>
+            <span>{{ order.user.firstNameUser }} {{ order.user.lastNameUser }}</span><br>
+            <span>{{ order.user.address.firstAddress }}</span>
+            {%  if order.user.address.secondAddress is defined %}
+                <span>{{ order.user.address.secondAddress }}</span><br>
+            {% endif %}
+            <span>{{ order.user.address.zipcodeAddress }} {{ order.user.address.townAddress }}</span><br>
+            <span>{{ order.user.address.countryAddress }}</span>
+        </div>
+        <div class="mbr-col-lg-2 mbr-col-md-3 mbr-col-sm-6 mt-4">
+             <p class="font-bold">Delivery Address</p>
+             <span>{{ order.user.livAddress.firstNameLiv }} {{ order.user.livAddress.lastNameLiv }}</span><br>
+             <span>{{ order.user.livAddress.firstAdLiv }}</span>
+             {%  if order.user.livAddress.secondAdLiv is defined %}
+                  <span>{{ order.user.livaddress.secondAdLiv }}</span><br>
+             {% endif %}
+             <span>{{ order.user.livAddress.zipcodeLiv }} {{ order.user.livAddress.townLiv }}</span><br>
+             <span>{{ order.user.livAddress.countryLiv }}</span>
+        </div>
+    </div>
+    <hr class="border-black">
+    <div class="mbr-row mt-4 justify-center">
+        <div class="mbr-col-lg-6 mbr-col-md-6 mbr-col-sm-12 mb-8">
+            <p>{{ order.statusOrder }}</p>
+            <table>
+                <tr>
+                    <th class="border border-gray-600 px-4 py-2">Product</th>
+                    <th class="border border-gray-600 px-4 py-2">Unit Price</th>
+                    <th class="border border-gray-600 px-4 py-2">Quantity</th>
+                    <th class="border border-gray-600 px-4 py-2">Price</th>
+                </tr>
+                <tr>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.nameProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.priceProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.quantityProductOrder }}</td>
+                    <td class="align-center border border-gray-600 px-4 py-2">{{ order.quantityProductOrder * order.priceProductOrder}}€</td>
+                </tr>
+                {% set status = order.statusOrder %}
+                {% set total= total+(order.quantityProductOrder * order.priceProductOrder) %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                <tr>
+                    <td class="align-right font-bold" colspan="4">Total price: {{ total }}€</td>
+                </tr>
+            </table>
+        </div>
+    <div class="mbr-col-lg-2 mbr-col-md-3 mbr-col-sm-6 mt-4">
+        <p class="font-bold">Billing Address</p>
+        <span>{{ orders|last.user.firstNameUser }} {{ orders|last.user.lastNameUser }}</span><br>
+        <span>{{ orders|last.user.address.firstAddress }}</span>
+        {%  if orders|last.user.address.secondAddress is defined %}
+            <span>{{ orders|last.user.address.secondAddress }}</span><br>
+        {% endif %}
+        <span>{{ orders|last.user.address.zipcodeAddress }} {{ orders|last.user.address.townAddress }}</span><br>
+        <span>{{ orders|last.user.address.countryAddress }}</span>
+    </div>
+    <div class="mbr-col-lg-2 mbr-col-md-3 mbr-col-sm-6 mt-4">
+        <p class="font-bold">Delivery Address</p>
+        <span>{{ orders|last.user.livAddress.firstNameLiv }} {{ orders|last.user.livAddress.lastNameLiv }}</span><br>
+        <span>{{ orders|last.user.livAddress.firstAdLiv }}</span>
+        {%  if orders|last.user.livAddress.secondAdLiv is defined %}
+            <span>{{ orders|last.user.livaddress.secondAdLiv }}</span><br>
+        {% endif %}
+        <span>{{ orders|last.user.livAddress.zipcodeLiv }} {{ orders|last.user.livAddress.townLiv }}</span><br>
+        <span>{{ orders|last.user.livAddress.countryLiv }}</span>
+    </div>
+
+    </div>
+    </div>
+{% endblock %}
