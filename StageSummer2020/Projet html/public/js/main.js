@@ -72,3 +72,4 @@ $('#second').on('mouseleave',function () {
     $("#col2Bio").removeClass('slide-in-bottom');
     $("#col2Bio").addClass('invisible');
 });
+

@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'Chilanka-Regular';
-    src:url('../font/Chilanka-Regular.ttf.woff') format('woff'),
-    url('../font/Chilanka-Regular.ttf.svg#Chilanka-Regular') format('svg'),
-    url('../font/Chilanka-Regular.ttf.eot'),
-    url('../font/Chilanka-Regular.ttf.eot?#iefix') format('embedded-opentype');
+    src:url('../fonts/Chilanka-Regular.ttf.woff') format('woff'),
+    url('../fonts/Chilanka-Regular.ttf.svg#Chilanka-Regular') format('svg'),
+    url('../fonts/Chilanka-Regular.ttf.eot'),
+    url('../fonts/Chilanka-Regular.ttf.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
     font-style: normal;
 }
