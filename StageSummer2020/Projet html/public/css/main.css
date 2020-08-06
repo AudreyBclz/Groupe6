@@ -1,3 +1,33 @@
+@media all and (min-width:576px) and (max-width:768px)
+{
+   body
+   {
+       font-size:12px;
+   }
+
+    h1
+    {
+        font-size:18px;
+    }
+
+    .imageG2a
+    {
+        width:90%;
+    }
+}
+
+@media all and (min-width:769px)
+{
+    .imageG2a
+    {
+        width: 50%;
+    }
+    body
+    {
+        font-size: 16px;
+    }
+}
+
 @font-face {
     font-family: 'Chilanka-Regular';
     src:url('../fonts/Chilanka-Regular.ttf.woff') format('woff'),
@@ -34,7 +64,8 @@ h1
 
 .bg-bleu
 {
-    background-image: url("../images/blue-lignts.jpg");
+   /*background-image: url("../images/blue-lignts.jpg");*/
+    background-color: lightskyblue;
 }
 
 .titre
@@ -76,11 +107,10 @@ h1
     font-size: 1.5em;
 }
 
-
-/*.section
+.section
 {
     height: 91vh;
-}*/
+}
 
 .footer
 {
@@ -123,6 +153,17 @@ h1
 #gta
 {
     font-family: "pricedown bl";
+}
+
+.margeL
+{
+    margin-left: 8%;
+}
+
+.contact
+{
+    border: 1px solid rebeccapurple;
+    box-shadow: 0px 0px 15px rebeccapurple;
 }
 
 /* ----------------------------------------------
