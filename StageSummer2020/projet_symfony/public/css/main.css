@@ -1,9 +1,9 @@
 @media all and (min-width:576px) and (max-width:768px)
 {
-   body
-   {
-       font-size:12px;
-   }
+    body
+    {
+        font-size:12px;
+    }
 
     h1
     {
@@ -64,7 +64,7 @@ h1,h3
 
 .bg-bleu
 {
-   /*background-image: url("../images/blue-lignts.jpg");*/
+    /*background-image: url("../images/blue-lignts.jpg");*/
     background-color: lightskyblue;
 }
 
