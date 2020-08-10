@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Areliann</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="public/css/main.css">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-violet" id="nav">
@@ -25,7 +25,7 @@
     <div class="d-flex justify-content-center">
         <div id="accueil" class="slide-in-left">
             <h1 class="text-center font-weight-bold p-3 titre">Bienvenue</h1>
-            <img class="align-center are" src="public/images/Are_grand.jpg">
+            <img class="align-center are" src="{{ asset('images/Are_grand.jpg') }}">
         </div>
     </div>
 </section>
@@ -39,7 +39,7 @@
                 Pellentesque lectus orci, hendrerit eget consequat at, volutpat sed velit. Sed eget eros orci.
                 Maecenas vestibulum dictum sapien, a ornare lectus finibus et. Ut sollicitudin bibendum erat, eget ultricies nibh ornare at.
                 Sed eget massa sed dui vulputate consequat.
-                <img class="image p-2" src="public/images/gtaV.png">
+                <img class="image p-2" src="{{ asset('images/gtaV.png') }}">
                 Aliquam tincidunt justo non neque semper, vel auctor lacus euismod. In eget arcu eget libero tincidunt bibendum.
                 Aenean ut est sem. Mauris a interdum lacus. Integer ultrices eu arcu et gravida. Ut rhoncus lobortis leo, vitae congue lorem vestibulum vitae.
                 Vestibulum finibus venenatis tortor nec rhoncus. Sed id consectetur turpis.
@@ -69,11 +69,11 @@
     </div>
 </section>
 <section class="d-flex flex-column justify-content-center" id="sixth">
-    <h1 class="text-center mt-2 invisible" id="g2a"><img src="public/images/partnerG2a.jpg" class="imageG2a"></h1>
+    <h1 class="text-center mt-2 invisible" id="g2a"><img src="{{ asset('images/partnerG2a.jpg') }}" class="imageG2a"></h1>
     <h1 class="text-center mt-3 font-weight-bold invisible" id="lien">Si vous voulez me soutenir en achetant vos jeux achetez les sur G2A avec <a href="http://g2a.com/?gname=areliann">ce lien</a></h1>
 </section>
 <section class="bg-bleu" id="third">
-    <h1 class="h12 text-center invisible" id="gta">GTA<img  class="minia" src="public/images/logo_gtav.png"></h1>
+    <h1 class="h12 text-center invisible" id="gta">GTA<img  class="minia" src="{{ asset('images/logo_gtav.png') }}"></h1>
     <div class="row justify-content-center align-items-center mx-4">
         <div class="col-lg-5 col-md-5 col-sm-12 invisible" id="col1gta">
             <p>
@@ -82,7 +82,7 @@
                 Pellentesque lectus orci, hendrerit eget consequat at, volutpat sed velit. Sed eget eros orci.
                 Maecenas vestibulum dictum sapien, a ornare lectus finibus et. Ut sollicitudin bibendum erat, eget ultricies nibh ornare at.
                 Sed eget massa sed dui vulputate consequat.
-                <img class="image p-2" src="public/images/gtaV.png">
+                <img class="image p-2" src="{{ asset('images/gtaV.png') }}">
                 Aliquam tincidunt justo non neque semper, vel auctor lacus euismod. In eget arcu eget libero tincidunt bibendum.
                 Aenean ut est sem. Mauris a interdum lacus. Integer ultrices eu arcu et gravida. Ut rhoncus lobortis leo, vitae congue lorem vestibulum vitae.
                 Vestibulum finibus venenatis tortor nec rhoncus. Sed id consectetur turpis.
@@ -113,7 +113,7 @@
 </section>
 
 <section id="fourth">
-    <h1 class="text-center h12 pb-0" id="ytb"><img src="public/images/YTB.png" class="minia"></h1>
+    <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia"></h1>
     <div class="row text-center margeL" id="ytbligne">
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
         <div class="elfsight-app-9e5dc2f8-f0ae-4110-9d38-082660d52b37"></div>
@@ -123,7 +123,7 @@
 </section>
 
 <section class="bg-bleu" id="fifth">
-    <h1 class="text-center h12 pb-3"><img src="public/images/Insta.png" class="minia invisible" id="insta"></h1>
+    <h1 class="text-center h12 pb-3"><img src="{{ asset('images/Insta.png') }}" class="minia invisible" id="insta"></h1>
     <div class="row d-block margeL mb-5" id="instaligne">
 
         <div class="elfsight-app-ff23eac8-27c1-4e0b-b4a1-0637a5ed2164"></div>
@@ -145,7 +145,7 @@
 </section>
 <footer class="footer" id="footer">
     <div class="d-flex justify-content-between">
-        <a href="#sixth" class="p-4"><img src="public/images/g2a.png" class="minia my-auto"></a>
+        <a href="#sixth" class="p-4"><img src="{{ asset('images/g2a.png') }}" class="minia my-auto"></a>
         <a href="#seventh" class="p-5 text-light"><h3>Contact</h3></a>
     </div>
 
@@ -154,7 +154,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="public/js/main.js"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
