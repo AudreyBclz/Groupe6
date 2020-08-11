@@ -47,6 +47,14 @@ class Contact
      */
     private $isDeleted;
 
+    public function __construct()
+    {
+        $this->isDeleted=false;
+        $this->isRead=false;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;

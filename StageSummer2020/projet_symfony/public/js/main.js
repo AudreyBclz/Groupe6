@@ -45,6 +45,7 @@ window.onresize=function () {
   hauteur(document.getElementById('fifth'),$('#fifth'));
   hauteur(document.getElementById('sixth'),$('#sixth'));
   hauteur(document.getElementById('seventh'),$('#seventh'));
+  hauteur(document.getElementById('seventh'),$('#eight'));
 };
 hauteur(document.getElementById('second'),$('#second'));
 hauteur(document.getElementById('third'),$('#third'));
@@ -52,6 +53,7 @@ hauteur(document.getElementById('fourth'),$('#fourth'));
 hauteur(document.getElementById('fifth'),$('#fifth'));
 hauteur(document.getElementById('sixth'),$('#sixth'));
 hauteur(document.getElementById('seventh'),$('#seventh'));
+hauteur(document.getElementById('seventh'),$('#eight'));
 
 
 $('a[href="https://elfsight.com/instagram-feed-instashow/?utm_source=websites&utm_medium=clients&utm_content=instagram-feed&utm_term=undefined&utm_campaign=free-widget"]').css('display','none !important');
@@ -217,4 +219,45 @@ $('#fourth').on('click',function () {
 $('#fourth').on('mouseenter',function () {
   $("#ytbligne").addClass('slide-in-left');
   $("#ytbligne").removeClass('invisible');
+});
+
+
+$('#seventh').on('click',function () {
+  $("#contact").addClass('slide-in-right');
+  $("#contact").removeClass('invisible');
+});
+$('#seventh').on('mouseenter',function () {
+  $("#contact").addClass('slide-in-right');
+  $("#contact").removeClass('invisible');
+});
+$('#seventh').on('mouseleave',function () {
+  $("#contact").removeClass('slide-in-right');
+  $("#contact").addClass('invisible');
+});
+
+
+$('#eight').on('click',function () {
+  $("#Arozzi").addClass('slide-in-right');
+  $("#Arozzi").removeClass('invisible')
+});
+$('#eight').on('mouseenter',function () {
+  $("#Arozzi").addClass('slide-in-right');
+  $("#Arozzi").removeClass('invisible')
+});
+$('#eight').on('mouseleave',function () {
+  $("#Arozzi").removeClass('slide-in-right');
+  $("#Arozzi").addClass('invisible');
+});
+
+$('#eight').on('click',function () {
+  $("#lienA").addClass('slide-in-left');
+  $("#lienA").removeClass('invisible')
+});
+$('#eight').on('mouseenter',function () {
+  $("#lienA").addClass('slide-in-left');
+  $("#lienA").removeClass('invisible')
+});
+$('#eight').on('mouseleave',function () {
+  $("#lienA").removeClass('slide-in-left');
+  $("#lienA").addClass('invisible');
 });

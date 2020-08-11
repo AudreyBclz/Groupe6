@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
+{% block nav %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-violet" id="nav">
     <a class="navbar-brand d" href="#">Areliann</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,14 +22,23 @@
         </div>
     </div>
 </nav>
+{% endblock %}
+
+{% block body %}
 <section id="first">
     <div class="d-flex justify-content-center">
         <div id="accueil" class="slide-in-left">
+            {% if not message is empty %}
+                <p class="h2 font-weight-bold text-center text-violet">{{ message }}</p>
+            {% else %}
             <h1 class="text-center font-weight-bold p-3 titre">Bienvenue</h1>
-            <img class="align-center are" src="{{ asset('images/Are_grand.jpg') }}">
+            {% endif %}
+            <a href="{{ path('app_login') }}"><img class="align-center are" src="{{ asset('images/Are_grand.jpg') }}"></a>
         </div>
     </div>
 </section>
+{% endblock %}
+{% block bio %}
 <section class="bg-bleu" id="second">
     <h1 class="text-center font-weight-bold titre2 invisible h12 mt-4" id="titreBio">A propos de moi</h1>
     <div class="row justify-content-center align-items-center mx-4">
@@ -68,10 +78,21 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block g2a %}
 <section class="d-flex flex-column justify-content-center" id="sixth">
-    <h1 class="text-center mt-2 invisible" id="g2a"><img src="{{ asset('images/partnerG2a.jpg') }}" class="imageG2a"></h1>
-    <h1 class="text-center mt-3 font-weight-bold invisible" id="lien">Si vous voulez me soutenir en achetant vos jeux achetez les sur G2A avec <a href="http://g2a.com/?gname=areliann">ce lien</a></h1>
+    <div><h1 class="text-center mt-2 invisible" id="g2a"><img src="{{ asset('images/partnerG2a.jpg') }}" class="imageG2a"></h1></div>
+    <div><h1 class="text-center mt-3 font-weight-bold invisible" id="lien">Si vous voulez me soutenir en achetant vos jeux achetez les sur G2A avec <a href="http://g2a.com/?gname=areliann">ce lien</a></h1></div>
 </section>
+    <hr class="bg-violet w-75 mt-0">
+{% endblock %}
+{% block Arozzi %}
+    <section class="d-flex flex-column justify-content-center" id="eight">
+        <div><h1 class="text-center" id="Arozzi"><img src="{{ asset('images/Arozzi.png') }}" class="imageG2a"></h1></div>
+        <div><h1 class="text-center mt-3 font-weight-bold" id="lienA">Je suis en partenariat avec Arozzi, si vous voulez profiter de chaise de bureau, bureau etc vous avez -10% avec le code <a href="https://arozzi.se/?lang=fr"><span class="text-success">areliann</span></a></h1></div>
+    </section>
+{% endblock %}
+{% block gta %}
 <section class="bg-bleu" id="third">
     <h1 class="h12 text-center invisible" id="gta">GTA<img  class="minia" src="{{ asset('images/logo_gtav.png') }}"></h1>
     <div class="row justify-content-center align-items-center mx-4">
@@ -111,9 +132,10 @@
         </div>
     </div>
 </section>
-
+{% endblock %}
+{% block ytb %}
 <section id="fourth">
-    <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia"></h1>
+    <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia2"></h1>
     <div class="row text-center margeL" id="ytbligne">
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
         <div class="elfsight-app-9e5dc2f8-f0ae-4110-9d38-082660d52b37"></div>
@@ -121,35 +143,30 @@
 
 
 </section>
-
+{% endblock %}
+{% block insta %}
 <section class="bg-bleu" id="fifth">
-    <h1 class="text-center h12 pb-3"><img src="{{ asset('images/Insta.png') }}" class="minia invisible" id="insta"></h1>
+    <h1 class="text-center h12 pb-3"><img src="{{ asset('images/Insta.png') }}" class="minia2 invisible" id="insta"></h1>
     <div class="row d-block margeL mb-5" id="instaligne">
 
         <div class="elfsight-app-ff23eac8-27c1-4e0b-b4a1-0637a5ed2164"></div>
     </div>
 </section>
-<section class="section" id="seventh">
-    <h1 class="text-center h12 titre font-weight-bold">Contact</h1>
-    <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-12 col-sm-12">
-            <form method="post" action=""class="p-5 contact m-3">
-                <input type="text" name="full_name" placeholder="Nom Prénom" class="w-50 mb-3 p-2">
-                <input type="email" name="email" placeholder="Email" class="w-50 mb-3 p-2">
-                <input type="text" name="subject" placeholder="Sujet" class="w-50 mb-3 p-2">
-                <textarea placeholder="Contenu" class="d-block w-100 p-2"></textarea>
-                <button type="submit" class="btn bg-violet text-light mt-4">Envoyer</button>
-            </form>
-        </div>
-    </div>
-</section>
+{% endblock %}
+{% block contact %}
+{% endblock %}
+{% block footer %}
 <footer class="footer" id="footer">
     <div class="d-flex justify-content-between">
-        <a href="#sixth" class="p-4"><img src="{{ asset('images/g2a.png') }}" class="minia my-auto"></a>
+        <div class="d-flex flex-column justify-content-around">
+            <div><a href="#sixth" class="p-4"><img src="{{ asset('images/g2a.png') }}" class="minia"></a></div>
+            <div><a href="#eight" class="pl-2"><img src="{{ asset('images/Arozzi.png') }}" class="minia2"></a></div>
+        </div>
         <a href="#seventh" class="p-5 text-light"><h3>Contact</h3></a>
     </div>
 
 </footer>
+{% endblock %}
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
