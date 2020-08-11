@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $form=$this->createForm(ContactType::class,$contact);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isSubmitted())
+        if($form->isSubmitted() && $form->isValid())
         {
             $subject=$contact->getSubject();
             $content=$contact->getContent();
