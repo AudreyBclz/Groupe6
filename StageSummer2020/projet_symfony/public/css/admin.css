@@ -1,0 +1,14 @@
+.bg-fond-bleu
+{
+    background-image: url("../images/fond-bleu.jpg");
+}
+
+.bg-gris
+{
+    background-color: rgba(127,127,127,0.5)
+}
+
+.text-black
+{
+    color:black;
+}

@@ -2,6 +2,9 @@
 {% block contact %}
 <section class="section" id="seventh">
     <h1 class="text-center h12 titre font-weight-bold" id="contact">Contact</h1>
+    {% if not message is empty %}
+        <p class="h2 font-weight-bold text-center text-violet mt-5">{{ message }}</p>
+    {% endif %}
     <div class="row justify-content-center">
         <div class="col-lg-5 col-md-12 col-sm-12" id="form">
             {{ form_start(form,{ 'attr':{'class':'p-5 contact m-3 slide-in-bottom','id':'form' }}) }}
