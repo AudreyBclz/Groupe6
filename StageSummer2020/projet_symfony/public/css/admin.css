@@ -5,10 +5,25 @@
 
 .bg-gris
 {
-    background-color: rgba(127,127,127,0.5)
+    background-color: rgba(42,73,101,0.5)
 }
 
 .text-black
 {
     color:black;
+}
+
+#plus
+{
+    cursor: pointer;
+}
+
+.fa-envelope-open
+{
+   color:black;
+}
+
+.fa-envelope
+{
+    color: gray;
 }
