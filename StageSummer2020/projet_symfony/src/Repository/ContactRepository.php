@@ -19,6 +19,26 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+    public function findSend($bool)
+    {
+        if($bool===0)
+        {
+            $query=$this->createQueryBuilder('c')
+                ->select('c')
+                ->where('c.fullName != :name')
+                ->setParameter('name','Areliann');
+            return $query->getQuery()->getResult();
+        }
+        else
+        {
+            $query=$this->createQueryBuilder('c')
+                ->select('c')
+                ->where('c.fullName = :name')
+                ->setParameter('name','Areliann');
+            return $query->getQuery()->getResult();
+        }
+    }
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */

@@ -28,11 +28,7 @@
 <section id="first">
     <div class="d-flex justify-content-center">
         <div id="accueil" class="slide-in-left">
-            {% if not message is empty %}
-                <p class="h2 font-weight-bold text-center text-violet">{{ message }}</p>
-            {% else %}
             <h1 class="text-center font-weight-bold p-3 titre">Bienvenue</h1>
-            {% endif %}
             <a href="{{ path('app_login') }}"><img class="align-center are" src="{{ asset('images/Are_grand.jpg') }}"></a>
         </div>
     </div>

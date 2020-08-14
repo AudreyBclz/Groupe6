@@ -47,12 +47,18 @@ class Contact
      */
     private $isDeleted;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
     public function __construct()
     {
         $this->isDeleted=false;
         $this->isRead=false;
+        date_default_timezone_set('Europe/Paris');
+        $this->date=new \DateTime('now');
     }
-
 
 
     public function getId(): ?int
@@ -128,6 +134,18 @@ class Contact
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
