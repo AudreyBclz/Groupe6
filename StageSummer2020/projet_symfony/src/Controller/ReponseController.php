@@ -15,9 +15,12 @@ class ReponseController extends AbstractController
      */
     public function index(Contact $contact, Request $request, \Swift_Mailer $mailer)
     {
+        $contact->setIsRead(true);
+        $this->getDoctrine()->getManager()->flush();
+        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
+        $alert='';
         $contact2=new Contact();
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0);
         $contact2->setIsRead(1);
         $contact2->setIsDeleted(0);
         $contact2->setFullName('Areliann');
@@ -48,13 +51,24 @@ class ReponseController extends AbstractController
             $entityManager=$this->getDoctrine()->getManager();
             $entityManager->persist($contact2);
             $entityManager->flush();
-            return $this->redirectToRoute('admin_contact');
+            $alert="Le message a bien été envoyé.";
+            return $this->render('admin_contact/index.html.twig', [
+                'controller_name' => 'ReponseController',
+                'msgNonLu'=>$msgNonlu,
+                'messages'=>$msg,
+                'alert'=>$alert
+            ]);
+
         }
-        return $this->render('reponse/index.html.twig', [
-            'controller_name' => 'ReponseController',
-            'form'=>$form->createView(),
-            'msgNonLu'=>$msgNonlu,
-            'messages'=>$msg
-        ]);
+        else
+        {
+            return $this->render('reponse/index.html.twig', [
+                'controller_name' => 'ReponseController',
+                'form'=>$form->createView(),
+                'msgNonLu'=>$msgNonlu,
+                'messages'=>$msg,
+            ]);
+        }
+
     }
 }

@@ -73,7 +73,7 @@ class Contact
 
     public function setFullName(string $fullName): self
     {
-        $this->fullName = $fullName;
+        $this->fullName = htmlspecialchars(trim($fullName));
 
         return $this;
     }
@@ -85,7 +85,7 @@ class Contact
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = htmlspecialchars(trim($email));
 
         return $this;
     }
@@ -97,7 +97,7 @@ class Contact
 
     public function setSubject(string $subject): self
     {
-        $this->subject = $subject;
+        $this->subject = htmlspecialchars(trim($subject));
 
         return $this;
     }
@@ -109,7 +109,7 @@ class Contact
 
     public function setContent(string $content): self
     {
-        $this->content = $content;
+        $this->content = htmlspecialchars(trim($content));
 
         return $this;
     }

@@ -37,3 +37,28 @@
 {
     width:20%;
 }
+
+.lien
+{
+    cursor: pointer;
+}
+
+.color-gray
+{
+    color:gray;
+}
+
+.color-black
+{
+    color:black;
+}
+
+.color-red
+{
+    color:red;
+}
+
+i:hover
+{
+    color: royalblue;
+}

@@ -21,8 +21,8 @@ class AdminContactController extends AbstractController
         }
         else
         {
-            $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0]);
-            $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0);
+            $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+            $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
             return $this->render('admin_contact/index.html.twig', [
                 'controller_name' => 'AdminContactController',
                 'messages'=>$msg,
@@ -37,8 +37,8 @@ class AdminContactController extends AbstractController
      */
     public function read (Contact $contact)
     {
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0);
+        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
             $contact->setIsRead(true);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('admin_contact');
@@ -55,8 +55,8 @@ class AdminContactController extends AbstractController
      */
     public function notread (Contact $contact)
     {
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0);
+        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
         $contact->setIsRead(false);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('admin_contact');
@@ -68,6 +68,45 @@ class AdminContactController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/admin/delete/{id}", name="admin_delete")
+     */
+    public function delete (Contact $contact)
+    {
+        $contact->setIsDeleted(true);
+        $this->getDoctrine()->getManager()->flush();
+        $alert="Message supprimé";
+        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
 
+
+        return $this->render('admin_contact/index.html.twig',[
+            'controller_name' => 'AdminContactController',
+            'messages'=>$msg,
+            'msgNonLu'=>$msgNonlu,
+            'alert'=>$alert
+        ]);
+    }
+
+    /**
+     * @Route("/admin/deleteRead/{id}", name="admin_deleteRead")
+     */
+    public function deleteRead (Contact $contact)
+    {
+        $contact->setIsDeleted(true);
+        $contact->setIsRead(true);
+        $this->getDoctrine()->getManager()->flush();
+        $alert="Message supprimé";
+        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
+        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
+
+
+        return $this->render('admin_contact/index.html.twig',[
+            'controller_name' => 'AdminContactController',
+            'messages'=>$msg,
+            'msgNonLu'=>$msgNonlu,
+            'alert'=>$alert
+        ]);
+    }
 
 }

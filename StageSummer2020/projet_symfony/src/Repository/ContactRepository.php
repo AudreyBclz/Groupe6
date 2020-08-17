@@ -19,13 +19,33 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
-    public function findSend($bool)
+    public function findSend($isSend,$isDel)
     {
-        if($bool===0)
+        if($isSend===0 && $isDel===0)
         {
             $query=$this->createQueryBuilder('c')
                 ->select('c')
                 ->where('c.fullName != :name')
+                ->andWhere('c.isDeleted = 0')
+                ->setParameter('name','Areliann');
+            return $query->getQuery()->getResult();
+        }
+        elseif($isSend===0 && $isDel===1)
+        {
+            $query = $this->createQueryBuilder('c')
+                ->select('c')
+                ->where('c.fullName != :name')
+                ->andWhere('c.isDeleted = 1')
+                ->setParameter('name', 'Areliann');
+            return $query->getQuery()->getResult();
+        }
+        elseif ($isSend===1 && $isDel===0)
+        {
+
+            $query=$this->createQueryBuilder('c')
+                ->select('c')
+                ->where('c.fullName = :name')
+                ->andWhere('c.isDeleted = 0')
                 ->setParameter('name','Areliann');
             return $query->getQuery()->getResult();
         }
@@ -34,9 +54,21 @@ class ContactRepository extends ServiceEntityRepository
             $query=$this->createQueryBuilder('c')
                 ->select('c')
                 ->where('c.fullName = :name')
+                ->andWhere('c.isDeleted = 1')
                 ->setParameter('name','Areliann');
             return $query->getQuery()->getResult();
         }
+    }
+
+    public function delBin($id)
+    {
+        return $this->createQueryBuilder('c')
+                ->delete()
+                ->where('c.id = :id')
+                ->setParameter('id',$id)
+                ->getQuery()
+                ->getResult();
+
     }
 
     // /**
