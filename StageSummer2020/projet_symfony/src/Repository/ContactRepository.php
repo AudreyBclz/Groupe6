@@ -71,6 +71,30 @@ class ContactRepository extends ServiceEntityRepository
 
     }
 
+    public function search($valeur)
+    {
+        $formatDate='/^[0-9]{2}-[0-9]{2}-[0-9]{4}$/';
+        $formatDate2='/^[0-9]{2}-[0-9]{2}$/';
+        if(preg_match($formatDate,$valeur))
+        {
+            $valeur=substr($valeur,6,4).'-'.substr($valeur,3,2).'-'.substr($valeur,8,2);
+        }
+        if(preg_match($formatDate2,$valeur))
+        {
+            $valeur=substr($valeur,3,2).'-'.substr($valeur,0,2);
+        }
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.fullName LIKE :key')
+            ->orWhere('c.email LIKE :key')
+            ->orWhere('c.subject LIKE :key')
+            ->orWhere('c.content LIKE :key')
+            ->orWhere('c.date LIKE :key')
+            ->setParameter('key','%'.$valeur.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */

@@ -57,7 +57,8 @@ class Contact
         $this->isDeleted=false;
         $this->isRead=false;
         date_default_timezone_set('Europe/Paris');
-        $this->date=new \DateTime('now');
+        $date=new \DateTime('now');
+        $this->date=$date;
     }
 
 
