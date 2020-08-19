@@ -16,6 +16,8 @@ class AdminContactController extends AbstractController
      */
     public function index(Request $request)
     {
+
+
         if (is_null($this->getUser()))
         {
             return $this->redirectToRoute('home');

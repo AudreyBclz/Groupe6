@@ -15,11 +15,11 @@ class SearchType extends AbstractType
         $builder
             ->add('search', TextType::class, array(
                 'attr' => ['class' => 'bg-light form-control border-0 small', 'placeholder' => 'Recherche...','name'=>'search']
-            ))
-            ->add('submit',SubmitType::class,array(
+            ));
+            /*->add('submit',SubmitType::class,array(
                 'attr'=>['class'=>'btn btn-primary py-0 bg-fond-bleu'],
                 'label'=>'Rechercher'
-            ));
+            ));*/
     }
 
     public function configureOptions(OptionsResolver $resolver)
