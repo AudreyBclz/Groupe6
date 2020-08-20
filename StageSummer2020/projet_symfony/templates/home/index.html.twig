@@ -5,25 +5,28 @@
         <div class="d-flex justify-content-center">
             <img src="{{ asset('images/bannière.jpg') }}">
         </div>
-        <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia2"></h1>
+        <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia2 mb-5"></h1>
 
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                        <div class="d-flex">
+                        <div class="row ml-3" id="ytbligne">
                     {% for items in decoded %}
-                                <div class="col-lg-4">
-                                    <div class="videoWrap controllles">
-                                        <a class="video_popup" href="https://www.youtube.com/watch?v={{ items['id']['videoId'] }}>"><img src="{{items['snippet']['thumbnails']['high']['url']}}" alt=""></a>
-                                        <div class="play_video">
+                                <div class="col-lg-4 col-sm-10">
+                                    <div class="videoWrap controllles justify-content-center">
+                                        <a class="video_popup" href="https://www.youtube.com/watch?v={{ items['id']['videoId'] }}>">
+                                            <img src="{{items['snippet']['thumbnails']['high']['url']}}" alt="" class="minaYtb">
+                                            <img src="{{ asset('images/play.png') }}" class="play">
+                                        </a>
+                                        <div class="play_video position-absolute">
                                             <i class="far fa-play-circle"></i>
                                         </div>
                                     </div>
-                                    <div class="videoblog">
-                                        <h6 class="text-wrap">{{ items['snippet']['title'] }}</h6>
+                                    <div class="videoblog w-75 text-center">
+                                        <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\''}) }}</h6>
                                         {% set datepub =  items['snippet']['publishedAt']|slice(0,10) %}
 
-                                        <p>{{ datepub|slice(8,2)  }}-{{ datepub|slice(5,2) }}-{{ datepub|slice(0,4) }}</p>
+                                        <p class="font-italic">Publié le {{ datepub|slice(8,2)  }}-{{ datepub|slice(5,2) }}-{{ datepub|slice(0,4) }}</p>
                                     </div>
                                 </div>
                                 {% if (loop.index % 3) is same as(0) and (decoded|length is same as(loop.index)) %}
@@ -34,14 +37,14 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="d-flex">
+                    <div class="row  ml-3">
                 {% endif %}
                 {% endfor %}
 
 
 
                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
                         <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">

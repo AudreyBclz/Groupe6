@@ -15,8 +15,8 @@ class HomeController extends AbstractController
      */
     public function index(Request $request)
     {
-        $API_key    = 'AIzaSyAyirpGBgsbAL96jEssw3zqn15Te7e6ESE'; // Remplacez par votre clé API
-        $channelID  = 'UChaonIpYNG1TkPVUtzWRjjQ';  // Remplacez par votre identifiant Youtube
+        $API_key    = 'AIzaSyDYSmQoy0AjwdT_VnWK2pbXH3DYz_kslUg';
+        $channelID  = 'UChaonIpYNG1TkPVUtzWRjjQ';
         $maxResults = 9;
 
 // Faire un Appel API pour récuperer la liste des vidéos en format Json
@@ -37,7 +37,6 @@ class HomeController extends AbstractController
 
         $decoded= json_decode(json_encode($data), true);
 
-        dump($decoded['items']);
 
         $message="";
         $contact=new Contact();
