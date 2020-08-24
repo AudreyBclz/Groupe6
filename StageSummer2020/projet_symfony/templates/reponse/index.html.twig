@@ -20,8 +20,9 @@
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Areliann</span></div>
-                    <div class="nav-item"><a href="#" class="text-light text-decoration-none text-center">Corbeille</a></div>
                     <div class="nav-item"><a href="{{ path('admin_contact') }}" class="text-light text-decoration-none text-center">Boîte de reception</a></div>
+                    <div class="nav-item"><a href="{{ path('send') }}" class="text-light text-decoration-none text-center">Envoyés</a></div>
+                    <div class="nav-item"><a href="{{ path('bin') }}" class="text-light text-decoration-none text-center">Corbeille</a></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar"></ul>
@@ -109,13 +110,13 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-8 col-sm-12">
-                {{ form_start(form,{'attr':{'class':'mt-5'}}) }}
-                    {{ form_widget(form.fullName) }}
-                        {{ form_widget(form.email) }}
-                        {{ form_widget(form.subject) }}
-                        {{ form_widget(form.content,{'attr':{'rows':10}}) }}
-                        {{ form_row(form.submit,{'attr':{'class':'btn text-light bg-fond-bleu mt-4'}}) }}
-                {{ form_end(form) }}
+                {{ form_start(formcontact,{'attr':{'class':'mt-5'}}) }}
+                    {{ form_widget(formcontact.fullName) }}
+                        {{ form_widget(formcontact.email) }}
+                        {{ form_widget(formcontact.subject) }}
+                        {{ form_widget(formcontact.content,{'attr':{'rows':10}}) }}
+                        {{ form_row(formcontact.submit,{'attr':{'class':'btn text-light bg-fond-bleu mt-4'}}) }}
+                {{ form_end(formcontact) }}
                     </div>
                 </div>
             </div>
@@ -124,7 +125,7 @@
                     <div class="text-center my-auto copyright"><span>Copyright © Areliann 2020</span></div>
                 </div>
             </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>

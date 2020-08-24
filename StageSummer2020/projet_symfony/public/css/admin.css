@@ -62,3 +62,5 @@ i:hover
 {
     color: royalblue;
 }
+
+.page-item.active .page-link{z-index:3;color:#fff;background-image:url("../images/fond-bleu.jpg");border-color:darkblue}

@@ -60,15 +60,9 @@ class BinController extends AbstractController
      */
     public function binread (Contact $contact, Request $request)
     {
-        $formsearch=$this->createForm(SearchType::class);
-        $formsearch->handleRequest($request);
-
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
         $contact->setIsRead(true);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('bin');
-
     }
 
     /**
@@ -76,8 +70,6 @@ class BinController extends AbstractController
      */
     public function binnotread (Contact $contact)
     {
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
         $contact->setIsRead(false);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('bin');
@@ -86,8 +78,11 @@ class BinController extends AbstractController
     /**
      * @Route("/admin/restore/{id}", name="admin_restore")
      */
-    public function restore(Contact $contact)
+    public function restore(Contact $contact,Request $request)
     {
+        $formsearch=$this->createForm(SearchType::class);
+        $formsearch->handleRequest($request);
+
         $contact->setIsDeleted(false);
         $this->getDoctrine()->getManager()->flush();
         $alert="Le message a bien été restauré.";
@@ -97,15 +92,20 @@ class BinController extends AbstractController
             'controller_name' => 'BinController',
             'messages'=>$msg,
             'msgNonLu'=>$msgNonlu,
-            'alert'=>$alert
+            'alert'=>$alert,
+            'form'=>$formsearch->createView(),
+            'form2'=>$formsearch->createView()
         ]);
     }
 
     /**
      * @Route("/admin/delBin/{id}", name="del_bin")
      */
-    public function delbin (Contact $contact)
+    public function delbin (Contact $contact,Request $request)
     {
+        $formsearch=$this->createForm(SearchType::class);
+        $formsearch->handleRequest($request);
+
         $em=$this->getDoctrine()->getManager();
         $em->remove($contact);
         $em->flush();
@@ -116,51 +116,21 @@ class BinController extends AbstractController
             'controller_name' => 'BinController',
             'msgNonLu'=>$msgNonlu,
             'messages'=>$msg,
-            'alert'=>$alert
+            'alert'=>$alert,
+            'form'=>$formsearch->createView(),
+            'form2'=>$formsearch->createView()
         ]);
     }
 
-    /**
-     * @Route("/admin/readBin/{id}", name="admin_readBin")
-     */
-    public function read (Contact $contact)
-    {
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
-        $contact->setIsRead(true);
-        $this->getDoctrine()->getManager()->flush();
-        return $this->redirectToRoute('admin_contact');
-
-        return $this->render('admin_contact/index.html.twig',[
-            'controller_name' => 'AdminContactController',
-            'messages'=>$msg,
-            'msgNonLu'=>$msgNonlu
-        ]);
-    }
-
-    /**
-     * @Route("/admin/notread/{id}", name="admin_notread")
-     */
-    public function notread (Contact $contact)
-    {
-        $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
-        $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
-        $contact->setIsRead(false);
-        $this->getDoctrine()->getManager()->flush();
-        return $this->redirectToRoute('admin_contact');
-
-        return $this->render('admin_contact/index.html.twig',[
-            'controller_name' => 'AdminContactController',
-            'messages'=>$msg,
-            'msgNonLu'=>$msgNonlu
-        ]);
-    }
 
     /**
      * @Route("/admin/delAll", name="admin_delAll")
      */
-    public function delAll()
+    public function delAll(Request $request)
     {
+        $formsearch=$this->createForm(SearchType::class);
+        $formsearch->handleRequest($request);
+
         $msgDel=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,1);
         foreach($msgDel as $msg)
         {
@@ -174,7 +144,9 @@ class BinController extends AbstractController
             'controller_name'=>'AdminContactController',
             'messages'=>$msgs,
             'msgNonLu'=>$msgNonlu,
-            'alert'=>$alert
+            'alert'=>$alert,
+            'form'=>$formsearch->createView(),
+            'form2'=>$formsearch->createView()
         ]);
     }
 }
