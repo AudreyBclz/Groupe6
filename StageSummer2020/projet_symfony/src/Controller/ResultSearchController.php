@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\SearchType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ class ResultSearchController extends AbstractController
     /**
      * @Route("/result/search", name="result_search")
      */
-    public function index(Request $request)
+    public function index(Request $request,PaginatorInterface $paginator)
     {
         $formsearch=$this->createForm(SearchType::class);
         $formsearch->handleRequest($request);

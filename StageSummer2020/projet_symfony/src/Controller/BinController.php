@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\SearchType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ class BinController extends AbstractController
     /**
      * @Route("/admin/bin", name="bin")
      */
-    public function index(Request $request)
+    public function index(Request $request,PaginatorInterface $paginator)
     {
         if (is_null($this->getUser()))
         {
@@ -30,9 +31,15 @@ class BinController extends AbstractController
                 $search=$request->get("search")['search'];
                 $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
                 $msg=$this->getDoctrine()->getRepository(Contact::class)->search($search);
+
+                $pagination = $paginator->paginate(
+                    $msg, /* query NOT result */
+                    $request->query->getInt('page', 1), /*page number*/
+                    12 /*limit per page*/);
+
                 return $this->render('result_search/index.html.twig',array(
                     'controller_name'=>'ResultSearchController',
-                    'messages'=>$msg,
+                    'messages'=>$pagination,
                     'msgNonLu'=>$msgNonlu,
                     'form'=>$formsearch->createView(),
                     'form2'=>$formsearch->createView()
@@ -43,9 +50,15 @@ class BinController extends AbstractController
 
                 $msgNonlu = $this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead' => 0, 'isDeleted' => 0]);
                 $msg = $this->getDoctrine()->getRepository(Contact::class)->findSend(0, 1);
+
+                $pagination = $paginator->paginate(
+                    $msg, /* query NOT result */
+                    $request->query->getInt('page', 1), /*page number*/
+                    12 /*limit per page*/);
+
                 return $this->render('bin/index.html.twig', [
                     'controller_name' => 'AdminContactController',
-                    'messages' => $msg,
+                    'messages' => $pagination,
                     'msgNonLu' => $msgNonlu,
                     'form'=>$formsearch->createView(),
                     'form2'=>$formsearch->createView()
@@ -78,7 +91,7 @@ class BinController extends AbstractController
     /**
      * @Route("/admin/restore/{id}", name="admin_restore")
      */
-    public function restore(Contact $contact,Request $request)
+    public function restore(Contact $contact,Request $request,PaginatorInterface $paginator)
     {
         $formsearch=$this->createForm(SearchType::class);
         $formsearch->handleRequest($request);
@@ -88,9 +101,15 @@ class BinController extends AbstractController
         $alert="Le message a bien été restauré.";
         $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
         $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
+
+        $pagination = $paginator->paginate(
+            $msg, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/);
+
         return $this->render('admin_contact/index.html.twig',[
             'controller_name' => 'BinController',
-            'messages'=>$msg,
+            'messages'=>$pagination,
             'msgNonLu'=>$msgNonlu,
             'alert'=>$alert,
             'form'=>$formsearch->createView(),
@@ -101,7 +120,7 @@ class BinController extends AbstractController
     /**
      * @Route("/admin/delBin/{id}", name="del_bin")
      */
-    public function delbin (Contact $contact,Request $request)
+    public function delbin (Contact $contact,Request $request,PaginatorInterface $paginator)
     {
         $formsearch=$this->createForm(SearchType::class);
         $formsearch->handleRequest($request);
@@ -111,11 +130,17 @@ class BinController extends AbstractController
         $em->flush();
         $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
         $msg=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,1);
+
+        $pagination = $paginator->paginate(
+            $msg, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/);
+
         $alert='Message supprimé définitivement';
         return $this->render('bin/index.html.twig', [
             'controller_name' => 'BinController',
             'msgNonLu'=>$msgNonlu,
-            'messages'=>$msg,
+            'messages'=>$pagination,
             'alert'=>$alert,
             'form'=>$formsearch->createView(),
             'form2'=>$formsearch->createView()
@@ -126,7 +151,7 @@ class BinController extends AbstractController
     /**
      * @Route("/admin/delAll", name="admin_delAll")
      */
-    public function delAll(Request $request)
+    public function delAll(Request $request,PaginatorInterface $paginator)
     {
         $formsearch=$this->createForm(SearchType::class);
         $formsearch->handleRequest($request);
@@ -138,11 +163,17 @@ class BinController extends AbstractController
         }
         $msgNonlu=$this->getDoctrine()->getRepository(Contact::class)->findBy(['isRead'=>0,'isDeleted'=>0]);
         $msgs=$this->getDoctrine()->getRepository(Contact::class)->findSend(0,0);
+
+        $pagination = $paginator->paginate(
+            $msgs, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/);
+
         $alert='La corbeille a été vidée.';
 
         return $this->render('admin_contact/index.html.twig',[
             'controller_name'=>'AdminContactController',
-            'messages'=>$msgs,
+            'messages'=>$pagination,
             'msgNonLu'=>$msgNonlu,
             'alert'=>$alert,
             'form'=>$formsearch->createView(),

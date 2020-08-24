@@ -63,7 +63,7 @@ class SendController extends AbstractController
     /**
      * @Route("/admin/delDef/{id}", name="del_def")
      */
-    public function delDef (Contact $contact,Request $request)
+    public function delDef (Contact $contact,Request $request,PaginatorInterface $paginator)
     {
         $formsearch=$this->createForm(SearchType::class);
         $formsearch->handleRequest($request);
