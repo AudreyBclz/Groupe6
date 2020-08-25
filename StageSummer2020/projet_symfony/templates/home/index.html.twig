@@ -7,12 +7,12 @@
         </div>
         <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia2 mb-5"></h1>
 
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="largeScreen" class="carousel slide fit-content mx-auto" data-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                        <div class="row ml-3" id="ytbligne">
+               <div class="carousel-item fit-content active">
+                         <div class="row" id="ytbligne">
                     {% for items in decoded %}
-                                <div class="col-lg-4 col-md-6 col-sm-10">
+                                <div class="col-lg-4 col-md-6 col-sm-10 justify-content-around">
                                     <div class="videoWrap controllles justify-content-center">
                                         <a class="video_popup" href="https://www.youtube.com/watch?v={{ items['id']['videoId'] }}>">
                                             <img src="{{items['snippet']['thumbnails']['high']['url']}}" alt="" class="minaYtb">
@@ -22,7 +22,7 @@
                                             <i class="far fa-play-circle"></i>
                                         </div>
                                     </div>
-                                    <div class="videoblog w-75 text-center">
+                                    <div class="videoblog text-center">
                                         <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\''}) }}</h6>
                                         {% set datepub =  items['snippet']['publishedAt']|slice(0,10) %}
 
@@ -30,31 +30,111 @@
                                     </div>
                                 </div>
                                 {% if (loop.index % 3) is same as(0) and (decoded|length is same as(loop.index)) %}
-                    </div>
+                        </div>
                 </div>
                 {% elseif (loop.index % 3) is same as(0) %}
 
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="row  ml-3">
+                    <div class="row">
                 {% endif %}
                 {% endfor %}
 
 
 
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <a class="carousel-control-prev" href="#largeScreen" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <a class="carousel-control-next" href="#largeScreen" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
 
                 </div>
             </div>
+
+        <div id="mediumScreen" class="carousel slide fit-content mx-auto d-none" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row" id="ytbligne">
+                        {% for items in decoded %}
+                        <div class="col-lg-6 col-md-6 col-sm-10 justify-content-around">
+                            <div class="videoWrap controllles justify-content-center">
+                                <a class="video_popup" href="https://www.youtube.com/watch?v={{ items['id']['videoId'] }}>">
+                                    <img src="{{items['snippet']['thumbnails']['high']['url']}}" alt="" class="minaYtb">
+                                    <img src="{{ asset('images/play.png') }}" class="play">
+                                </a>
+                                <div class="play_video position-absolute">
+                                    <i class="far fa-play-circle"></i>
+                                </div>
+                            </div>
+                            <div class="videoblog text-center">
+                                <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\''}) }}</h6>
+                                {% set datepub =  items['snippet']['publishedAt']|slice(0,10) %}
+
+                                <p class="font-italic">Publié le {{ datepub|slice(8,2)  }}-{{ datepub|slice(5,2) }}-{{ datepub|slice(0,4) }}</p>
+                            </div>
+                        </div>
+                        {% if (loop.index % 2) is same as(0) and (decoded|length is same as(loop.index)) %}
+                    </div>
+                </div>
+                {% elseif (loop.index % 2) is same as(0) %}
+
+            </div>
         </div>
+        <div class="carousel-item fit-content">
+            <div class="row">
+                {% endif %}
+                {% endfor %}
+
+                <a class="carousel-control-prev" href="#mediumScreen" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#mediumScreen" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="smallScreen" class="carousel slide fit-content mx-auto d-none" data-ride="carousel">
+            <div class="carousel-inner">
+                        {% for items in decoded %}
+                            <div class="carousel-item {% if loop.index is same as(1) %} active {% endif %}">
+                                <div class="videoWrap controllles justify-content-center">
+                                    <a class="video_popup" href="https://www.youtube.com/watch?v={{ items['id']['videoId'] }}>">
+                                        <img src="{{items['snippet']['thumbnails']['high']['url']}}" alt="" class="minaYtb">
+                                        <img src="{{ asset('images/play.png') }}" class="play">
+                                    </a>
+                                    <div class="play_video position-absolute">
+                                        <i class="far fa-play-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="videoblog text-center">
+                                    <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\''}) }}</h6>
+                                    {% set datepub =  items['snippet']['publishedAt']|slice(0,10) %}
+
+                                    <p class="font-italic">Publié le {{ datepub|slice(8,2)  }}-{{ datepub|slice(5,2) }}-{{ datepub|slice(0,4) }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+            </div>
+
+
+                <a class="carousel-control-prev" href="#smallScreen" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#smallScreen" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
     </section>
 {% endblock %}
 

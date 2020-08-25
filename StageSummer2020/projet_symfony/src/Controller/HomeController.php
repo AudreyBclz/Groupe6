@@ -22,7 +22,7 @@ class HomeController extends AbstractController
 
             $API_key    = 'AIzaSyDYSmQoy0AjwdT_VnWK2pbXH3DYz_kslUg';
             $channelID  = 'UChaonIpYNG1TkPVUtzWRjjQ';
-            $maxResults = 9;
+            $maxResults = 12;
 
 // Faire un Appel API pour récuperer la liste des vidéos en format Json
             $myQuery = "https://www.googleapis.com/youtube/v3/search?key=$API_key&channelId=$channelID&part=snippet,id&order=date&maxResults=$maxResults";
@@ -44,7 +44,6 @@ class HomeController extends AbstractController
 
 
         });
-
 
         $client_id=7080023405;
         $redirect_uri='https://localhost:8001';
@@ -68,7 +67,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'form'=>$form->createView(),
             'message'=>$message,
-            'decoded'=>$decoded['items']
+            'decoded'=>$decoded['items'],
         ]);
     }
 }
