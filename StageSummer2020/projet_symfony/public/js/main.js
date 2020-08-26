@@ -30,7 +30,7 @@ function hauteur(block,block2)
   var h = Math.max(block.clientHeight, window.innerHeight || 0);
   var vh=(block.clientHeight * h) / 100;
 
-  if(vh >=100)
+  if(vh >=100 && window.innerHeight>block.clientHeight)
   {
     block2.css('height','91vh');
     $('#seventh').css('height','100vh');
