@@ -27,36 +27,34 @@ function myFunction() {
 
 function hauteur(block,block2)
 {
-  if(block.clientHeight < screen.availHeight && window.innerWidth<768)
-  {
-    $("#instaligne").css('height', '150%');
-  }
-  else if (block.clientHeight < screen.availHeight) {
-    block2.css('height', '91vh');
+  var h = Math.max(block.clientHeight, window.innerHeight || 0);
+  var vh=(block.clientHeight * h) / 100;
 
-  } else {
-    block2.css('height', '100%');
+  if(vh >=100)
+  {
+    block2.css('height','91vh');
+    $('#seventh').css('height','100vh');
+    $('#fourth').css('height','100%');
+    $('#fifth').css('height','100%');
   }
-}
-window.onresize=function () {
-  hauteur(document.getElementById('second'),$('#second'));
-  hauteur(document.getElementById('third'),$('#third'));
-  hauteur(document.getElementById('fourth'),$('#fourth'));
-  hauteur(document.getElementById('fifth'),$('#fifth'));
-  hauteur(document.getElementById('sixth'),$('#sixth'));
-  hauteur(document.getElementById('seventh'),$('#seventh'));
-  hauteur(document.getElementById('seventh'),$('#eight'));
+  else
+  {
+    block2.css('height','100%');
+    $('#seventh').css('height','100vh');
+    $('#fourth').css('height','91 vh');
+    $('#fifth').css('height','91vh');
+  }
 };
+
+console.log(window.innerWidth);
+
 hauteur(document.getElementById('second'),$('#second'));
 hauteur(document.getElementById('third'),$('#third'));
-hauteur(document.getElementById('fourth'),$('#fourth'));
-hauteur(document.getElementById('fifth'),$('#fifth'));
 hauteur(document.getElementById('sixth'),$('#sixth'));
-hauteur(document.getElementById('seventh'),$('#seventh'));
 hauteur(document.getElementById('seventh'),$('#eight'));
 
 
-$('a[href="https://elfsight.com/instagram-feed-instashow/?utm_source=websites&utm_medium=clients&utm_content=instagram-feed&utm_term=undefined&utm_campaign=free-widget"]').css('display','none !important');
+
 
 $('#first').on('click',function () {
   $("#accueil").addClass('slide-in-left')

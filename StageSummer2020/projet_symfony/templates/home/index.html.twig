@@ -7,7 +7,7 @@
         </div>
         <h1 class="text-center h12 pb-0" id="ytb"><img src="{{ asset('images/YTB.png') }}" class="minia2 mb-5"></h1>
 
-        <div id="largeScreen" class="carousel slide fit-content mx-auto" data-ride="carousel">
+        <div id="largeScreen" class="carousel slide fit-content mx-auto sm-none md-none" data-ride="carousel">
             <div class="carousel-inner">
                <div class="carousel-item fit-content active">
                          <div class="row" id="ytbligne">
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-        <div id="mediumScreen" class="carousel slide fit-content mx-auto d-none" data-ride="carousel">
+        <div id="mediumScreen" class="carousel slide fit-content mx-auto sm-none lg-none" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row" id="ytbligne">
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div id="smallScreen" class="carousel slide fit-content mx-auto d-none" data-ride="carousel">
+        <div id="smallScreen" class="carousel slide fit-content mx-auto md-none lg-none" data-ride="carousel">
             <div class="carousel-inner">
                         {% for items in decoded %}
                             <div class="carousel-item {% if loop.index is same as(1) %} active {% endif %}">

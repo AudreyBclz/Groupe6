@@ -28,6 +28,32 @@
     }
 }
 
+/* affichage du carousel */
+@media all and (max-width:1049px)
+{
+    .sm-none
+    {
+        display: none;
+    }
+}
+
+@media all and (min-width:1050px) and (max-width: 1548px)
+{
+    .md-none
+    {
+        display: none;
+    }
+}
+
+@media all and (min-width: 1549px)
+{
+    .lg-none
+    {
+        display: none;
+    }
+
+}
+/*fin du carousel*/
 @font-face {
     font-family: 'Chilanka-Regular';
     src:url('../fonts/Chilanka-Regular.ttf.woff') format('woff'),
