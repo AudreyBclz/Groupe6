@@ -25,6 +25,7 @@ function myFunction() {
   }
 }
 
+
 function hauteur(block,block2)
 {
   var h = Math.max(block.clientHeight, window.innerHeight || 0);
@@ -35,18 +36,18 @@ function hauteur(block,block2)
     block2.css('height','91vh');
     $('#seventh').css('height','100vh');
     $('#fourth').css('height','100%');
-    $('#fifth').css('height','100%');
+    $('#instaligne').css('height','100%');
+    $('#instagram-feed-demo').css('height','100%');
   }
   else
   {
     block2.css('height','100%');
     $('#seventh').css('height','100vh');
     $('#fourth').css('height','91 vh');
-    $('#fifth').css('height','91vh');
+    $('#instaligne').css('height','70vh');
+    $('#instagram-feed-demo').css('height','85vh');
   }
 };
-
-console.log(window.innerWidth);
 
 hauteur(document.getElementById('second'),$('#second'));
 hauteur(document.getElementById('third'),$('#third'));

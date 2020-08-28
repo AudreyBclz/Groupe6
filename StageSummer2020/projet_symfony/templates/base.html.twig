@@ -5,9 +5,10 @@
     <title>Areliann</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="icon" href="{{ asset('images/Are2.png') }}">
 </head>
 <body>
-<scrpit src="{{ asset('js/instagramFeed.min.js') }}"></scrpit>
+<script src="{{ asset('js/instagramFeed.min.js') }}"></script>
 {% block nav %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-violet" id="nav">
     <a class="navbar-brand d" href="#">Areliann</a>
@@ -134,33 +135,32 @@
 {% endblock %}
 {% block insta %}
 <section class="bg-bleu" id="fifth">
-   <h1 class="text-center h12 pb-3"><img src="{{ asset('images/Insta.png') }}" class="minia2 invisible" id="insta"></h1>
-    <div class="row d-block margeL mb-5" id="instaligne">
+   <h1 class="text-center"><img src="{{ asset('images/Insta.png') }}" class="minia2 invisible mt-3" id="insta"></h1>
+    <!--<div class="row d-block margeL mb-5" id="instaligne">
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
         <div class="elfsight-app-ff23eac8-27c1-4e0b-b4a1-0637a5ed2164"></div>
+    </div>-->
+    <div id="instagram-feed-demo" class="instagram_feed m-auto">
+        <script>
+           (function () {
+                new InstagramFeed({
+                    'username':'Areliannn',
+                    'container':document.getElementById('instagram-feed-demo'),
+                    'display_profile': true,
+                    'display_biography': true,
+                    'display_gallery': true,
+                    'callback':null,
+                    'styling':true,
+                    'items': 6,
+                    'items_per_row': 6,
+                    'margin': 0.5,
+                    'image-size':150,
+                });
+
+            })();
+        </script>
     </div>
-    <div id="instagram-feed-demo" class="instagram_feed"></div>
-    <script>
-       window.addEventListener('load',function () {
-           new InstagramFeed({
-               'username':'audrey_627',
-               'container':"#instagram-feed-demo",
-               'display_profile': true,
-               'display_biography': true,
-               'display_gallery': true,
-               'display_igtv': false,
-               'items': 10,
-               'items_per_row': 3,
-               'margin': 0.5,
-               'get_data':true,
-               'styling':true,
-               'lazy_load':true,
-               'callback': function (data) {
-                   document.getElementById('instagram-feed-demo').innerText(data);
-               }
-           });
-       })
-    </script>
+
 </section>
 {% endblock %}
 {% block contact %}
