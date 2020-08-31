@@ -44,14 +44,7 @@ class HomeController extends AbstractController
 
 
         });
-
-        $client_id=7080023405;
-        $redirect_uri='https://localhost:8001';
-        $access_token='IGQVJVdDNxZADJrMUFucTNiaXJfUkFkVFBpQzR1Vy03dDBKRkVmZAnNnWE9VLXNpWkNlZAGJBUURMQmlXalQxQ282dndlZAHAzZAE05T1lFVmxYLUc5akY4YXg3R3N1RVRUdDhzdW1xa3YzZATY1S2RtLW1GOAZDZD';
-
-        $query="https://graph.instagram.com/".$client_id.'/media';
-
-
+        
         $message="";
         $contact=new Contact();
         $form=$this->createForm(ContactType::class,$contact);
