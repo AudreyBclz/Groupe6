@@ -23,7 +23,7 @@
                                         </div>
                                     </div>
                                     <div class="videoblog text-center">
-                                        <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\''}) }}</h6>
+                                        <h6 class="font-weight-bold">{{ items['snippet']['title']|replace({'&#39;':'\'','&amp;':'&'}) }}</h6>
                                         {% set datepub =  items['snippet']['publishedAt']|slice(0,10) %}
 
                                         <p class="font-italic">Publié le {{ datepub|slice(8,2)  }}-{{ datepub|slice(5,2) }}-{{ datepub|slice(0,4) }}</p>
