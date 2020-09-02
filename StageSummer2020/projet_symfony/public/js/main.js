@@ -45,7 +45,7 @@ function hauteur(block,block2)
     $('#seventh').css('height','100vh');
     $('#fourth').css('height','91 vh');
     $('#instaligne').css('height','70vh');
-    $('#instagram-feed-demo').css('height','85vh');
+    $('#instagram-feed-demo').css('height','75vh');
   }
 };
 
