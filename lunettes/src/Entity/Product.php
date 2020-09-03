@@ -56,14 +56,14 @@ class Product
     private $statusProduct;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $photoProduct;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $stockProduct;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoProduct;
 
     /**
      * @var File|null
