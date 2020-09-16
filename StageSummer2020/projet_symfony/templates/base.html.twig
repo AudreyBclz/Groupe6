@@ -162,6 +162,25 @@
 
 </section>
 {% endblock %}
+{%  block twitch %}
+    <section id="nineth">
+        <h1 class="text-center m-3"><img src="{{ asset('images/twitch.png') }}" class="minia2"> </h1>
+        <!-- Add a placeholder for the Twitch embed -->
+        <div id="twitch-embed" class="text-center"></div>
+
+        <!-- Load the Twitch embed script -->
+        <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+
+        <!-- Create a Twitch.Player object. This will render within the placeholder div -->
+        <script type="text/javascript">
+            new Twitch.Player("twitch-embed", {
+                channel: "areliann",
+                width:"80%",
+                height:"660px"
+            });
+        </script>
+    </section>
+{% endblock %}
 {% block contact %}
 {% endblock %}
 {% block footer %}
