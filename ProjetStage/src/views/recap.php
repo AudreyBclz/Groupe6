@@ -30,12 +30,6 @@ if (isset($_POST['nom'])) {
         $adresse->setAdresse2($_POST['complement']);
         $adresse->setAdresseCP($_POST['codePost']);
         $adresse->setAdresseVille($_POST['ville']);
-        /*$pays=htmlspecialchars(trim($_POST['pays']));
-        $nom = htmlspecialchars(trim($_POST['nom']));
-        $prenom = htmlspecialchars(trim($_POST['prenom']));
-        $adresse = htmlspecialchars(trim($_POST['adresse']));
-        $complement = htmlspecialchars(trim($_POST['complement']));
-        $ville = htmlspecialchars(trim($_POST['ville']));*/
 
         $idAd = $adresse->check_adresse($pays, 1);
         var_dump($idAd);
@@ -50,70 +44,6 @@ if (isset($_POST['nom'])) {
             $idAd = $adresse->insert_adresse(1);
         }
 
-        /* //on vérifie si l'adresse rentrée est déjà en base de donnée si oui on récupère l'id
-         $sqlSelAd = 'SELECT idadresse FROM adresse
-                     INNER JOIN pays ON pays_idpays=idpays
-                     WHERE adresse1=:ad
-                     AND adressePrenom=:prenom
-                     AND adresseNom=:nom
-                     AND adresse2=:ad2
-                     AND adresseCP=:cp
-                     AND adresseVille=:ville
-                     AND nomPays=:pays';
-         $reqSelAd = $db->prepare($sqlSelAd);
-         $reqSelAd->bindParam(':prenom', $prenom);
-         $reqSelAd->bindParam(':nom', $nom);
-         $reqSelAd->bindParam(':ad', $adresse);
-         $reqSelAd->bindParam(':ad2', $complement);
-         $reqSelAd->bindParam(':cp', $_POST['codePost']);
-         $reqSelAd->bindParam(':ville', $ville);
-         $reqSelAd->bindParam(':pays',$pays);
-         $reqSelAd->execute();
-         $tab_ad = array();
-         while ($data = $reqSelAd->fetchObject()) {
-             array_push($tab_ad, $data);
-         }
-         if (!empty($tab_ad)) {
-             $idAd = intval($tab_ad[0]->idadresse);
-         } else {
-             //si non on vérifie si le pays existe en DB et si c'est le cas on récupère l'id
-             $sqlSelPays='SELECT idpays FROM pays
-                          WHERE nomPays=:pays';
-             $reqSelPays=$db->prepare($sqlSelPays);
-             $reqSelPays->bindParam(':pays',$pays);
-             $reqSelPays->execute();
-             $tab_pays=array();
-             while($data=$reqSelPays->fetchObject())
-             {
-                 array_push($tab_pays,$data);
-             }
-             if(!empty($tab_pays))
-             {
-                 $idPays=intval($tab_pays[0]->idpays);
-             }
-             else
-             {
-                 //si le pays n'existe pas on l'insère et on récupère l'id
-                 $sqlInsPays='INSERT INTO pays (nomPays) VALUES (:pays)';
-                 $reqInsPays=$db->prepare($sqlInsPays);
-                 $reqInsPays->bindParam(':pays',$pays);
-                 $reqInsPays->execute();
-                 $idPays=intval($db->lastInsertId());
-             }
-             //on insère l'adresse et on récupère l'id
-             $sqlInsAd = 'INSERT INTO adresse (adressePrenom, adresseNom,adresse1,adresse2,adresseCP,adresseVille,pays_idpays)
-                         VALUES (:prenom,:nom,:ad1,:ad2,:cp,:ville,:id_p)';
-             $reqInsAd = $db->prepare($sqlInsAd);
-             $reqInsAd->bindParam(':prenom', $prenom);
-             $reqInsAd->bindParam(':nom', $nom);
-             $reqInsAd->bindParam(':ad1', $adresse);
-             $reqInsAd->bindParam(':ad2', $complement);
-             $reqInsAd->bindParam(':cp', $_POST['codePost']);
-             $reqInsAd->bindParam(':ville', $ville);
-             $reqInsAd->bindParam(':id_p',$idPays);
-             $reqInsAd->execute();
-             $idAd = intval($db->lastInsertId());
-         }*/
         // on update l'idadresse du panier
 
     }
@@ -127,19 +57,6 @@ if (isset($_POST['nom'])) {
     $reqUpAd->bindParam(':id_ad', $idAd);
     $reqUpAd->bindParam(':idU', $_SESSION['iduser']);
     $reqUpAd->execute();
-    /*//on récupère l'adresse de facturation pour l'afficher
-        $sqlAdFacture = 'SELECT * FROM users
-                        INNER JOIN adresse ON adresse_idadresse=idadresse
-                        INNER JOIN pays ON pays_idpays=idpays
-                       WHERE idUsers=:id';
-        $reqAdFacture = $db->prepare($sqlAdFacture);
-        $reqAdFacture->bindParam(':id', $_SESSION['iduser']);
-        $reqAdFacture->execute();
-        $tab_ad_fact = array();
-        while ($data = $reqAdFacture->fetchObject()) {
-            array_push($tab_ad_fact, $data);
-        }
-        $idFac = intval($tab_ad_fact[0]->adresse_idadresse);*/
 }
     if (isset($_POST['same'])) {
         $idAd = $idFac;
